@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Downloader {
-    private BufferedReader reader = null;
 
     public String download(String url){ // метод скачивающий страницы заданному адресу
         StringBuilder page = new StringBuilder();; // текст страницы

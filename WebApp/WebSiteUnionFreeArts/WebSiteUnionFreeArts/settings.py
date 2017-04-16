@@ -139,6 +139,31 @@ MEDIA_URL = '/media/'
 # абсолютный путь к каталогу для загруженных файлов, в.т.ч. картинок.
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+# Настраиваю вывод сообщений об ошибках, а то по умолчанию они даже
+# в консоль не попадают.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        # 'file': {
+        #     'level': 'DEBUG',
+        #     'class': 'logging.FileHandler',
+        #     'filename': '/tmp/ZZZ.log',
+        # },
+    },
+    'loggers': {
+        'mylog': {
+            # 'handlers': ['file', 'console'],
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 
 if DEBUG:
     # автозапуск модуля панельки

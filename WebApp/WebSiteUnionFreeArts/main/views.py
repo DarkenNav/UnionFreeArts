@@ -20,6 +20,12 @@ def technical_support(request):
 
 
 def contact(request):
-    '''Страница "Техническая помощь"'''
+    '''Страница "Связь"'''
     context = {}
     return render(request, 'contact.html', context)
+
+
+def comment(request):
+    '''Страница "Отзывы"'''
+    context = {}
+    return render(request, 'comment.html', context)

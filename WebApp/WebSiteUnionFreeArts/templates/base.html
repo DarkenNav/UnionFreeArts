@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="{% static 'general/style/reset.css' %}">
+	<link rel="stylesheet" href="{% static 'general/style/style.css' %}">
+</head>
+<body>
+
+<header>
+	<ul>
+		<li><a href="{% url 'main' %}">Главная</a></li>
+		<li><a href="{% url 'main' %}">О компании</a></li>
+		<li><a href="{% url 'main' %}">Техническая помощь</a></li>
+		<li><a href="{% url 'main' %}">Связь</a></li>
+		<li><a href="{% url 'main' %}">Отзывы</a></li>
+	</ul>
+</header>
+
+<article class="content">
+	{% block content  %}
+		<p>Тут-то всё и будет. Это текст базового шаблона.</p>
+	{% endblock %}
+</article>
+
+<footer>
+	<p>Copyright &copy; 2017</p>
+</footer>
+
+</body>
+</html>

@@ -17,3 +17,9 @@ def technical_support(request):
     '''Страница "Техническая помощь"'''
     context = {}
     return render(request, 'technical_support.html', context)
+
+
+def contact(request):
+    '''Страница "Техническая помощь"'''
+    context = {}
+    return render(request, 'contact.html', context)

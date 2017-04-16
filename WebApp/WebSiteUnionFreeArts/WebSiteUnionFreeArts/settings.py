@@ -122,3 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+if DEBUG:
+    # автозапуск модуля панельки
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    # включение панельки в список установленых приложений
+    INSTALLED_APPS += ('debug_toolbar',)
+    # IP-адрес браузера, а не сервера:
+    INTERNAL_IPS = ('127.0.0.1',)

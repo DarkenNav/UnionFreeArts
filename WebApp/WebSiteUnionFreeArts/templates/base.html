@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="{% static 'general/style/reset.css' %}">
+	<link rel="stylesheet" href="{% static 'general/style/style.css' %}">
+</head>
+<body>
+
+<header>
+	Хэдер с меню
+</header>
+
+<article class="content">
+	{% block content  %}
+		<p>Тут-то всё и будет. Это текст базового шаблона.</p>
+	{% endblock %}
+</article>
+
+<footer>
+	<p>Copyright &copy; 2017</p>
+</footer>
+
+</body>
+</html>

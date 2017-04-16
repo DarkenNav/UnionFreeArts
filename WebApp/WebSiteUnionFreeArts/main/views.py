@@ -1,6 +1,13 @@
 from django.shortcuts import render
 
-# Create your views here.
+
 def main(request):
+    '''Главная страница сайта'''
     context = {}
     return render(request, 'index.html', context)
+
+
+def about(request):
+    '''Страница "О компании"'''
+    context = {}
+    return render(request, 'about.html', context)

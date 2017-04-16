@@ -5,7 +5,7 @@ python3 ./manage.py runserver
 
 # Создание проекта:
 # django-admin startproject <имя проекта>
-#Создание приложениея:
+#Создание приложения:
 # python3 manage.py startapp <название приложения>
 # Создать суперпользователя:
 #./manage.py createsuperuser

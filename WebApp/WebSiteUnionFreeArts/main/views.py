@@ -11,3 +11,9 @@ def about(request):
     '''Страница "О компании"'''
     context = {}
     return render(request, 'about.html', context)
+
+
+def technical_support(request):
+    '''Страница "Техническая помощь"'''
+    context = {}
+    return render(request, 'technical_support.html', context)

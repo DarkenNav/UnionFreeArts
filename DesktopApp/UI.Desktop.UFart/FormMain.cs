@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UI.Desktop.UFart.FakeData;
+using UI.Desktop.UFart.UI.DTO;
 
 namespace UFart.Desktop.UI
 {
@@ -15,10 +16,17 @@ namespace UFart.Desktop.UI
     {
         private Brush tabPageTitleBrush = new SolidBrush(Color.Blue);
 
+        private FakeData fakeData;
+
         public FormMain()
         {
             InitializeComponent();
+
+            fakeData = new FakeData();
+
             InitPageStatTotal();
+
+            UpdatelistViewStatTotal();
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
@@ -59,21 +67,70 @@ namespace UFart.Desktop.UI
 
         private void InitPageStatEveryDay()
         {
-            cbStatEveryDaySite.DataSource = new FakeSitesList(); ;
+            cbStatEveryDaySite.DataSource = fakeData.Sites;
             cbStatEveryDaySite.DisplayMember = "Name";
-            cbStatEveryDaySite.ValueMember = "ID";
 
-            cbStatEveryDayPerson.DataSource = new FakePersonsList(); ;
+            cbStatEveryDayPerson.DataSource = fakeData.Persons;
             cbStatEveryDayPerson.DisplayMember = "Name";
-            cbStatEveryDayPerson.ValueMember = "ID";
         }
 
         private void InitPageStatTotal()
         {
-            var sites = new FakeSitesList();
-            cbStatTotalSite.DataSource = sites;
+            cbStatTotalSite.DataSource = fakeData.Sites;
             cbStatTotalSite.DisplayMember = "Name";
-            cbStatTotalSite.ValueMember = "ID";
+        }
+
+        private void btnStatTotalApply_Click(object sender, EventArgs e)
+        {
+            UpdatelistViewStatTotal();
+
+        }
+
+        private void UpdatelistViewStatTotal()
+        {
+            var selectedSite = (SiteDTO)cbStatTotalSite.SelectedValue;
+            var stats = fakeData.Ranks.FindAll(r => 
+                r.Page.SiteID == selectedSite.ID
+                && r.Page.LastScanDate != null
+            );
+
+            listViewStatTotal.Items.Clear();
+            foreach (var person in fakeData.Persons)
+            {
+                listViewStatTotal.Items.Add(new ListViewItem(new string[] {
+                    person.Name,
+                    stats.Where(s => s.PersonID == person.ID).Sum(s => s.Rank).ToString()
+                }));
+            }
+        }
+
+        private void btnStatEveryDayDateApply_Click(object sender, EventArgs e)
+        {
+            UpdateStatEveryDayDate();
+        }
+
+        private void UpdateStatEveryDayDate()
+        {
+            var selectedSite = (SiteDTO)cbStatEveryDaySite.SelectedValue;
+            var selectedPerson = (PersonDTO)cbStatEveryDayPerson.SelectedValue;
+
+            var stats = fakeData.Ranks.FindAll(r =>
+                (dateStatEveryDayDateFrom.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0
+                    && dateStatEveryDayDateTo.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) >= 0)
+                && r.Page.SiteID == selectedSite.ID
+                && r.PersonID == selectedPerson.ID
+            );
+
+            listViewStatEveryDay.Items.Clear();
+            foreach (var stat in stats)
+            {
+                listViewStatEveryDay.Items.Add(new ListViewItem(new string[] {
+                    stat.Page.LastScanDate?.ToString("dd.mm.yyyy"),
+                    stat.Rank.ToString()
+                }));
+            }
+
+            labelStatEveryDayDateSumValue.Text = stats.Sum(s => s.Rank).ToString();
         }
     }
 

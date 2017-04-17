@@ -11,5 +11,8 @@ namespace UI.Desktop.UFart.UI.DTO
         public int PersonID { get; set; }
         public int PageID { get; set; }
         public int Rank { get; set; }
+
+        public PageDTO Page { get; set; }
+        public PersonDTO Person { get; set; }
     }
 }

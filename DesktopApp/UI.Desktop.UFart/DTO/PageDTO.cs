@@ -13,6 +13,8 @@ namespace UI.Desktop.UFart.UI.DTO
         public string Url { get; set; }
         public int SiteID { get; set; }
         public DateTime FoundDateTime { get; set; }
-        public DateTime LastScanDate { get; set; }
+        public DateTime? LastScanDate { get; set; }
+
+        public SiteDTO Site { get; set; }
     }
 }

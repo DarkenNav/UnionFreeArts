@@ -16,7 +16,7 @@ namespace UI.Desktop.UFart.FakeData
                 new PageDTO {ID = 1, Url = @"https://ria.ru/0", SiteID = 1, FoundDateTime = DateTime.Now, LastScanDate = DateTime.Now },
                 new PageDTO {ID = 2, Url = @"https://ria.ru/1", SiteID = 1, FoundDateTime = DateTime.Now, LastScanDate = DateTime.Now },
                 new PageDTO {ID = 3, Url = @"https://ria.ru/2", SiteID = 1, FoundDateTime = DateTime.Now, LastScanDate = DateTime.Now },
-                new PageDTO {ID = 4, Url = @"https://ria.ru/3", SiteID = 1, FoundDateTime = DateTime.Now, LastScanDate = DateTime.Now },
+                new PageDTO {ID = 4, Url = @"https://ria.ru/3", SiteID = 1, FoundDateTime = DateTime.Now, LastScanDate = null },
 
                 new PageDTO {ID = 100, Url = @"https://lenta.ru/1", SiteID = 2, FoundDateTime = DateTime.Now, LastScanDate = DateTime.Now },
                 new PageDTO {ID = 101, Url = @"https://lenta.ru/2", SiteID = 2, FoundDateTime = DateTime.Now, LastScanDate = DateTime.Now },

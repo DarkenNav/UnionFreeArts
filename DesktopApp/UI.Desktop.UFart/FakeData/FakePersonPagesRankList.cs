@@ -26,7 +26,12 @@ namespace UI.Desktop.UFart.FakeData
                 new PersonPageRankDTO { PersonID = 3, PageID = 101, Rank = 1 },
                 new PersonPageRankDTO { PersonID = 3, PageID = 102, Rank = 2 },
                 new PersonPageRankDTO { PersonID = 3, PageID = 103, Rank = 5 },
-                new PersonPageRankDTO { PersonID = 3, PageID = 104, Rank = 3 }
+                new PersonPageRankDTO { PersonID = 3, PageID = 104, Rank = 3 },
+
+                new PersonPageRankDTO { PersonID = 1, PageID = 1, Rank = 10 },
+                new PersonPageRankDTO { PersonID = 1, PageID = 2, Rank = 20 },
+                new PersonPageRankDTO { PersonID = 1, PageID = 3, Rank = 20 },
+                new PersonPageRankDTO { PersonID = 1, PageID = 4, Rank = 0 }
             });
         }
     }

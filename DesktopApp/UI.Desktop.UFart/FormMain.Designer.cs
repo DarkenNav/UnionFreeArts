@@ -127,6 +127,7 @@
             this.btnStatTotalApply.TabIndex = 2;
             this.btnStatTotalApply.Text = "Применить";
             this.btnStatTotalApply.UseVisualStyleBackColor = true;
+            this.btnStatTotalApply.Click += new System.EventHandler(this.btnStatTotalApply_Click);
             // 
             // cbStatTotalSite
             // 
@@ -177,7 +178,7 @@
             this.labelStatEveryDayDateSumValue.AutoSize = true;
             this.labelStatEveryDayDateSumValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelStatEveryDayDateSumValue.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelStatEveryDayDateSumValue.Location = new System.Drawing.Point(524, 520);
+            this.labelStatEveryDayDateSumValue.Location = new System.Drawing.Point(512, 520);
             this.labelStatEveryDayDateSumValue.Name = "labelStatEveryDayDateSumValue";
             this.labelStatEveryDayDateSumValue.Size = new System.Drawing.Size(18, 20);
             this.labelStatEveryDayDateSumValue.TabIndex = 15;
@@ -191,9 +192,9 @@
             this.labelStatEveryDayDateSum.ForeColor = System.Drawing.SystemColors.ControlText;
             this.labelStatEveryDayDateSum.Location = new System.Drawing.Point(27, 520);
             this.labelStatEveryDayDateSum.Name = "labelStatEveryDayDateSum";
-            this.labelStatEveryDayDateSum.Size = new System.Drawing.Size(134, 20);
+            this.labelStatEveryDayDateSum.Size = new System.Drawing.Size(138, 20);
             this.labelStatEveryDayDateSum.TabIndex = 14;
-            this.labelStatEveryDayDateSum.Text = "Всего за период";
+            this.labelStatEveryDayDateSum.Text = "Всего за период:";
             this.labelStatEveryDayDateSum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dateStatEveryDayDateTo
@@ -292,6 +293,7 @@
             this.btnStatEveryDayDateApply.TabIndex = 6;
             this.btnStatEveryDayDateApply.Text = "Применить";
             this.btnStatEveryDayDateApply.UseVisualStyleBackColor = true;
+            this.btnStatEveryDayDateApply.Click += new System.EventHandler(this.btnStatEveryDayDateApply_Click);
             // 
             // cbStatEveryDaySite
             // 

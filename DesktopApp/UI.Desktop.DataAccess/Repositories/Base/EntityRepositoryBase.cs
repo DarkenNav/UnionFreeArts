@@ -11,6 +11,11 @@ namespace UI.Desktop.DataAccess.Repositories.Base
     public class EntityRepositoryBase<TEntity>
         : IEntityRepositoryBase<TEntity> where TEntity : class
     {
+        public EntityRepositoryBase()
+        {
+
+        }
+
         public void Create(TEntity item)
         {
             throw new NotImplementedException();

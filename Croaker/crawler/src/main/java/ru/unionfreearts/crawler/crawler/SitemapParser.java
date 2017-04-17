@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class SitemapParser {
-	public static void main(String[] args) throws Exception {
+	public ArrayList<String> siteMapParser() throws Exception {
 		RobotsParser robotParser = new RobotsParser();
 		ArrayList<String> urlFromRobotParser = new ArrayList<String>(robotParser.robotParser());
 		// цикл потом включим, чтобы парсить все ссылки из robots.txt
@@ -16,33 +16,23 @@ public class SitemapParser {
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 		String inputLine;
-		ArrayList<String> HtmlURL = new ArrayList<String>();
+		ArrayList<String> htmlURL = new ArrayList<String>();
 
 		while ((inputLine = in.readLine()) != null) { // парсим HTML
 			if (inputLine.contains("https")) {
 				System.out.println(inputLine);
-
-				HtmlURL.add(inputLine.substring(5, (inputLine.length() - 6))); // пишем
-																				// их
-																				// в
-																				// лист,
-																				// убираем
-																				// лишние
-																				// символы
-																				// с
-																				// начала
-																				// и
-																				// конца
-																				// строк.
-
+				// пишем их в лист, убираем ишние символы с начала и конца
+				// строк.
+				htmlURL.add(inputLine.substring(5, inputLine.length() - 6));
 			}
 
 		}
 		in.close();
 
-		System.out.println(HtmlURL);// для тестирования работы, потом можно
+		System.out.println(htmlURL);// для тестирования работы, потом можно
 									// удалить.
 
 		// }
+		return htmlURL;
 	}
 }

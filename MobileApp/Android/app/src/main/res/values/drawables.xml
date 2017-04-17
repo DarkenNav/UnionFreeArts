@@ -1,5 +1,0 @@
-<resources>
-    <item name="ic_menu_total" type="drawable">@android:drawable/ic_menu_my_calendar</item>
-    <item name="ic_menu_settings" type="drawable">@android:drawable/ic_menu_manage</item>
-    <item name="ic_menu_daily" type="drawable">@android:drawable/ic_menu_today</item>
-</resources>

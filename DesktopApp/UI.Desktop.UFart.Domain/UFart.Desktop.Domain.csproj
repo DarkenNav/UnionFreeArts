@@ -40,13 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Entity\Base\EntityBase.cs" />
+    <Compile Include="Entity\Keyword.cs" />
+    <Compile Include="Entity\Page.cs" />
+    <Compile Include="Entity\Site.cs" />
+    <Compile Include="Entity\Person.cs" />
+    <Compile Include="Entity\PersonPageRank.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entity\Base\" />
-    <Folder Include="Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

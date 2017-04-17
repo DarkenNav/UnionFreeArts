@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UFart.Desktop.Domain
+namespace UI.Desktop.UFart.Domain.Entity.Base
 {
-    public class Class1
+    public class EntityBase
     {
+        public int ID { get; set; }
     }
 }

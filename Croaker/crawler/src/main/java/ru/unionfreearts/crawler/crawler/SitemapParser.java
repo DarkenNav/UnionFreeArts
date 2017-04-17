@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 public class SitemapParser {
 	public static void main(String[] args) throws Exception {
+		RobotsParser robotParser = new RobotsParser();
+		ArrayList<String> urlFromRobotParser = new ArrayList<String>(robotParser.robotParser());
+		System.out.println(urlFromRobotParser);
+		
+		//for (int i = 0; i < urlFromRobotParser.size(); i++){
 
 		URL url = new URL("https://yandex.ru/blog/sitemap.xml"); //передаем нужный URL
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));

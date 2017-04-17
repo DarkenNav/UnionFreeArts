@@ -46,7 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Debug\FakePersonList.cs" />
+    <Compile Include="FakeData\FakePersonPagesRankList.cs" />
+    <Compile Include="FakeData\FakePagesList.cs" />
+    <Compile Include="FakeData\FakeSitesList.cs" />
+    <Compile Include="FakeData\FakePersonsList.cs" />
     <Compile Include="DTO\Base\EntityBaseDTO.cs" />
     <Compile Include="DTO\KeywordDTO.cs" />
     <Compile Include="DTO\PageDTO.cs" />

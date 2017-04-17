@@ -21,16 +21,7 @@ namespace UI.Desktop.DataAccess.Repositories.Base
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> func)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null, 
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null, 
-            int? skip = default(int?), 
-            int? take = default(int?))
+        public IEnumerable<TEntity> Get(int id)
         {
             throw new NotImplementedException();
         }

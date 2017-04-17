@@ -8,15 +8,9 @@ using UI.Desktop.DataAccess.Repositories.Base.Interfaces;
 namespace UI.Desktop.DataAccess.Repositories.Base
 {
     public abstract class AbstractRepository
-        : IRepositoryBase
     {
 
         public AbstractRepository()
-        {
-            
-        }
-
-        public void Save()
         {
             
         }

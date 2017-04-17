@@ -44,7 +44,6 @@
     <Compile Include="Repositories\Base\AbstractRepository.cs" />
     <Compile Include="Repositories\Base\EntityRepositoryBase.cs" />
     <Compile Include="Repositories\Base\Interfaces\IEntityRepositoryBase.cs" />
-    <Compile Include="Repositories\Base\Interfaces\IRepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

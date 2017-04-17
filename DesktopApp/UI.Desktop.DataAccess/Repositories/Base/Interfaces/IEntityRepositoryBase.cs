@@ -9,14 +9,7 @@ namespace UI.Desktop.DataAccess.Repositories.Base.Interfaces
 {
     public interface IEntityRepositoryBase<TEntity> where TEntity : class
     {
-        IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
-            int? skip = null,
-            int? take = null
-            );
-
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> func);
+        IEnumerable<TEntity> Get(int id);
 
         void Create(TEntity item);
         void Update(TEntity item);

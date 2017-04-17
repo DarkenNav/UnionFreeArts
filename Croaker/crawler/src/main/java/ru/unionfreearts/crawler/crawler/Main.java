@@ -10,5 +10,8 @@ public class Main
     {
 //        RobotsParser robotParser = new RobotsParser();
 //        robotParser.robotParser();
+    	SitemapParser sitemapParser = new SitemapParser();
+    	sitemapParser.siteMapParser();
+    	
     }
 }

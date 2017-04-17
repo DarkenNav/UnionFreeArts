@@ -1,4 +1,4 @@
-package ru.unionfreearts.crawler.crawler;
+package ru.unionfreearts.crawler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,7 +10,8 @@ public class RobotsParser {
 	// На вход принимаем String URL, допишем потом, пока для теста.
 	public ArrayList<String> robotParser() throws Exception {
 		// Заходим на сайт и читаем файл robots.txt
-		URL url = new URL("http://yandex.ru/robots.txt");
+
+		URL url = new URL("https://yandex.ru/robots.txt");
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 		String inputLine;

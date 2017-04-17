@@ -1,4 +1,4 @@
-package ru.unionfreearts.crawler.crawler;
+package ru.unionfreearts.crawler;
 
 /**
  * Hello world!
@@ -10,8 +10,11 @@ public class Main
     {
 //        RobotsParser robotParser = new RobotsParser();
 //        robotParser.robotParser();
-    	SitemapParser sitemapParser = new SitemapParser();
-    	sitemapParser.siteMapParser();
+//    	SitemapParser sitemapParser = new SitemapParser();
+//    	sitemapParser.siteMapParser();
+    	HtmlParser htmlParser = new HtmlParser();
+    	htmlParser.htmlParser("Сегодня");
+    	System.out.println("END");
     	
     }
 }

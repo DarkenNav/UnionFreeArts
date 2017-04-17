@@ -1,4 +1,4 @@
-package ru.unionfreearts.crawler.crawler;
+package ru.unionfreearts.crawler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,7 +13,7 @@ public class SitemapParser {
 		// цикл потом включим, чтобы парсить все ссылки из robots.txt
 		//for (int i = 0; i < urlFromRobotParser.size(); i++) {
 
-			URL url = new URL(urlFromRobotParser.get(0)); // передаем нужный URL
+			URL url = new URL(urlFromRobotParser.get(1)); // передаем нужный URL
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 			String inputLine;
@@ -31,7 +31,7 @@ public class SitemapParser {
 
 			System.out.println(htmlURL);// для тестирования работы, потом можно
 										// удалить.
-			System.out.println(htmlURL.size());
+			
 
 		//}
 		return htmlURL;

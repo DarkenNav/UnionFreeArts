@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeData\FakePagesList.cs" />
+    <Compile Include="FakeData\FakePersonPagesRankList.cs" />
+    <Compile Include="FakeData\FakePersonsList.cs" />
+    <Compile Include="FakeData\FakeSitesList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\AbstractRepository.cs" />
     <Compile Include="Repositories\Base\EntityRepositoryBase.cs" />

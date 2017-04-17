@@ -46,10 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeData\FakePersonPagesRankList.cs" />
-    <Compile Include="FakeData\FakePagesList.cs" />
-    <Compile Include="FakeData\FakeSitesList.cs" />
-    <Compile Include="FakeData\FakePersonsList.cs" />
     <Compile Include="DTO\Base\EntityBaseDTO.cs" />
     <Compile Include="DTO\KeywordDTO.cs" />
     <Compile Include="DTO\PageDTO.cs" />
@@ -89,7 +85,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\UI.Desktop.DataAccess\UFart.Desktop.DataAccess.csproj">
+      <Project>{A73ACC59-6211-4986-9B3B-D0C91E65F2AF}</Project>
+      <Name>UFart.Desktop.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

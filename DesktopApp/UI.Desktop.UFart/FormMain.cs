@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Desktop.UFart.FakeData;
 
 namespace UFart.Desktop.UI
 {
@@ -17,6 +18,7 @@ namespace UFart.Desktop.UI
         public FormMain()
         {
             InitializeComponent();
+            InitPageStatTotal();
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
@@ -41,5 +43,38 @@ namespace UFart.Desktop.UI
             stringFlags.LineAlignment = StringAlignment.Center;
             g.DrawString(tabPage.Text, font, tabPageTitleBrush, tabBounds, new StringFormat(stringFlags));
         }
+
+        private void tabControlMainScreen_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage.Equals(tabPageStatTotal))
+            {
+                InitPageStatTotal();
+            }
+            if (e.TabPage.Equals(tabPageStatEveryDay))
+            {
+                InitPageStatEveryDay();
+            }
+
+        }
+
+        private void InitPageStatEveryDay()
+        {
+            cbStatEveryDaySite.DataSource = new FakeSitesList(); ;
+            cbStatEveryDaySite.DisplayMember = "Name";
+            cbStatEveryDaySite.ValueMember = "ID";
+
+            cbStatEveryDayPerson.DataSource = new FakePersonsList(); ;
+            cbStatEveryDayPerson.DisplayMember = "Name";
+            cbStatEveryDayPerson.ValueMember = "ID";
+        }
+
+        private void InitPageStatTotal()
+        {
+            var sites = new FakeSitesList();
+            cbStatTotalSite.DataSource = sites;
+            cbStatTotalSite.DisplayMember = "Name";
+            cbStatTotalSite.ValueMember = "ID";
+        }
     }
+
 }

@@ -25,7 +25,7 @@ public class RobotsParser {
 		while ((inputLine = in.readLine()) != null) {
 			if (inputLine.contains("sitemap.xml")) { // ищем сслыку на
 														// sitemap.xml
-				System.out.println(inputLine);// тут пока печатаем, в
+				//System.out.println(inputLine);// тут пока печатаем, в
 												// будущем
 												// делаем, что хотим.
 
@@ -36,7 +36,7 @@ public class RobotsParser {
 
 		}
 		in.close();
-		System.out.println(sitemapURL);//печатать в финале не обязательно, здесь для проверки работоспособности
+		//System.out.println(sitemapURL);//печатать в финале не обязательно, здесь для проверки работоспособности
 		return sitemapURL;
 
 	}

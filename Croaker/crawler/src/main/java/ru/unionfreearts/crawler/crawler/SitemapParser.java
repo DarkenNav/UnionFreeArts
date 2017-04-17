@@ -9,31 +9,40 @@ public class SitemapParser {
 	public static void main(String[] args) throws Exception {
 		RobotsParser robotParser = new RobotsParser();
 		ArrayList<String> urlFromRobotParser = new ArrayList<String>(robotParser.robotParser());
-		//System.out.println(urlFromRobotParser);
+		// цикл потом включим, чтобы парсить все ссылки из robots.txt
+		// for (int i = 0; i < urlFromRobotParser.size(); i++) {
 
-		for (int i = 0; i < urlFromRobotParser.size(); i++) {
+		URL url = new URL(urlFromRobotParser.get(1)); // передаем нужный URL
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
-			URL url = new URL(urlFromRobotParser.get(i)); // передаем нужный URL
-			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+		String inputLine;
+		ArrayList<String> HtmlURL = new ArrayList<String>();
 
-			String inputLine;
-			ArrayList<String> HtmlURL = new ArrayList<String>();
+		while ((inputLine = in.readLine()) != null) { // парсим HTML
+			if (inputLine.contains("https")) {
+				System.out.println(inputLine);
 
-			while ((inputLine = in.readLine()) != null) { // парсим HTML
-				if (inputLine.contains("https")) {
-					System.out.println(inputLine);
-
-					HtmlURL.add(inputLine.substring(5, (inputLine.length() - 6))); // пишем
-																					// их
-																					// в
-																					// лист
-
-				}
+				HtmlURL.add(inputLine.substring(5, (inputLine.length() - 6))); // пишем
+																				// их
+																				// в
+																				// лист,
+																				// убираем
+																				// лишние
+																				// символы
+																				// с
+																				// начала
+																				// и
+																				// конца
+																				// строк.
 
 			}
-			in.close();
-			System.out.println(HtmlURL);
 
 		}
+		in.close();
+
+		System.out.println(HtmlURL);// для тестирования работы, потом можно
+									// удалить.
+
+		// }
 	}
 }

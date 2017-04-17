@@ -8,7 +8,7 @@ public class Main
 {
     public static void main( String[] args ) throws Exception
     {
-        RobotsParser robotParser = new RobotsParser();
-        robotParser.robotParser();
+//        RobotsParser robotParser = new RobotsParser();
+//        robotParser.robotParser();
     }
 }

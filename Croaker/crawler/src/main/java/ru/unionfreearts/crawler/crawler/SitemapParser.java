@@ -18,7 +18,7 @@ public class SitemapParser {
 				if (inputLine.contains("https")) { 
 					System.out.println(inputLine);
 					
-					HtmlURL.add(inputLine.substring(5));
+					HtmlURL.add(inputLine.substring(5, (inputLine.length()-6)));
 
 
 				}

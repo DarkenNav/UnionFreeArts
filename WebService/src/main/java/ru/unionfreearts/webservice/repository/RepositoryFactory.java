@@ -1,6 +1,6 @@
-package ru.unionfreearts.webapp.repository;
+package ru.unionfreearts.webservice.repository;
 
-import ru.unionfreearts.webapp.entity.*;
+import ru.unionfreearts.webservice.entity.*;
 
 public class RepositoryFactory {
     private static final EntityRepository<Site> siteRepository = new EntityRepository<Site>(Site.class);

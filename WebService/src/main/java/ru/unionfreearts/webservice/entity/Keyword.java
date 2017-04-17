@@ -1,26 +1,18 @@
-package ru.unionfreearts.webapp.entity;
+package ru.unionfreearts.webservice.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "persons")
-public class Person {
+@Table(name = "keywords")
+public class Keyword {
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
-    @OneToMany(targetEntity = Rank.class, mappedBy = "person")
-    private Set<Rank> ranks;
-
-    public Person() {
-    }
-
-    public Person(String name) {
-        this.name = name;
-    }
+    @ManyToOne(targetEntity = Person.class)
+    private Person person;
 
     public Long getId() {
         return id;
@@ -38,11 +30,11 @@ public class Person {
         this.name = name;
     }
 
-    public Set<Rank> getRanks() {
-        return ranks;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setRanks(Set<Rank> ranks) {
-        this.ranks = ranks;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

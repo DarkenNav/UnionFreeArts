@@ -1,4 +1,4 @@
-package ru.unionfreearts.webapp.util;
+package ru.unionfreearts.webservice.util;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

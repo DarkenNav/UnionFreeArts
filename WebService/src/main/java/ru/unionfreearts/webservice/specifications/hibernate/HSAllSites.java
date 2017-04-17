@@ -1,10 +1,9 @@
-package ru.unionfreearts.webapp.specifications.hibernate;
+package ru.unionfreearts.webservice.specifications.hibernate;
 
 import org.hibernate.Session;
-import ru.unionfreearts.webapp.entity.Person;
-import ru.unionfreearts.webapp.entity.Site;
-import ru.unionfreearts.webapp.specifications.Specification;
-import ru.unionfreearts.webapp.util.HibernateUtil;
+import ru.unionfreearts.webservice.entity.Site;
+import ru.unionfreearts.webservice.specifications.Specification;
+import ru.unionfreearts.webservice.util.HibernateUtil;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

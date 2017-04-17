@@ -1,4 +1,4 @@
-package ru.unionfreearts.webapp.entity;
+package ru.unionfreearts.webservice.entity;
 
 import javax.persistence.*;
 import java.util.Date;

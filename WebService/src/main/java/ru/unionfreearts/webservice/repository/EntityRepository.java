@@ -1,7 +1,7 @@
-package ru.unionfreearts.webapp.repository;
+package ru.unionfreearts.webservice.repository;
 
-import ru.unionfreearts.webapp.specifications.Specification;
-import ru.unionfreearts.webapp.util.HibernateUtil;
+import ru.unionfreearts.webservice.specifications.Specification;
+import ru.unionfreearts.webservice.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.util.List;

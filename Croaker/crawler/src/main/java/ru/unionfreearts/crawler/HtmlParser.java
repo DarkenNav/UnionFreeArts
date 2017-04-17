@@ -15,7 +15,7 @@ public class HtmlParser {
 		// цикл потом включим, чтобы парсить все ссылки из sitemap.xml
 		// for (int i = 0; i < urlFromRobotParser.size(); i++) {
 
-		URL url = new URL(urlFromSitemapParser.get(0)); // передаем нужный URL
+		URL url = new URL("https://ru.wikipedia.org/wiki/Sitemaps"); // передаем нужный URL
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 		String inputLine;
@@ -23,7 +23,7 @@ public class HtmlParser {
 		while ((inputLine = in.readLine()) != null) { // парсим HTML
 			// слово получаем от пользователя.
 			if (inputLine.contains(searchWord)) {
-				System.out.println(inputLine);
+				//System.out.println(inputLine);
 				// добавляем +1 к рейтингу.
 				rating++;
 			}

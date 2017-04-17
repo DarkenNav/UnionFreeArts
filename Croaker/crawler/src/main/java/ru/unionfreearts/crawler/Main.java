@@ -13,7 +13,7 @@ public class Main
 //    	SitemapParser sitemapParser = new SitemapParser();
 //    	sitemapParser.siteMapParser();
     	HtmlParser htmlParser = new HtmlParser();
-    	htmlParser.htmlParser("Сегодня");
+    	htmlParser.htmlParser("Sitemap");
     	System.out.println("END");
     	
     }

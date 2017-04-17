@@ -9,29 +9,31 @@ public class SitemapParser {
 	public static void main(String[] args) throws Exception {
 		RobotsParser robotParser = new RobotsParser();
 		ArrayList<String> urlFromRobotParser = new ArrayList<String>(robotParser.robotParser());
-		System.out.println(urlFromRobotParser);
-		
-		//for (int i = 0; i < urlFromRobotParser.size(); i++){
+		//System.out.println(urlFromRobotParser);
 
-		URL url = new URL("https://yandex.ru/blog/sitemap.xml"); //передаем нужный URL
-		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+		for (int i = 0; i < urlFromRobotParser.size(); i++) {
 
-		String inputLine;
-		ArrayList<String> HtmlURL = new ArrayList<String>();
-		
-			while ((inputLine = in.readLine()) != null) { //парсим HTML
-				if (inputLine.contains("https")) { 
+			URL url = new URL(urlFromRobotParser.get(i)); // передаем нужный URL
+			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+			String inputLine;
+			ArrayList<String> HtmlURL = new ArrayList<String>();
+
+			while ((inputLine = in.readLine()) != null) { // парсим HTML
+				if (inputLine.contains("https")) {
 					System.out.println(inputLine);
-					
-					HtmlURL.add(inputLine.substring(5, (inputLine.length()-6))); //пишем их в лист
 
+					HtmlURL.add(inputLine.substring(5, (inputLine.length() - 6))); // пишем
+																					// их
+																					// в
+																					// лист
 
 				}
 
 			}
 			in.close();
-		System.out.println(HtmlURL);
+			System.out.println(HtmlURL);
 
+		}
 	}
-	
 }

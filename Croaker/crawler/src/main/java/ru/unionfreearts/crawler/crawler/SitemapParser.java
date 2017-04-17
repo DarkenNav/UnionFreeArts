@@ -8,17 +8,17 @@ import java.util.ArrayList;
 public class SitemapParser {
 	public static void main(String[] args) throws Exception {
 
-		URL url = new URL("https://yandex.ru/blog/sitemap.xml");
+		URL url = new URL("https://yandex.ru/blog/sitemap.xml"); //передаем нужный URL
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 		String inputLine;
 		ArrayList<String> HtmlURL = new ArrayList<String>();
 		
-			while ((inputLine = in.readLine()) != null) {
+			while ((inputLine = in.readLine()) != null) { //парсим HTML
 				if (inputLine.contains("https")) { 
 					System.out.println(inputLine);
 					
-					HtmlURL.add(inputLine.substring(5, (inputLine.length()-6)));
+					HtmlURL.add(inputLine.substring(5, (inputLine.length()-6))); //пишем их в лист
 
 
 				}

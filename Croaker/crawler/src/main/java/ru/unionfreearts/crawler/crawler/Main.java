@@ -6,8 +6,9 @@ package ru.unionfreearts.crawler.crawler;
  */
 public class Main 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws Exception
     {
-        System.out.println( "Hello World!" );
+        RobotsParser robotParser = new RobotsParser();
+        robotParser.robotParser();
     }
 }

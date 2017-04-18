@@ -53,6 +53,7 @@
     <Compile Include="Repositories\Base\AbstractRepositoryBase.cs" />
     <Compile Include="Repositories\Base\AbstractRepository.cs" />
     <Compile Include="Repositories\Base\EntityRepositoryBase.cs" />
+    <Compile Include="Repositories\Entities\Base\IPersonPageRankRepository.cs" />
     <Compile Include="Repositories\Base\Interfaces\IEntityRepositoryBase.cs" />
     <Compile Include="Repositories\DataRepository.cs" />
     <Compile Include="Repositories\Entities\PersonPageRankRepository.cs" />

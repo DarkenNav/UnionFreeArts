@@ -30,18 +30,15 @@ namespace UFart.Desktop.UI
             fakeData = new FakeDataDTOBase();
 
             InitPageStatTotal();
+            
+            //using (var repo = new DataRepository(new FakeDataBase()))
+            //{
+            //    var sites = repo.Sites.GetAll();
+            //    var sitesDto =  Mapper.Map<IEnumerable<Site>,List<SiteDTO>>(sites);
 
-            UpdatelistViewStatTotal();
-
-            //Mapper.Initialize(cfg => MapperConfigurate.Initialize(cfg));
-            using (var repo = new DataRepository(new FakeDataBase()))
-            {
-                var sites = repo.Sites.GetAll();
-                var sitesDto =  Mapper.Map<IEnumerable<Site>,List<SiteDTO>>(sites);
-
-                var persons = repo.Persons.GetAll();
-                var personsDto = Mapper.Map<IEnumerable<Person>, List<PersonDTO>>(persons);
-            }
+            //    var persons = repo.Persons.GetAll();
+            //    var personsDto = Mapper.Map<IEnumerable<Person>, List<PersonDTO>>(persons);
+            //}
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
@@ -91,8 +88,14 @@ namespace UFart.Desktop.UI
 
         private void InitPageStatTotal()
         {
-            cbStatTotalSite.DataSource = fakeData.Sites;
+            using (var repo = new DataRepository(new FakeDataBase()))
+            {
+                cbStatTotalSite.DataSource = Mapper.Map<IEnumerable<Site>, List<SiteDTO>>(repo.Sites.GetAll());
+            }
+            //cbStatTotalSite.DataSource = fakeData.Sites;
             cbStatTotalSite.DisplayMember = "Name";
+
+            UpdatelistViewStatTotal();
         }
 
         private void btnStatTotalApply_Click(object sender, EventArgs e)
@@ -104,19 +107,31 @@ namespace UFart.Desktop.UI
         private void UpdatelistViewStatTotal()
         {
             var selectedSite = (SiteDTO)cbStatTotalSite.SelectedValue;
-            var stats = fakeData.Ranks.FindAll(r => 
-                r.Page.SiteID == selectedSite.ID
-                && r.Page.LastScanDate != null
-            );
-
-            listViewStatTotal.Items.Clear();
-            foreach (var person in fakeData.Persons)
+            using (var repo = new DataRepository(new FakeDataBase()))
             {
-                listViewStatTotal.Items.Add(new ListViewItem(new string[] {
-                    person.Name,
-                    stats.Where(s => s.PersonID == person.ID).Sum(s => s.Rank).ToString()
-                }));
+                var stats = repo.PersonPagesRank.GetBySite(selectedSite.ID);
+                var persons = repo.Persons.GetAll();
+                //var stats = fakeData.Ranks.FindAll(r => 
+                //    r.Page.SiteID == selectedSite.ID
+                //    && r.Page.LastScanDate != null
+                //);
+
+                listViewStatTotal.Items.Clear();
+//                foreach (var person in fakeData.Persons)
+                foreach (var person in persons)
+                    {
+                        listViewStatTotal.Items.Add(new ListViewItem(new string[] {
+                        person.Name,
+                        stats.Where(s => s.PersonID == person.ID).Sum(s => s.Rank).ToString()
+                    }));
+
+                    //listViewStatTotal.Items.Add(new ListViewItem(new string[] {
+                    //    person.Name,
+                    //    stats.Where(s => s.PersonID == person.ID).Sum(s => s.Rank).ToString()
+                    //}));
+                }
             }
+
         }
 
         private void btnStatEveryDayDateApply_Click(object sender, EventArgs e)

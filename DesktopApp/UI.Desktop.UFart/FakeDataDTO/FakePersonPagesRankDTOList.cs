@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UFart.Desktop.UI.DTO;
 
-namespace UFart.Desktop.UI.FakeData
+namespace UFart.Desktop.UI.FakeDataDTO
 {
-    public class FakePersonPagesRankList
+    public class FakePersonPagesRankListDTO
         : List<PersonPageRankDTO>
     {
-        public FakePersonPagesRankList()
+        public FakePersonPagesRankListDTO()
         {
             AddRange(new List<PersonPageRankDTO> {
                 new PersonPageRankDTO { PersonID = 1, PageID = 101, Rank = 10 },

@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UFart.Desktop.UI.DTO;
 
-namespace UFart.Desktop.UI.FakeData
+namespace UFart.Desktop.UI.FakeDataDTO
 {
-    public class FakePagesList
+    public class FakePagesDTOList
         : List<PageDTO>
     {
-        public FakePagesList()
+        public FakePagesDTOList()
         {
             AddRange(new List<PageDTO> {
                 new PageDTO {ID = 1, Url = @"https://ria.ru/0", SiteID = 1, FoundDateTime = DateTime.Now, LastScanDate = DateTime.Now },

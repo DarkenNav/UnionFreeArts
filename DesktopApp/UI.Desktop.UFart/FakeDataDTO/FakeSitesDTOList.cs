@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UFart.Desktop.UI.DTO;
 
-namespace UFart.Desktop.UI.FakeData
+namespace UFart.Desktop.UI.FakeDataDTO
 {
-    public class FakeSitesList
+    public class FakeSitesListDTO
         : List<SiteDTO>
     {
-        public FakeSitesList()
+        public FakeSitesListDTO()
         {
             AddRange(new List<SiteDTO> {
                 new SiteDTO {ID = 1, Name = @"https://ria.ru/"},

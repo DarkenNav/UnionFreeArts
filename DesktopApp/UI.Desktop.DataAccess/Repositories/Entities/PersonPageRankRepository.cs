@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.DataAccess.Repositories.Base;
-using UI.Desktop.UFart.Domain.Entity;
+using UFart.Desktop.DataAccess.Repositories.Base;
+using UFart.Desktop.Domain.Entity;
 
-namespace UI.Desktop.DataAccess.Repositories.Entities
+namespace UFart.Desktop.DataAccess.Repositories.Entities
 {
     public class PersonPageRankRepository
         : EntityRepositoryBase<PersonPageRank>

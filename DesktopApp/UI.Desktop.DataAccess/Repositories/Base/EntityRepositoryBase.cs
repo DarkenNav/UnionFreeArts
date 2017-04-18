@@ -4,9 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.DataAccess.Repositories.Base.Interfaces;
+using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
 
-namespace UI.Desktop.DataAccess.Repositories.Base
+namespace UFart.Desktop.DataAccess.Repositories.Base
 {
     public class EntityRepositoryBase<TEntity>
         : IEntityRepositoryBase<TEntity> where TEntity : class

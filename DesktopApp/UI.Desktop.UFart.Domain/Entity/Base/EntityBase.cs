@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UI.Desktop.UFart.Domain.Entity.Base
+namespace UFart.Desktop.Domain.Entity.Base
 {
     public class EntityBase
     {

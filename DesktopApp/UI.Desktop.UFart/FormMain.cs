@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UI.Desktop.UFart.FakeData;
-using UI.Desktop.UFart.UI.DTO;
+using UFart.Desktop.DataAccess.FakeData;
+using UFart.Desktop.UI.DTO;
+using UFart.Desktop.UI.FakeData;
 
 namespace UFart.Desktop.UI
 {
@@ -16,13 +17,13 @@ namespace UFart.Desktop.UI
     {
         private Brush tabPageTitleBrush = new SolidBrush(Color.Blue);
 
-        private FakeData fakeData;
+        private FakeDataBase fakeData;
 
         public FormMain()
         {
             InitializeComponent();
 
-            fakeData = new FakeData();
+            fakeData = new FakeDataBase();
 
             InitPageStatTotal();
 

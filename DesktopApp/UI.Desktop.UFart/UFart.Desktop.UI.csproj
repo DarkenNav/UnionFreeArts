@@ -52,7 +52,7 @@
     <Compile Include="DTO\PersonDTO.cs" />
     <Compile Include="DTO\PersonPageRankDTO.cs" />
     <Compile Include="DTO\SiteDTO.cs" />
-    <Compile Include="FakeData\FakeData.cs" />
+    <Compile Include="FakeData\FakeDataBase.cs" />
     <Compile Include="FakeData\FakePagesList.cs" />
     <Compile Include="FakeData\FakePersonPagesRankList.cs" />
     <Compile Include="FakeData\FakePersonsList.cs" />

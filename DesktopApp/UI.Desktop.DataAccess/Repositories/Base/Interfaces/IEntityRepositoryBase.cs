@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UI.Desktop.DataAccess.Repositories.Base.Interfaces
+namespace UFart.Desktop.DataAccess.Repositories.Base.Interfaces
 {
     public interface IEntityRepositoryBase<TEntity> where TEntity : class
     {

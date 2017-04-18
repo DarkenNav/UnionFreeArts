@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.DataAccess.Repositories.Base.Interfaces;
-using UI.Desktop.UFart.Domain.Entity;
+using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
+using UFart.Desktop.Domain.Entity;
 
-namespace UI.Desktop.DataAccess.Repositories
+namespace UFart.Desktop.DataAccess.Repositories
 {
     public interface IDataRepository
     {

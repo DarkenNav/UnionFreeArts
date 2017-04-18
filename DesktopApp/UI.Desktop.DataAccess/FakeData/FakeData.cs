@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UI.Desktop.UFart.FakeData
+namespace UFart.Desktop.DataAccess.FakeData
 {
     public class FakeData
     {

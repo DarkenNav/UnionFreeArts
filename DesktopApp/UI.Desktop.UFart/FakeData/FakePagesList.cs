@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.UFart.UI.DTO;
+using UFart.Desktop.UI.DTO;
 
-namespace UI.Desktop.UFart.FakeData
+namespace UFart.Desktop.UI.FakeData
 {
     public class FakePagesList
         : List<PageDTO>

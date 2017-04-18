@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,8 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UFart.Desktop.DataAccess.FakeData;
+using UFart.Desktop.DataAccess.Repositories;
+using UFart.Desktop.Domain.Entity;
 using UFart.Desktop.UI.DTO;
-using UFart.Desktop.UI.FakeData;
+using UFart.Desktop.UI.FakeDataDTO;
+using UI.Desktop.UFart.Mapping;
 
 namespace UFart.Desktop.UI
 {
@@ -17,17 +21,27 @@ namespace UFart.Desktop.UI
     {
         private Brush tabPageTitleBrush = new SolidBrush(Color.Blue);
 
-        private FakeDataBase fakeData;
+        private FakeDataDTOBase fakeData;
 
         public FormMain()
         {
             InitializeComponent();
 
-            fakeData = new FakeDataBase();
+            fakeData = new FakeDataDTOBase();
 
             InitPageStatTotal();
 
             UpdatelistViewStatTotal();
+
+            //Mapper.Initialize(cfg => MapperConfigurate.Initialize(cfg));
+            using (var repo = new DataRepository(new FakeDataBase()))
+            {
+                var sites = repo.Sites.GetAll();
+                var sitesDto =  Mapper.Map<IEnumerable<Site>,List<SiteDTO>>(sites);
+
+                var persons = repo.Persons.GetAll();
+                var personsDto = Mapper.Map<IEnumerable<Person>, List<PersonDTO>>(persons);
+            }
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace UFart.Desktop.DataAccess.Repositories.Base
 {
     public abstract class AbstractRepository
+        : IDisposable
     {
 
         public AbstractRepository()

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UFart.Desktop.DataAccess.FakeData;
 using UFart.Desktop.DataAccess.Repositories.Base;
 using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
+using UFart.Desktop.DataAccess.Repositories.Entities;
 using UFart.Desktop.Domain.Entity;
 
 namespace UFart.Desktop.DataAccess.Repositories
@@ -65,8 +66,8 @@ namespace UFart.Desktop.DataAccess.Repositories
             }
         }
 
-        IEntityRepositoryBase<PersonPageRank> personPagesRankRepository;
-        public IEntityRepositoryBase<PersonPageRank> PersonPagesRank
+        IPersonPageRankRepository personPagesRankRepository;
+        public IPersonPageRankRepository PersonPagesRank
         {
             get
             {
@@ -74,11 +75,11 @@ namespace UFart.Desktop.DataAccess.Repositories
                 {
                     if (fakeContext != null)
                     {
-                        personPagesRankRepository = new EntityRepositoryBase<PersonPageRank>(fakeContext.Ranks);
+                        personPagesRankRepository = new PersonPageRankRepository(fakeContext.Ranks);
                     }
                     else
                     {
-                        personPagesRankRepository = new EntityRepositoryBase<PersonPageRank>();
+                        personPagesRankRepository = new PersonPageRankRepository();
                     }
                 }
                 return personPagesRankRepository;

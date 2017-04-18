@@ -14,7 +14,7 @@ namespace UFart.Desktop.DataAccess.Repositories.Base
     public class EntityRepositoryBase<TEntity>
         : IEntityRepositoryBase<TEntity> where TEntity : class
     {
-        List<TEntity> fakeData;
+        internal List<TEntity> fakeData;
         public EntityRepositoryBase()
         {
 

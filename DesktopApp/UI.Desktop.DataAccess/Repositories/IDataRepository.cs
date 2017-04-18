@@ -14,6 +14,6 @@ namespace UFart.Desktop.DataAccess.Repositories
         IEntityRepositoryBase<Keyword> Keywords { get; }
         IEntityRepositoryBase<Site> Sites { get; }
         IEntityRepositoryBase<Page> Pages { get; }
-        IEntityRepositoryBase<PersonPageRank> PersonPagesRank { get; }
+        IPersonPageRankRepository PersonPagesRank { get; }
     }
 }

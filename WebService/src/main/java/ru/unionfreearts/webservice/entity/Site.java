@@ -1,8 +1,11 @@
 package ru.unionfreearts.webservice.entity;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.Set;
 
+@Component
 @Entity
 @Table(name = "sites")
 public class Site {

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.UFart.Domain.Entity.Base;
+using UFart.Desktop.Domain.Entity.Base;
 
-namespace UI.Desktop.UFart.Domain.Entity
+namespace UFart.Desktop.Domain.Entity
 {
     public class Person
         : EntityBase
     {
         public string Name { get; set; }
+
+        public ICollection<Keyword> Keywords { get; set; }
+        public ICollection<PersonPageRank> PersonPageRanks { get; set; }
     }
 }

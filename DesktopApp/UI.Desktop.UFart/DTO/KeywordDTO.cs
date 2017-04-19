@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.UFart.UI.DTO.Base;
+using UFart.Desktop.UI.DTO.Base;
 
-namespace UI.Desktop.UFart.UI.DTO
+namespace UFart.Desktop.UI.DTO
 {
     public class KeywordDTO
         : EntityBaseDTO

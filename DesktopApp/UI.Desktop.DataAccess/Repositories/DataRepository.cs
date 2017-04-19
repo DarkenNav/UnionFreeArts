@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.DataAccess.Repositories.Base;
-using UI.Desktop.DataAccess.Repositories.Base.Interfaces;
-using UI.Desktop.UFart.Domain.Entity;
+using UFart.Desktop.DataAccess.FakeData;
+using UFart.Desktop.DataAccess.Repositories.Base;
+using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
+using UFart.Desktop.DataAccess.Repositories.Entities;
+using UFart.Desktop.Domain.Entity;
 
-namespace UI.Desktop.DataAccess.Repositories
+namespace UFart.Desktop.DataAccess.Repositories
 {
     public class DataRepository
         : AbstractRepository, IDataRepository
@@ -17,13 +19,29 @@ namespace UI.Desktop.DataAccess.Repositories
         {
         }
 
+        private FakeDataBase fakeContext;
+        public DataRepository(FakeDataBase fakeContext)
+            : base()
+        {
+            this.fakeContext = fakeContext;
+        }
+
         IEntityRepositoryBase<Keyword> keywordsRepository;
         public IEntityRepositoryBase<Keyword> Keywords
         {
             get
             {
                 if (keywordsRepository == null)
-                    keywordsRepository = new EntityRepositoryBase<Keyword>();
+                {
+                    if (fakeContext != null)
+                    {
+                        keywordsRepository = new EntityRepositoryBase<Keyword>();
+                    }
+                    else
+                    {
+                        keywordsRepository = new EntityRepositoryBase<Keyword>();
+                    }
+                }
                 return keywordsRepository;
             }
         }
@@ -34,18 +52,36 @@ namespace UI.Desktop.DataAccess.Repositories
             get
             {
                 if (pagesRepository == null)
-                    pagesRepository = new EntityRepositoryBase<Page>();
+                {
+                    if (fakeContext != null)
+                    {
+                        pagesRepository = new EntityRepositoryBase<Page>(fakeContext.Pages);
+                    }
+                    else
+                    {
+                        pagesRepository = new EntityRepositoryBase<Page>();
+                    }
+                }
                 return pagesRepository;
             }
         }
 
-        IEntityRepositoryBase<PersonPageRank> personPagesRankRepository;
-        public IEntityRepositoryBase<PersonPageRank> PersonPagesRank
+        IPersonPageRankRepository personPagesRankRepository;
+        public IPersonPageRankRepository PersonPagesRank
         {
             get
             {
                 if (personPagesRankRepository == null)
-                    personPagesRankRepository = new EntityRepositoryBase<PersonPageRank>();
+                {
+                    if (fakeContext != null)
+                    {
+                        personPagesRankRepository = new PersonPageRankRepository(fakeContext.Ranks);
+                    }
+                    else
+                    {
+                        personPagesRankRepository = new PersonPageRankRepository();
+                    }
+                }
                 return personPagesRankRepository;
             }
         }
@@ -56,7 +92,16 @@ namespace UI.Desktop.DataAccess.Repositories
             get
             {
                 if (personsRepository == null)
-                    personsRepository = new EntityRepositoryBase<Person>();
+                {
+                    if (fakeContext != null)
+                    {
+                        personsRepository = new EntityRepositoryBase<Person>(fakeContext.Persons);
+                    }
+                    else
+                    {
+                        personsRepository = new EntityRepositoryBase<Person>();
+                    }
+                }
                 return personsRepository;
             }
         }
@@ -67,7 +112,16 @@ namespace UI.Desktop.DataAccess.Repositories
             get
             {
                 if (sitesRepository == null)
-                    sitesRepository = new EntityRepositoryBase<Site>();
+                {
+                    if (fakeContext != null)
+                    {
+                        sitesRepository = new EntityRepositoryBase<Site>(fakeContext.Sites);
+                    }
+                    else
+                    {
+                        sitesRepository = new EntityRepositoryBase<Site>();
+                    }
+                }
                 return sitesRepository;
             }
         }

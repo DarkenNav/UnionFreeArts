@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFart.Desktop.UI", "UI.Desktop.UFart\UFart.Desktop.UI.csproj", "{09F3DBC4-6C1C-424F-8144-FE332CCD0F20}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A73ACC59-6211-4986-9B3B-D0C91E65F2AF} = {A73ACC59-6211-4986-9B3B-D0C91E65F2AF}
+		{2173CCB4-4E8E-4570-A286-BFCAA440A3BC} = {2173CCB4-4E8E-4570-A286-BFCAA440A3BC}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFart.Desktop.DataAccess", "UI.Desktop.DataAccess\UFart.Desktop.DataAccess.csproj", "{A73ACC59-6211-4986-9B3B-D0C91E65F2AF}"

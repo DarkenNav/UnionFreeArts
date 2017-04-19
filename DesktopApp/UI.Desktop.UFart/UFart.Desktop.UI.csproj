@@ -56,11 +56,6 @@
     <Compile Include="DTO\PersonDTO.cs" />
     <Compile Include="DTO\PersonPageRankDTO.cs" />
     <Compile Include="DTO\SiteDTO.cs" />
-    <Compile Include="FakeDataDTO\FakeDataDTOBase.cs" />
-    <Compile Include="FakeDataDTO\FakePagesDTOList.cs" />
-    <Compile Include="FakeDataDTO\FakePersonPagesRankDTOList.cs" />
-    <Compile Include="FakeDataDTO\FakePersonsDTOList.cs" />
-    <Compile Include="FakeDataDTO\FakeSitesDTOList.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

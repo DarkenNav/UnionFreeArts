@@ -12,8 +12,6 @@ using UFart.Desktop.DataAccess.FakeData;
 using UFart.Desktop.DataAccess.Repositories;
 using UFart.Desktop.Domain.Entity;
 using UFart.Desktop.UI.DTO;
-using UFart.Desktop.UI.FakeDataDTO;
-using UI.Desktop.UFart.Mapping;
 
 namespace UFart.Desktop.UI
 {
@@ -21,24 +19,12 @@ namespace UFart.Desktop.UI
     {
         private Brush tabPageTitleBrush = new SolidBrush(Color.Blue);
 
-        private FakeDataDTOBase fakeData;
-
         public FormMain()
         {
             InitializeComponent();
 
-            fakeData = new FakeDataDTOBase();
-
             InitPageStatTotal();
             
-            //using (var repo = new DataRepository(new FakeDataBase()))
-            //{
-            //    var sites = repo.Sites.GetAll();
-            //    var sitesDto =  Mapper.Map<IEnumerable<Site>,List<SiteDTO>>(sites);
-
-            //    var persons = repo.Persons.GetAll();
-            //    var personsDto = Mapper.Map<IEnumerable<Person>, List<PersonDTO>>(persons);
-            //}
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
@@ -79,11 +65,14 @@ namespace UFart.Desktop.UI
 
         private void InitPageStatEveryDay()
         {
-            cbStatEveryDaySite.DataSource = fakeData.Sites;
-            cbStatEveryDaySite.DisplayMember = "Name";
+            using (var repo = new DataRepository(new FakeDataBase()))
+            {
+                cbStatEveryDaySite.DataSource = Mapper.Map<IEnumerable<Site>, List<SiteDTO>>(repo.Sites.GetAll());
+                cbStatEveryDaySite.DisplayMember = "Name";
 
-            cbStatEveryDayPerson.DataSource = fakeData.Persons;
-            cbStatEveryDayPerson.DisplayMember = "Name";
+                cbStatEveryDayPerson.DataSource = Mapper.Map<IEnumerable<Person>, List<PersonDTO>>(repo.Persons.GetAll());
+                cbStatEveryDayPerson.DisplayMember = "Name";
+            }
         }
 
         private void InitPageStatTotal()
@@ -92,7 +81,6 @@ namespace UFart.Desktop.UI
             {
                 cbStatTotalSite.DataSource = Mapper.Map<IEnumerable<Site>, List<SiteDTO>>(repo.Sites.GetAll());
             }
-            //cbStatTotalSite.DataSource = fakeData.Sites;
             cbStatTotalSite.DisplayMember = "Name";
 
             UpdatelistViewStatTotal();
@@ -111,24 +99,14 @@ namespace UFart.Desktop.UI
             {
                 var stats = repo.PersonPagesRank.GetBySite(selectedSite.ID);
                 var persons = repo.Persons.GetAll();
-                //var stats = fakeData.Ranks.FindAll(r => 
-                //    r.Page.SiteID == selectedSite.ID
-                //    && r.Page.LastScanDate != null
-                //);
 
                 listViewStatTotal.Items.Clear();
-//                foreach (var person in fakeData.Persons)
                 foreach (var person in persons)
                     {
                         listViewStatTotal.Items.Add(new ListViewItem(new string[] {
                         person.Name,
                         stats.Where(s => s.PersonID == person.ID).Sum(s => s.Rank).ToString()
                     }));
-
-                    //listViewStatTotal.Items.Add(new ListViewItem(new string[] {
-                    //    person.Name,
-                    //    stats.Where(s => s.PersonID == person.ID).Sum(s => s.Rank).ToString()
-                    //}));
                 }
             }
 
@@ -165,15 +143,6 @@ namespace UFart.Desktop.UI
                 labelStatEveryDayDateSumValue.Text = stats.Sum(s => s.Rank).ToString();
 
             }
-
-
-                //var stats1 = fakeData.Ranks.FindAll(r =>
-                //    (dateStatEveryDayDateFrom.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0
-                //        && dateStatEveryDayDateTo.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) >= 0)
-                //    && r.Page.SiteID == selectedSite.ID
-                //    && r.PersonID == selectedPerson.ID
-                //);
-
 
         }
     }

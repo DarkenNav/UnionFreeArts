@@ -1,4 +1,4 @@
-package ru.unionfreearts.ui;
+package ru.unionfreeart.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.unionfreearts.ufart.R;
+import ru.unionfreeart.ufart.R;
 
 /**
  * Created by NeoSvet on 16.04.2017.

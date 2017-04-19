@@ -1,4 +1,4 @@
-package ru.unionfreearts.ufart;
+package ru.unionfreeart.ufart;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -16,8 +16,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import ru.unionfreearts.ui.TableAdapter;
-import ru.unionfreearts.ui.TableRow;
+import ru.unionfreeart.ui.TableAdapter;
+import ru.unionfreeart.ui.TableRow;
 
 public class DailyFragment extends Fragment implements View.OnClickListener {
     private final int MIN_DAY = 1, MIN_MONTH = 3, MIN_YEAR = 2017;

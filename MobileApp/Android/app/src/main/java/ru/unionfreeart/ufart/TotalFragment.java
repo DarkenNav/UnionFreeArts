@@ -1,4 +1,4 @@
-package ru.unionfreearts.ufart;
+package ru.unionfreeart.ufart;
 
 import android.app.Fragment;
 import android.os.Bundle;

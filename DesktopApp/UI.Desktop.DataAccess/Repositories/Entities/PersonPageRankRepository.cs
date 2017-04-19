@@ -33,5 +33,25 @@ namespace UFart.Desktop.DataAccess.Repositories.Entities
             }
             throw new NotImplementedException();
         }
+
+        public IEnumerable<PersonPageRank> GetBy(
+            int? idSite = null, 
+            int? idPerson = null, 
+            DateTime? fromDate = null, 
+            DateTime? toDate = null, 
+            int? skip = null, 
+            int? take = null)
+        {
+            if (fakeData != null)
+            {
+                return fakeData.FindAll(f =>
+                    ((idSite.HasValue) ? f.Page.SiteID == idSite : true)
+                    && ((idPerson.HasValue) ? f.PersonID == idPerson : true)
+                    && (((fromDate.HasValue) ? fromDate.Value.Date.CompareTo((f.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0 : true)
+                        && ((toDate.HasValue) ? toDate.Value.Date.CompareTo((f.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0 : true))
+                    && f.Page.LastScanDate.HasValue);
+            }
+            throw new NotImplementedException();
+        }
     }
 }

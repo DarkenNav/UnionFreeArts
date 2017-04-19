@@ -144,23 +144,37 @@ namespace UFart.Desktop.UI
             var selectedSite = (SiteDTO)cbStatEveryDaySite.SelectedValue;
             var selectedPerson = (PersonDTO)cbStatEveryDayPerson.SelectedValue;
 
-            var stats = fakeData.Ranks.FindAll(r =>
-                (dateStatEveryDayDateFrom.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0
-                    && dateStatEveryDayDateTo.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) >= 0)
-                && r.Page.SiteID == selectedSite.ID
-                && r.PersonID == selectedPerson.ID
-            );
-
-            listViewStatEveryDay.Items.Clear();
-            foreach (var stat in stats)
+            using (var repo = new DataRepository(new FakeDataBase()))
             {
-                listViewStatEveryDay.Items.Add(new ListViewItem(new string[] {
+                var stats = repo.PersonPagesRank.GetBy(
+                    idSite: selectedSite.ID,
+                    idPerson: selectedPerson.ID, 
+                    fromDate: dateStatEveryDayDateFrom.Value,
+                    toDate: dateStatEveryDayDateTo.Value
+                    );
+
+                listViewStatEveryDay.Items.Clear();
+                foreach (var stat in stats)
+                {
+                    listViewStatEveryDay.Items.Add(new ListViewItem(new string[] {
                     stat.Page.LastScanDate?.ToString("dd.mm.yyyy"),
                     stat.Rank.ToString()
                 }));
+                }
+
+                labelStatEveryDayDateSumValue.Text = stats.Sum(s => s.Rank).ToString();
+
             }
 
-            labelStatEveryDayDateSumValue.Text = stats.Sum(s => s.Rank).ToString();
+
+                //var stats1 = fakeData.Ranks.FindAll(r =>
+                //    (dateStatEveryDayDateFrom.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0
+                //        && dateStatEveryDayDateTo.Value.Date.CompareTo((r.Page.LastScanDate ?? DateTime.MinValue).Date) >= 0)
+                //    && r.Page.SiteID == selectedSite.ID
+                //    && r.PersonID == selectedPerson.ID
+                //);
+
+
         }
     }
 

@@ -13,5 +13,13 @@ namespace UFart.Desktop.DataAccess.Repositories.Base.Interfaces
         : IEntityRepositoryBase<PersonPageRank>
     {
         IEnumerable<PersonPageRank> GetBySite(int idSite);
+
+        IEnumerable<PersonPageRank> GetBy(
+            int? idSite = null,
+            int? idPerson = null,
+            DateTime? fromDate = null,
+            DateTime? toDate = null,
+            int? skip = null,
+            int? take = null);
     }
 }

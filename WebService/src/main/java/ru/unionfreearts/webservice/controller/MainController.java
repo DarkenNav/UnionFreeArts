@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.unionfreearts.webservice.entity.Site;
+import ru.unionfreearts.webservice.repository.Repository;
+import ru.unionfreearts.webservice.repository.RepositoryFactory;
+import ru.unionfreearts.webservice.specifications.hibernate.HSAllSites;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +19,19 @@ import java.util.List;
 @Controller
 public class MainController {
 
+    Repository repository  = RepositoryFactory.getSiteRepository();;
+
     List<Site> list  = new ArrayList<Site>();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() {
-        list = getList();
+
+
+
+        //list = getList();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("sites", list);
+        HSAllSites allSites = new HSAllSites();
+        modelAndView.addObject("sites", repository.query(allSites));
         modelAndView.setViewName("admin/sites");
         return modelAndView;
     }
@@ -31,7 +40,9 @@ public class MainController {
     public ModelAndView checkUser(@ModelAttribute("newSite") Site site){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
-        list.add(site);
+        site.setId(1l);
+        repository.add(site);
+        //list.add(site);
         return modelAndView;
     }
 

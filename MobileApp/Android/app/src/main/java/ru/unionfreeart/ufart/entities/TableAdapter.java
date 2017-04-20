@@ -35,7 +35,7 @@ public class TableAdapter extends BaseAdapter {
 
     @Override
     public TableRow getItem(int i) {
-        return (data == null || i >= data.size()) ? null : data.get(i);
+        return (i >= data.size()) ? null : data.get(i);
     }
 
     @Override
@@ -55,5 +55,9 @@ public class TableAdapter extends BaseAdapter {
         TextView tvValue = (TextView) convertView.findViewById(R.id.valueColumn);
         tvValue.setText(data.get(position).getValue());
         return convertView;
+    }
+
+    public void clear() {
+        data.clear();
     }
 }

@@ -22,6 +22,12 @@ public class TableRepositories {
         helper = new TableHelper(context, table);
     }
 
+    public void clearTable() {
+        SQLiteDatabase dataBase = helper.getWritableDatabase();
+        dataBase.delete(table, null, null);
+        helper.close();
+    }
+
     public void loadTable() {
         SQLiteDatabase dataBase = helper.getReadableDatabase();
         Cursor cursor = dataBase.query(table, null, null, null, null, null, null);

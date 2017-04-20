@@ -1,4 +1,4 @@
-package ru.unionfreeart.ui;
+package ru.unionfreeart.ufart.entities;
 
 import android.content.Context;
 import android.view.LayoutInflater;

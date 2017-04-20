@@ -1,4 +1,4 @@
-package ru.unionfreeart.ui;
+package ru.unionfreeart.ufart.entities;
 
 /**
  * Created by NeoSvet on 16.04.2017.

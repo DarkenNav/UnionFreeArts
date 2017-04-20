@@ -16,13 +16,18 @@ import ru.unionfreeart.ufart.interfaces.IMasterTask;
  * Created by NeoSvet on 19.04.2017.
  */
 
-public class Task extends AsyncTask<ILoader, Integer, String> implements Serializable {
-    private Context context;
-    private IMasterTask master;
+public class LoaderTask extends AsyncTask<ILoader, Integer, String> implements Serializable {
+    private transient Context context;
+    private transient IMasterTask master;
 
-    public Task(Context context, IMasterTask master) {
-        this.context = context;
+    public LoaderTask(IMasterTask master) {
         this.master = master;
+        this.context = master.getContext();
+    }
+
+    public void newMaster(IMasterTask master) {
+        this.master = master;
+        this.context = master.getContext();
     }
 
     @Override

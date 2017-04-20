@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ListHelper extends SQLiteOpenHelper {
-    public static final String ITEM = "item";
+    public static final String NAME = "name", ID = "id";
     private String name;
 
     public ListHelper(Context context, String name) {
@@ -15,7 +15,9 @@ public class ListHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + name + " (" + ITEM + " text);");
+        db.execSQL("create table " + name + " ("
+                + ID + " integer primary key, "
+                + NAME + " text);");
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ru.unionfreearts.webservice.controller;
 
-import org.springframework.stereotype.Controller;
 import ru.unionfreearts.webservice.entity.Site;
 import ru.unionfreearts.webservice.repository.Repository;
 import ru.unionfreearts.webservice.repository.RepositoryFactory;
@@ -15,7 +14,6 @@ import java.util.List;
 /**
  * Created by Михалыч on 21.04.2017.
  */
-@Controller
 public class SiteController {
 
     Repository sites = RepositoryFactory.getSiteRepository();

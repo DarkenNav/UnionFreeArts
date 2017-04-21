@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Dolgov on 17.04.2017.
  */
-@Controller
+//@Controller
 public class MainController {
 
     Repository repository  = RepositoryFactory.getSitesRepository();

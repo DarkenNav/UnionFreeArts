@@ -7,6 +7,8 @@ public class RepositoryFactory {
     private static final EntityRepository<Person> personRepository = new EntityRepository<Person>(Person.class);
     private static final EntityRepository<Rank> rankRepository = new EntityRepository<Rank>(Rank.class);
     private static final EntityRepository<Keyword> keywordRepository = new EntityRepository<Keyword>(Keyword.class);
+    private static final FakeRepository<Site> sitesRepository = new FakeRepository<Site>(Site.class);
+
 
     public static EntityRepository<Site> getSiteRepository() {
         return siteRepository;
@@ -22,5 +24,9 @@ public class RepositoryFactory {
 
     public static EntityRepository<Keyword> getKeywordRepository() {
         return keywordRepository;
+    }
+
+    public static FakeRepository<Site> getSitesRepository(){
+        return sitesRepository;
     }
 }

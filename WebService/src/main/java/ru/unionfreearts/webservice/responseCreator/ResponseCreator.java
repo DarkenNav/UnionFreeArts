@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 /**
  * Created by Михалыч on 21.04.2017.
  */
-public class ResponceCreator {
+public class ResponseCreator {
 
     public static Response error(int status, int errorCode, String version) {
         Response.ResponseBuilder response = Response.status(status);

@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private NavigationView navigationView;
     private DrawerLayout drawer;
     private FragmentManager fragmentManager;
     private ProgressBar progressBar;
@@ -24,6 +25,15 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initUI();
+        restoreActivityState(savedInstanceState);
+    }
+
+    private void restoreActivityState(Bundle state) {
+        if (state == null) { //first open activity
+            setFragment(R.id.nav_total);
+        } else { //restore activity
+            //fragment will be restored automatically
+        }
     }
 
     private void initUI() {
@@ -35,7 +45,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
     }
@@ -58,8 +68,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        setFragment(item.getItemId());
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void setFragment(int id) {
+        if (navigationView != null)
+            navigationView.setCheckedItem(id);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        switch (item.getItemId()) {
+        switch (id) {
             case R.id.nav_total:
                 fragmentTransaction.replace(R.id.fragment, new TotalFragment());
                 break;
@@ -71,8 +89,5 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         fragmentTransaction.commit();
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

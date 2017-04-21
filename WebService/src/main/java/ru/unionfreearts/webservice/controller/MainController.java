@@ -19,16 +19,10 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    Repository repository  = RepositoryFactory.getSiteRepository();;
-
-    List<Site> list  = new ArrayList<Site>();
+    Repository repository  = RepositoryFactory.getSitesRepository();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() {
-
-
-
-        //list = getList();
         ModelAndView modelAndView = new ModelAndView();
         HSAllSites allSites = new HSAllSites();
         modelAndView.addObject("sites", repository.query(allSites));
@@ -36,22 +30,28 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/newSite")
-    public ModelAndView checkUser(@ModelAttribute("newSite") Site site){
+    @RequestMapping(value = "/newSite", method = RequestMethod.POST)
+    public ModelAndView addNewSite(@ModelAttribute("newSite") Site site){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         site.setId(1l);
         repository.add(site);
-        //list.add(site);
         return modelAndView;
     }
 
-    private List<Site> getList() {
-        //List<Site> list = new ArrayList<Site>();
-        list.add(new Site("http://yandex.ru"));
-        list.add(new Site("http://lenta.ru"));
-        list.add(new Site("http://google.ru"));
-        list.add(new Site("http://gazeta.ru"));
-        return list;
+    @RequestMapping(value = "/editSite", method = RequestMethod.POST)
+    public ModelAndView editSite(@ModelAttribute("editSite") Site site){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/removeSite", method = RequestMethod.DELETE)
+    public ModelAndView removeSite(@ModelAttribute("removeSite") Site site){
+        ModelAndView modelAndView = new ModelAndView();
+        site.setId(1l);
+        repository.remove(site);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
     }
 }

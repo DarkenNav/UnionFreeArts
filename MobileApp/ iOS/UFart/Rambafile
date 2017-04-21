@@ -1,0 +1,24 @@
+### Headers settings
+company: Union Free Arts
+
+### Xcode project settings
+project_name: UFart
+xcodeproj_path: UFart.xcodeproj
+prefix: UFA
+
+### Code generation settings section
+# The main project target name
+project_target: UFart
+
+# The file path for new modules
+project_file_path: UFart/Modules
+
+# The Xcode group path to new modules
+project_group_path: UFart/Modules
+
+### Dependencies settings section
+podfile_path: Podfile
+
+### Templates
+templates:
+- {name: swifty_viper}

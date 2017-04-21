@@ -1,101 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ru.unionfreeart.ufart.DailyFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvSite"
+    <include layout="@layout/content_daily" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/spSite"
-        android:layout_margin="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/site" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/options" />
 
-    <Spinner
-        android:id="@+id/spSite"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabOk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/tvSite" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ok" />
 
-    <TextView
-        android:id="@+id/tvPerson"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/spPerson"
-        android:layout_margin="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/person" />
-
-    <Spinner
-        android:id="@+id/spPerson"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spSite"
-        android:layout_toRightOf="@+id/tvPerson" />
-
-    <LinearLayout
-        android:id="@+id/pPeriod"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spPerson"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/period_from" />
-
-        <EditText
-            android:id="@+id/etStartDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="date" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/to" />
-
-        <EditText
-            android:id="@+id/etFinishDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:inputType="date" />
-
-        <Button
-            android:id="@+id/bApply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@android:string/ok" />
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/pPeriod"
-        android:background="@color/colorPrimary" />
-
-    <ListView
-        android:id="@+id/lvTable"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/view" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/lvTable"
-        android:background="@color/colorPrimary" />
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

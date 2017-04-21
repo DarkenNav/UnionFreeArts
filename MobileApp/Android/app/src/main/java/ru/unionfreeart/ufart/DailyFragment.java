@@ -41,7 +41,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
     private TableAdapter adTable;
     private EditText etStartDate, etFinishDate;
     private Date dateStart, dateFinish;
-    private View container;
+    private View container, pOptions, pList, fabOptions, fabOk;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -54,7 +54,8 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         initSites();
         initPersons();
         initTable();
-        initButton();
+        initPanels();
+        initButtons();
         initPreferences();
         initDates();
         restoreActivityState(savedInstanceState);
@@ -63,12 +64,15 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
 
     private void restoreActivityState(Bundle state) {
         if (state == null) { //first open fragment
+            pList.setVisibility(View.GONE);
+            pOptions.setVisibility(View.VISIBLE);
             TableRepositories table = new TableRepositories(activity, TableRepositories.TABLE_DAILY);
             table.clearTable();
             loader = new LoaderTask(DailyFragment.this);
             ILoader loaderSites = new SitesLoaderFake();
             ILoader loaderPersons = new PersonsLoaderFake();
             loader.execute(loaderSites, loaderPersons);
+            activity.setVisibleProgressBar(true);
         } else { //restory fragment
             loader = (LoaderTask) state.getSerializable(LOADER);
             if (loader == null || loader.getStatus() != AsyncTask.Status.RUNNING) {
@@ -94,23 +98,39 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         editor.apply();
     }
 
+    private void initPanels() {
+        pOptions = container.findViewById(R.id.pOptions);
+        pList = container.findViewById(R.id.pList);
+    }
+
     private void initPreferences() {
         pref = activity.getSharedPreferences(this.getClass().getSimpleName(), activity.MODE_PRIVATE);
         editor = pref.edit();
     }
 
-    private void initButton() {
-        container.findViewById(R.id.bApply).setOnClickListener(new View.OnClickListener() {
+    private void initButtons() {
+        fabOk = container.findViewById(R.id.fabOk);
+        fabOptions = container.findViewById(R.id.fabOptions);
+        fabOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (loader == null || loader.getStatus() != AsyncTask.Status.RUNNING) {
                     loader = new LoaderTask(DailyFragment.this);
                     ILoader loaderDaily = new DailyLoaderFake(
                             adSites.getId(spSite.getSelectedItemPosition()),
                             adPerson.getId(spPerson.getSelectedItemPosition()),
                             dateStart, dateFinish);
                     loader.execute(loaderDaily);
-                }
+                    fabOk.setVisibility(View.GONE);
+                    activity.setVisibleProgressBar(true);
+            }
+        });
+        fabOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fabOptions.setVisibility(View.GONE);
+                fabOk.setVisibility(View.VISIBLE);
+                pList.setVisibility(View.GONE);
+                pOptions.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -190,6 +210,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
 
     public void putResult(String msg) {
 
+        activity.setVisibleProgressBar(false);
+        pOptions.setVisibility(View.GONE);
+        fabOptions.setVisibility(View.VISIBLE);
+        pList.setVisibility(View.VISIBLE);
+
         openLists();
         openTable();
     }
@@ -198,8 +223,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         adTable.clear();
         TableRepositories table = new TableRepositories(activity, TableRepositories.TABLE_DAILY);
         table.loadTable();
-        if (table.getCount() == 0) //table is empty
+        if (table.getCount() == 0) { //table is empty
+            pOptions.setVisibility(View.VISIBLE);
             return;
+        }
+        pList.setVisibility(View.VISIBLE);
         adTable.addItem(new TableRow(getResources().getString(R.string.date),
                 getResources().getString(R.string.count_new_pages)));
         adTable.getItem(0).setBold(true);

@@ -30,7 +30,7 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/newSite")
+    @RequestMapping(value = "/newSite", method = RequestMethod.POST)
     public ModelAndView addSite(@ModelAttribute("newSite") Site site){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");

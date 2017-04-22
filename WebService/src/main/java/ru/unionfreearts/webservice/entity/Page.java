@@ -1,15 +1,12 @@
 package ru.unionfreearts.webservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "pages")
-public class Page implements Serializable {
+public class Page {
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -22,20 +19,8 @@ public class Page implements Serializable {
     private Date foundDateTime;
     @Column(name = "last_datetime")
     private Date lastDateTime;
-    @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "page")
     private Set<Rank> ranks;
-
-    public Page() {
-    }
-
-    public Page(Long id, String url, Site site, Date foundDateTime, Date lastDateTime) {
-        this.id = id;
-        this.url = url;
-        this.site = site;
-        this.foundDateTime = foundDateTime;
-        this.lastDateTime = lastDateTime;
-    }
 
     public Long getId() {
         return id;

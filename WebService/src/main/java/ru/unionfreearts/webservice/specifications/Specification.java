@@ -1,4 +1,4 @@
-package ru.unionfreearts.webservice.repository.specifications;
+package ru.unionfreearts.webservice.specifications;
 
 import java.util.List;
 

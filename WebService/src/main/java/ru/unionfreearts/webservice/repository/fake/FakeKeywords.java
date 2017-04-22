@@ -2,19 +2,16 @@ package ru.unionfreearts.webservice.repository.fake;
 
 import ru.unionfreearts.webservice.entity.Keyword;
 import ru.unionfreearts.webservice.entity.Person;
-import ru.unionfreearts.webservice.repository.Repository;
-import ru.unionfreearts.webservice.specifications.Specification;
+import ru.unionfreearts.webservice.repository.IRepository;
+import ru.unionfreearts.webservice.repository.specifications.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakeKeywords implements Repository<Keyword> {
+public class FakeKeywords implements IRepository<Keyword> {
     @Override
     public Keyword get(long id) {
-        Keyword keyword = new Keyword();
-        keyword.setId(id);
-        keyword.setName("Путина");
-        return keyword;
+        return new Keyword(1L, "Путина", new Person(1L, "Путин"));
     }
 
     @Override
@@ -34,13 +31,7 @@ public class FakeKeywords implements Repository<Keyword> {
 
     @Override
     public List<Keyword> query(Specification specification) {
-        Person person = new Person();
-        person.setName("Путин");
-        person.setId(1L);
-        Keyword keyword = new Keyword();
-        keyword.setId(1L);
-        keyword.setName("Путина");
-        keyword.setPerson(person);
+        Keyword keyword = new Keyword(1L, "Путина", new Person(1L, "Путин"));
         ArrayList<Keyword> keywords = new ArrayList<>();
         keywords.add(keyword);
         keywords.add(keyword);

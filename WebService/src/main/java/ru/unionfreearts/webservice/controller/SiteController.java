@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.unionfreearts.webservice.entity.Site;
-import ru.unionfreearts.webservice.repository.Repository;
-import ru.unionfreearts.webservice.repository.fake.FakeSites;
-import ru.unionfreearts.webservice.specifications.hibernate.HSAllSites;
+import ru.unionfreearts.webservice.repository.IRepository;
+import ru.unionfreearts.webservice.repository.Repositories;
+import ru.unionfreearts.webservice.repository.specifications.hibernate.HSAllSites;
 
 import java.util.List;
 
@@ -16,55 +16,55 @@ import java.util.List;
  * @author Dmitry Kostyukov
  */
 @RestController
-@RequestMapping(value = "/site")
+@RequestMapping(value = "api/admin/site")
 public class SiteController {
-    private Repository<Site> siteRepository = new FakeSites();
+    private IRepository<Site> siteIRepository = Repositories.getSiteFakeRepository();
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Site> get(@PathVariable Long id) {
-        Site site = siteRepository.get(id);
+        Site site = siteIRepository.get(id);
         if (site != null) {
-            return new ResponseEntity<Site>(site, HttpStatus.OK);
+            return new ResponseEntity<>(site, HttpStatus.OK);
         }
-        return new ResponseEntity<Site>(site, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(site, HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Site>> getAll() {
-        List<Site> siteList = siteRepository.query(new HSAllSites());
+        List<Site> siteList = siteIRepository.query(new HSAllSites());
         if (siteList != null) {
-            return new ResponseEntity<List<Site>>(siteList, HttpStatus.OK);
+            return new ResponseEntity<>(siteList, HttpStatus.OK);
         }
-        return new ResponseEntity<List<Site>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Site> add(@RequestBody Site site) {
         System.out.println(site.getId()+" "+site.getName());
-        if (siteRepository.add(site)) {
-            return new ResponseEntity<Site>(site, HttpStatus.CREATED);
+        if (siteIRepository.add(site)) {
+            return new ResponseEntity<>(site, HttpStatus.CREATED);
         }
-        return new ResponseEntity<Site>(site, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(site, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Site> update(@RequestBody Site site){
-        if (siteRepository.set(site)) {
-            return new ResponseEntity<Site>(site, HttpStatus.OK);
+        if (siteIRepository.set(site)) {
+            return new ResponseEntity<>(site, HttpStatus.OK);
         }
-        return new ResponseEntity<Site>(site, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(site, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<Site> remove(@RequestBody Site site){
-        if (siteRepository.remove(site)) {
-            return new ResponseEntity<Site>(site, HttpStatus.OK);
+        if (siteIRepository.remove(site)) {
+            return new ResponseEntity<>(site, HttpStatus.OK);
         }
-        return new ResponseEntity<Site>(site, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(site, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

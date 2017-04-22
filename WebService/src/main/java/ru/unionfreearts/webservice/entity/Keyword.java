@@ -1,10 +1,13 @@
 package ru.unionfreearts.webservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "keywords")
-public class Keyword {
+public class Keyword implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -13,6 +16,15 @@ public class Keyword {
     private String name;
     @ManyToOne(targetEntity = Person.class)
     private Person person;
+
+    public Keyword() {
+    }
+
+    public Keyword(Long id, String name, Person person) {
+        this.id = id;
+        this.name = name;
+        this.person = person;
+    }
 
     public Long getId() {
         return id;

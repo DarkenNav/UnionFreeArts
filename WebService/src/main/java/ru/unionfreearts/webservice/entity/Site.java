@@ -1,27 +1,31 @@
 package ru.unionfreearts.webservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Component
 @Entity
 @Table(name = "sites")
-public class Site {
+public class Site implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
+    @JsonIgnore
     @OneToMany(targetEntity = Page.class, mappedBy = "site")
     private Set<Page> pages;
 
     public Site() {
     }
 
-    public Site(String name) {
+    public Site(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 

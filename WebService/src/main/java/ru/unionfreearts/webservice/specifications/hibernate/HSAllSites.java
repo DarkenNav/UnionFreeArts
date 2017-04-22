@@ -14,11 +14,17 @@ import java.util.List;
 public class HSAllSites implements Specification<Site> {
     public List<Site> toList() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Site> criteriaQuery = criteriaBuilder.createQuery(Site.class);
-        Root<Site> rank = criteriaQuery.from(Site.class);
-        criteriaQuery.select(rank);
-        TypedQuery<Site> typedQuery = session.createQuery(criteriaQuery);
-        return typedQuery.getResultList();
+        try {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Site> criteriaQuery = criteriaBuilder.createQuery(Site.class);
+            Root<Site> rank = criteriaQuery.from(Site.class);
+            criteriaQuery.select(rank);
+            TypedQuery<Site> typedQuery = session.createQuery(criteriaQuery);
+            return typedQuery.getResultList();
+        } catch (Exception e) {
+            return null;
+        } finally {
+            session.close();
+        }
     }
 }

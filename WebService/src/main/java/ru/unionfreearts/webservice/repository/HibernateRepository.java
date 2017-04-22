@@ -1,12 +1,12 @@
 package ru.unionfreearts.webservice.repository;
 
-import ru.unionfreearts.webservice.specifications.Specification;
+import ru.unionfreearts.webservice.repository.specifications.Specification;
 import ru.unionfreearts.webservice.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.util.List;
 
-public class HibernateRepository<T> implements Repository<T> {
+public class HibernateRepository<T> implements IRepository<T> {
     private Class<T> tClass;
 
     public HibernateRepository(Class<T> tClass) {

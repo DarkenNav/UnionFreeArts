@@ -1,8 +1,8 @@
-package ru.unionfreearts.webservice.specifications.hibernate;
+package ru.unionfreearts.webservice.repository.specifications.hibernate;
 
 import org.hibernate.Session;
 import ru.unionfreearts.webservice.entity.Site;
-import ru.unionfreearts.webservice.specifications.Specification;
+import ru.unionfreearts.webservice.repository.specifications.Specification;
 import ru.unionfreearts.webservice.util.HibernateUtil;
 
 import javax.persistence.TypedQuery;

@@ -1,7 +1,7 @@
-package ru.unionfreearts.webservice.specifications.hibernate;
+package ru.unionfreearts.webservice.repository.specifications.hibernate;
 
 import ru.unionfreearts.webservice.entity.Person;
-import ru.unionfreearts.webservice.specifications.Specification;
+import ru.unionfreearts.webservice.repository.specifications.Specification;
 import ru.unionfreearts.webservice.util.HibernateUtil;
 import org.hibernate.Session;
 

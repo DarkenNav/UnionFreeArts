@@ -1,10 +1,10 @@
 package ru.unionfreearts.webservice.repository;
 
-import ru.unionfreearts.webservice.specifications.Specification;
+import ru.unionfreearts.webservice.repository.specifications.Specification;
 
 import java.util.List;
 
-public interface Repository<T> {
+public interface IRepository<T> {
     T get(long id);
     boolean add(T entity);
     boolean set(T entity);

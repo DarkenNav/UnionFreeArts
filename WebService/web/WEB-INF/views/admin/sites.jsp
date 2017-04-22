@@ -29,6 +29,12 @@
 	<button>Submit</button>
 
 </form>
+<form method="delete" modelAttribute="removeSite" action="/removeSite">
+
+	Name: <input  type = "text" name = "name" value = "${site.name}"/><br/>
+	<button>Submit</button>
+
+</form>
 
 </body>
 

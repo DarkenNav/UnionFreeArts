@@ -19,16 +19,10 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    Repository repository  = RepositoryFactory.getSiteRepository();;
-
-    List<Site> list  = new ArrayList<Site>();
+    Repository repository  = RepositoryFactory.getSitesRepository();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView main() {
-
-
-
-        //list = getList();
         ModelAndView modelAndView = new ModelAndView();
         HSAllSites allSites = new HSAllSites();
         modelAndView.addObject("sites", repository.query(allSites));
@@ -37,21 +31,20 @@ public class MainController {
     }
 
     @RequestMapping(value = "/newSite")
-    public ModelAndView checkUser(@ModelAttribute("newSite") Site site){
+    public ModelAndView addSite(@ModelAttribute("newSite") Site site){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         site.setId(1l);
         repository.add(site);
-        //list.add(site);
         return modelAndView;
     }
 
-    private List<Site> getList() {
-        //List<Site> list = new ArrayList<Site>();
-        list.add(new Site("http://yandex.ru"));
-        list.add(new Site("http://lenta.ru"));
-        list.add(new Site("http://google.ru"));
-        list.add(new Site("http://gazeta.ru"));
-        return list;
+    @RequestMapping(value = "/removeSite", method = RequestMethod.DELETE)
+    public ModelAndView removeSite(@ModelAttribute("removeSite") Site site){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/");
+        site.setId(1l);
+        repository.remove(site);
+        return modelAndView;
     }
 }

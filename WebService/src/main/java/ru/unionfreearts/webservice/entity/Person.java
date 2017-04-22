@@ -25,7 +25,8 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String name) {
+    public Person(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 

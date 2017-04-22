@@ -24,7 +24,8 @@ public class Site implements Serializable {
     public Site() {
     }
 
-    public Site(String name) {
+    public Site(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 

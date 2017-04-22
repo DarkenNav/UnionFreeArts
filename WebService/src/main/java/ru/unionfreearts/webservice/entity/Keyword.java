@@ -14,9 +14,17 @@ public class Keyword implements Serializable {
     private Long id;
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
-    @JsonIgnore
     @ManyToOne(targetEntity = Person.class)
     private Person person;
+
+    public Keyword() {
+    }
+
+    public Keyword(Long id, String name, Person person) {
+        this.id = id;
+        this.name = name;
+        this.person = person;
+    }
 
     public Long getId() {
         return id;

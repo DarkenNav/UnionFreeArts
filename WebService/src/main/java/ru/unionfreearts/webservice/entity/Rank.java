@@ -16,6 +16,15 @@ public class Rank implements Serializable {
     @Column(name = "rank")
     private Integer rank;
 
+    public Rank() {
+    }
+
+    public Rank(Person person, Page page, Integer rank) {
+        this.person = person;
+        this.page = page;
+        this.rank = rank;
+    }
+
     public Person getPerson() {
         return person;
     }

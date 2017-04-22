@@ -26,6 +26,17 @@ public class Page implements Serializable {
     @OneToMany(targetEntity = Rank.class, mappedBy = "page")
     private Set<Rank> ranks;
 
+    public Page() {
+    }
+
+    public Page(Long id, String url, Site site, Date foundDateTime, Date lastDateTime) {
+        this.id = id;
+        this.url = url;
+        this.site = site;
+        this.foundDateTime = foundDateTime;
+        this.lastDateTime = lastDateTime;
+    }
+
     public Long getId() {
         return id;
     }

@@ -3,24 +3,24 @@ package ru.unionfreearts.webservice.repository;
 import ru.unionfreearts.webservice.entity.*;
 
 public class RepositoryFactory {
-    private static final EntityRepository<Site> siteRepository = new EntityRepository<Site>(Site.class);
-    private static final EntityRepository<Person> personRepository = new EntityRepository<Person>(Person.class);
-    private static final EntityRepository<Rank> rankRepository = new EntityRepository<Rank>(Rank.class);
-    private static final EntityRepository<Keyword> keywordRepository = new EntityRepository<Keyword>(Keyword.class);
+    private static final HibernateRepository<Site> siteRepository = new HibernateRepository<Site>(Site.class);
+    private static final HibernateRepository<Person> personRepository = new HibernateRepository<Person>(Person.class);
+    private static final HibernateRepository<Rank> rankRepository = new HibernateRepository<Rank>(Rank.class);
+    private static final HibernateRepository<Keyword> keywordRepository = new HibernateRepository<Keyword>(Keyword.class);
 
-    public static EntityRepository<Site> getSiteRepository() {
+    public static HibernateRepository<Site> getSiteRepository() {
         return siteRepository;
     }
 
-    public static EntityRepository<Person> getPersonRepository() {
+    public static HibernateRepository<Person> getPersonRepository() {
         return personRepository;
     }
 
-    public static EntityRepository<Rank> getRankRepository() {
+    public static HibernateRepository<Rank> getRankRepository() {
         return rankRepository;
     }
 
-    public static EntityRepository<Keyword> getKeywordRepository() {
+    public static HibernateRepository<Keyword> getKeywordRepository() {
         return keywordRepository;
     }
 }

@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "api/admin/keyword")
+@RequestMapping(value = "/keyword")
 public class KeywordController {
     private IRepository<Keyword> keywordIRepository = Repositories.getKeywordFakeRepository();
 

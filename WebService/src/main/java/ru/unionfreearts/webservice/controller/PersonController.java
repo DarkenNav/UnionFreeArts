@@ -12,7 +12,7 @@ import ru.unionfreearts.webservice.repository.specifications.hibernate.HSAllSite
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/admin/person")
+@RequestMapping(value = "/person")
 public class PersonController {
     private IRepository<Person> personIRepository = Repositories.getPersonFakeRepository();
 

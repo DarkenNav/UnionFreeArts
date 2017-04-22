@@ -16,7 +16,7 @@ import java.util.List;
  * @author Dmitry Kostyukov
  */
 @RestController
-@RequestMapping(value = "api/admin/site")
+@RequestMapping(value = "/site")
 public class SiteController {
     private IRepository<Site> siteIRepository = Repositories.getSiteFakeRepository();
 

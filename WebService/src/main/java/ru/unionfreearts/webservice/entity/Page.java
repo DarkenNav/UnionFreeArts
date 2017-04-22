@@ -1,12 +1,15 @@
 package ru.unionfreearts.webservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "pages")
-public class Page {
+public class Page implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -19,6 +22,7 @@ public class Page {
     private Date foundDateTime;
     @Column(name = "last_datetime")
     private Date lastDateTime;
+    @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "page")
     private Set<Rank> ranks;
 

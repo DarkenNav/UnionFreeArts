@@ -1,15 +1,18 @@
 package ru.unionfreearts.webservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "person_page_rank")
-public class Rank {
+public class Rank implements Serializable {
     @ManyToOne(targetEntity = Person.class)
     private Person person;
+    @JsonIgnore
     @ManyToOne(targetEntity = Page.class)
     private Page page;
-    @Id
     @Column(name = "rank")
     private Integer rank;
 

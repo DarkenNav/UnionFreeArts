@@ -28,5 +28,14 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     compile 'com.android.support:support-v4:25.3.1'
+
+    /* REST API consumer */
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.0.2'
+
+    /* Retrofit will use ok-http if present */
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+
     testCompile 'junit:junit:4.12'
 }

@@ -200,20 +200,26 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         DatePickerDialog datePickerDialog;
         if (view.getId() == R.id.etStartDate) {
             datePickerDialog = new DatePickerDialog(activity, dateStartListener,
-                    dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
+                    getYearFromDate(dateStart), dateStart.getMonth(), dateStart.getDate());
+            Date min = new Date(getYearForDate(MIN_YEAR), MIN_MONTH, MIN_DAY);
+            datePickerDialog.getDatePicker().setMinDate(min.getTime());
+            datePickerDialog.getDatePicker().setMaxDate(dateFinish.getTime());
         } else { //if (view.getId() == R.id.etFinishDate)
             datePickerDialog = new DatePickerDialog(activity, dateFinishListener,
-                    dateFinish.getYear(), dateFinish.getMonth(), dateFinish.getDay());
+                    getYearFromDate(dateFinish), dateFinish.getMonth(), dateFinish.getDate());
+            datePickerDialog.getDatePicker().setMinDate(dateStart.getTime());
+            Date max = new Date();
+            datePickerDialog.getDatePicker().setMaxDate(max.getTime());
         }
-        Date max = new Date();
-        datePickerDialog.getDatePicker().setMaxDate(max.getTime());
-        Date min = new Date(getYearForDate(MIN_YEAR), MIN_MONTH, MIN_DAY);
-        datePickerDialog.getDatePicker().setMinDate(min.getTime());
         datePickerDialog.show();
     }
 
     private int getYearForDate(int year) {
         return year - 1900;
+    }
+
+    private int getYearFromDate(Date date) {
+        return date.getYear() + 1900;
     }
 
     public Context getContext() {

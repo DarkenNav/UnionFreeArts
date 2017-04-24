@@ -12,7 +12,7 @@ import ru.unionfreeart.ufart.database.ListHelper;
 import ru.unionfreeart.ufart.entities.ListItem;
 
 public class ListRepositories {
-    public static final String LIST_SITES = "sites", LIST_PERSONS = "persons";
+    public static final String LIST_SITES = "site", LIST_PERSONS = "person";
     private String list;
     private ListHelper helper;
     private List<ListItem> items = new ArrayList<ListItem>();

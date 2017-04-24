@@ -24,7 +24,6 @@ public class StatController {
             @RequestParam(value = "siteId") Long siteId,
             @RequestParam(value = "startDate") Long startDate,
             @RequestParam(value = "finishDate") Long finishDate) {
-        System.out.println(personId+" "+siteId+" "+startDate+" "+finishDate);
         List<Rank> ranks = repository.query(new HSAllRanks());
         List<JSONObject> jsonObjects = new ArrayList<>();
         for (Rank rank : ranks) {

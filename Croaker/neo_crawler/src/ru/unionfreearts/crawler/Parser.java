@@ -8,17 +8,22 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Pattern;
+
+import ru.unionfreearts.crawler.entities.Keyword;
+import ru.unionfreearts.crawler.entities.Page;
+import ru.unionfreearts.crawler.entities.Rank;
 
 public class Parser {
 	private final String DISALLOW = "Disallow", PAGE = "page", HREF = " href";
 	private String site;
-	private ArrayList<String> disallow;
-	private ArrayList<Keyword> keywords;
-	private boolean complete_download = false, complete_parse = true;
-	private HashMap<Integer, Integer> persons; // person id, count
-	private int site_id, count_page = 0, current_page = 0, index_download = 0;
+	private ArrayList<String> disallow = new ArrayList<String>();
+	private ArrayList<Keyword> keywords = new ArrayList<Keyword>();
+	private ArrayList<Rank> ranks = new ArrayList<Rank>();
+	private ArrayList<Integer> persons = new ArrayList<Integer>();
+	private ArrayList<Page> pages = new ArrayList<Page>();
+	private boolean complete_download = false;
+	private int site_id, count_page = 0, index_download = 0;
 
 	public Parser(int site_id) {
 		this.site_id = site_id;
@@ -26,137 +31,135 @@ public class Parser {
 
 	public void start() throws Exception {
 		site = getSite(site_id);
-		System.out.println("start parse site: " + site);
+		System.out.println("start parsing site: " + site);
 		parseRobotsFile();
 		loadDisallowList();
 		loadPersonsList();
 		loadKeywordsList();
 		downloadPage(site);
-		addLinksFromPage(current_page);
-		countRankOnPage(current_page);
-		downloadPagesFromList();
+		System.out.println("parsing page #0");
+		addLinksFromPage(0);
+		startDownloadThread();
+		countRankOnPage(0);
+		getFile(PAGE + 0).delete();
+		startParseThread();
 	}
 
 	private String getSite(int id) {
 		return "https://lenta.ru";
 	}
 
-	private void downloadPagesFromList() {
+	private void startDownloadThread() {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					System.out.println("downloadPagesFromList: " + index_download);
-					ArrayList<String> pages = getPagesList(index_download);
-					if (pages.size() == 0) {
-						complete_download = true;
-						checkFinish();
-						return;
-					}
-					index_download += pages.size();
-					for (int i = 0; i < pages.size(); i++) {
-						downloadPage(site + pages.get(i));
-						current_page++;
-						if (complete_parse)
-							parsePage(current_page);						
+					int i = 0;
+					while (i < pages.size()) {
+						downloadPage(site + pages.get(i).getLink());
 						if (count_page == 10) { // tut temp limit
 							complete_download = true;
-							checkFinish();
 							return;
 						}
+						i++;
 					}
-					downloadPagesFromList();
 				} catch (Exception e) {
-					System.out.println("ERROR (downloadPagesFromList): " + e.getMessage());
+					complete_download = true;
+					System.out.println("ERROR (startDownloadThread): " + e.getMessage());
 				}
+				complete_download = true;
 			}
 		}).start();
 	}
 
-	private void parsePage(final int start_index) {
+	private void startParseThread() {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					int i = start_index;
+					int i = 1;
 					File f = getFile(PAGE + i);
-					while (f.exists()) {
-						System.out.println("parsePage: " + i);
-						addLinksFromPage(i);
-						countRankOnPage(i);
-						f.delete();
-						i++;
-						f = getFile(PAGE + i);
+					while (true) {
+						if (f.exists() && i < count_page) {
+							System.out.println("parsing page #" + i);
+							addLinksFromPage(i);
+							countRankOnPage(i);
+							f.delete();
+							i++;
+							f = getFile(PAGE + i);
+						} else {
+							if(complete_download)
+								break;
+							System.out.println("sleep parse");
+							Thread.sleep(500);
+						}
 					}
 				} catch (Exception e) {
-					System.out.println("ERROR (parsePage): " + e.getMessage());
+					System.out.println("ERROR (startParseThread): " + e.getMessage());
 				}
-				complete_parse = true;
-				checkFinish();
+				saveRanks();
 			}
 		}).start();
 	}
 
-	private void checkFinish() {
-		if (complete_download && complete_parse) {
-			for (int i : persons.keySet()) {
-				System.out.println("person #" + i + ": " + persons.get(i));
-			}
+	private void saveRanks() {
+		for (int i = 0; i < ranks.size(); i++) {
+			System.out.println("person id" + ranks.get(i).getPersonId() + " on page id" + ranks.get(i).getPageId() + ": "
+					+ ranks.get(i).getCount());
 		}
-	}
-
-	private ArrayList<String> getPagesList(int index) throws Exception {
-		ArrayList<String> list = new ArrayList<String>();
-		File f = getFile("pages.txt");
-		if (!f.exists())
-			return list;
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		String line;		
-		int i = 0;
-		while ((line = br.readLine()) != null) {
-			if (i == index)
-				list.add(line);
-			else
-				i++;
-		}
-		br.close();
-		return list;
 	}
 
 	private void loadPersonsList() {
-		persons = new HashMap<Integer, Integer>(); // person id, count
-		persons.put(1, 0); // "Путин"
-		persons.put(2, 0); // "Медведев"
+		persons.add(1);
+		persons.add(2);
 	}
 
 	private void loadKeywordsList() {
-		keywords = new ArrayList<Keyword>();
 		keywords.add(new Keyword(1, "Путин"));
 		keywords.add(new Keyword(2, "Медведев"));
 	}
 
 	private void countRankOnPage(int index_page) throws Exception {
+		addRanksForNewPage(index_page);
 		BufferedReader br = new BufferedReader(new FileReader(getFile(PAGE + index_page)));
 		String line;
-		int k, n;
+		StringBuilder page = new StringBuilder();
 		while ((line = br.readLine()) != null) {
-			for (int i = 0; i < keywords.size(); i++) {
-				k = persons.get(keywords.get(i).getId());
-				n = line.indexOf(keywords.get(i).getWord());
-				while (n > -1) { // while - if several keyword on the line
-					k++;
-					n = line.indexOf(keywords.get(i).getWord(), n + 1);
-				}
-				persons.put(keywords.get(i).getId(), k);
-			}
+			page.append(line);
 		}
 		br.close();
+		int n, k;
+		for (int i = 0; i < keywords.size(); i++) {
+			n = page.indexOf(keywords.get(i).getWord());
+			k = 0;
+			while (n > -1) {
+				k++;
+				n = page.indexOf(keywords.get(i).getWord(), n + 1);
+			}
+			addRank(k, pages.get(index_page).getId(), keywords.get(i).getPersonId());
+		}
+	}
+
+	private void addRank(int count, int page_id, int person_id) {
+		for (int i = 0; i < ranks.size(); i++) {
+			if (ranks.get(i).isNeed(page_id, person_id)) {
+				ranks.get(i).addCount(count);
+				break;
+			}
+		}
+	}
+
+	private int addRanksForNewPage(int index_page) {
+		int start_index = ranks.size();
+		for (int i = 0; i < persons.size(); i++) {
+			ranks.add(new Rank(pages.get(index_page).getId(), persons.get(i)));
+		}
+		return start_index;
 	}
 
 	private void downloadPage(String link) throws Exception {
-		System.out.println("start downloadPage (" + count_page + "): " + link);
+		System.out.println("start download page #" + count_page + ": " + link);
 		URL url = new URL(link);
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(getFile(PAGE + count_page)));
-		count_page++;
 		String line;
 		boolean isBody = false;
 		while ((line = br.readLine()) != null) {
@@ -175,7 +178,8 @@ public class Parser {
 		}
 		br.close();
 		bw.close();
-		System.out.println("finish downloadPage (" + (count_page-1) + "): " + link);
+		System.out.println("finish download page #" + count_page + ": " + link);
+		count_page++;
 	}
 
 	private void addLinksFromPage(int index_page) throws Exception {
@@ -197,7 +201,7 @@ public class Parser {
 				if (!isDisallow(link)) {
 					if (link.contains(site)) // remove http://site.ru
 						link = link.substring(site.length());
-					if (link.length() > 1 && !containsLink(link)) {
+					if (link.length() > 1) {
 						addLink(link);
 					}
 				}
@@ -208,26 +212,16 @@ public class Parser {
 	}
 
 	private void addLink(String link) throws Exception {
-		System.out.println("add: " + link);
-		BufferedWriter bw = new BufferedWriter(new FileWriter(getFile("pages.txt"), true));
-		bw.write(link);
-		bw.newLine();
-		bw.close();
+		if (!containsLink(link))
+			pages.add(new Page(link, pages.size() + 1, site_id));
 	}
 
 	private boolean containsLink(String link) throws Exception {
-		File f = getFile("pages.txt");
-		if (!f.exists())
-			return false;
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		String line;
-		while ((line = br.readLine()) != null) {
-			if (line.equals(link)) {
-				br.close();
+		for (int i = 0; i < pages.size(); i++) {
+			if (pages.get(i).getLink().equals(link)) {
 				return true;
 			}
 		}
-		br.close();
 		return false;
 	}
 
@@ -274,7 +268,6 @@ public class Parser {
 	}
 
 	private void loadDisallowList() throws Exception {
-		disallow = new ArrayList<String>();
 		BufferedReader br = new BufferedReader(new FileReader(getFile(DISALLOW)));
 		String line;
 		while ((line = br.readLine()) != null) {

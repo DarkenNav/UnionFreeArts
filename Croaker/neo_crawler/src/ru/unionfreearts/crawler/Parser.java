@@ -18,24 +18,19 @@ public class Parser {
 	private final String DISALLOW = "Disallow", PAGE = "page", HREF = " href";
 	private String site;
 	private ArrayList<String> disallow = new ArrayList<String>();
-	private ArrayList<Keyword> keywords = new ArrayList<Keyword>();
-	private ArrayList<Rank> ranks = new ArrayList<Rank>();
-	private ArrayList<Integer> persons = new ArrayList<Integer>();
-	private ArrayList<Page> pages = new ArrayList<Page>();
 	private boolean complete_download = false;
-	private int site_id, count_page = 0, index_download = 0;
+	private int count_page = 0;
+	private DBHandler base;
 
 	public Parser(int site_id) {
-		this.site_id = site_id;
+		base = new DBHandler("admin", site_id);
+		site = base.getSite();
 	}
 
 	public void start() throws Exception {
-		site = getSite(site_id);
 		System.out.println("start parsing site: " + site);
 		parseRobotsFile();
 		loadDisallowList();
-		loadPersonsList();
-		loadKeywordsList();
 		downloadPage(site);
 		System.out.println("parsing page #0");
 		addLinksFromPage(0);
@@ -45,17 +40,13 @@ public class Parser {
 		startParseThread();
 	}
 
-	private String getSite(int id) {
-		return "https://lenta.ru";
-	}
-
 	private void startDownloadThread() {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
 					int i = 0;
-					while (i < pages.size()) {
-						downloadPage(site + pages.get(i).getLink());
+					while (i < base.countPages()) {
+						downloadPage(site + base.getLink(i));
 						if (count_page == 10) { // tut temp limit
 							complete_download = true;
 							return;
@@ -86,7 +77,7 @@ public class Parser {
 							i++;
 							f = getFile(PAGE + i);
 						} else {
-							if(complete_download)
+							if (complete_download)
 								break;
 							System.out.println("sleep parse");
 							Thread.sleep(500);
@@ -95,30 +86,13 @@ public class Parser {
 				} catch (Exception e) {
 					System.out.println("ERROR (startParseThread): " + e.getMessage());
 				}
-				saveRanks();
+				base.saveRanks();
 			}
 		}).start();
-	}
-
-	private void saveRanks() {
-		for (int i = 0; i < ranks.size(); i++) {
-			System.out.println("person id" + ranks.get(i).getPersonId() + " on page id" + ranks.get(i).getPageId() + ": "
-					+ ranks.get(i).getCount());
-		}
-	}
-
-	private void loadPersonsList() {
-		persons.add(1);
-		persons.add(2);
-	}
-
-	private void loadKeywordsList() {
-		keywords.add(new Keyword(1, "Путин"));
-		keywords.add(new Keyword(2, "Медведев"));
-	}
+	}	
 
 	private void countRankOnPage(int index_page) throws Exception {
-		addRanksForNewPage(index_page);
+		base.addRanksForNewPage(index_page);
 		BufferedReader br = new BufferedReader(new FileReader(getFile(PAGE + index_page)));
 		String line;
 		StringBuilder page = new StringBuilder();
@@ -127,32 +101,15 @@ public class Parser {
 		}
 		br.close();
 		int n, k;
-		for (int i = 0; i < keywords.size(); i++) {
-			n = page.indexOf(keywords.get(i).getWord());
+		for (int i = 0; i < base.countKeywords(); i++) {
+			n = page.indexOf(base.getWord(i));
 			k = 0;
 			while (n > -1) {
 				k++;
-				n = page.indexOf(keywords.get(i).getWord(), n + 1);
+				n = page.indexOf(base.getWord(i), n + 1);
 			}
-			addRank(k, pages.get(index_page).getId(), keywords.get(i).getPersonId());
+			base.addRank(k, base.getPageId(index_page), base.getPersonIdByKeyword(i));
 		}
-	}
-
-	private void addRank(int count, int page_id, int person_id) {
-		for (int i = 0; i < ranks.size(); i++) {
-			if (ranks.get(i).isNeed(page_id, person_id)) {
-				ranks.get(i).addCount(count);
-				break;
-			}
-		}
-	}
-
-	private int addRanksForNewPage(int index_page) {
-		int start_index = ranks.size();
-		for (int i = 0; i < persons.size(); i++) {
-			ranks.add(new Rank(pages.get(index_page).getId(), persons.get(i)));
-		}
-		return start_index;
 	}
 
 	private void downloadPage(String link) throws Exception {
@@ -202,27 +159,13 @@ public class Parser {
 					if (link.contains(site)) // remove http://site.ru
 						link = link.substring(site.length());
 					if (link.length() > 1) {
-						addLink(link);
+						base.addLink(link);
 					}
 				}
 				i = line.indexOf(HREF, i);
 			}
 		}
 		br.close();
-	}
-
-	private void addLink(String link) throws Exception {
-		if (!containsLink(link))
-			pages.add(new Page(link, pages.size() + 1, site_id));
-	}
-
-	private boolean containsLink(String link) throws Exception {
-		for (int i = 0; i < pages.size(); i++) {
-			if (pages.get(i).getLink().equals(link)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private boolean isDisallow(String url) {

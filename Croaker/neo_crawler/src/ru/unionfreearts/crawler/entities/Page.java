@@ -21,6 +21,4 @@ public class Page {
 	public int getSiteId() {
 		return site_id;
 	}
-	
-	
 }

@@ -2,12 +2,11 @@ package ru.unionfreearts.crawler.entities;
 
 public class Page {
 	private String link;
-	private int id, site_id;
+	private int id;
 	
-	public Page(String link, int id, int site_id) {
+	public Page(String link, int id) {
 		this.link = link;
 		this.id = id;
-		this.site_id = site_id;
 	}
 
 	public String getLink() {
@@ -16,9 +15,5 @@ public class Page {
 
 	public int getId() {
 		return id;
-	}
-
-	public int getSiteId() {
-		return site_id;
 	}
 }

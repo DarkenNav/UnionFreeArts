@@ -1,60 +1,71 @@
 package ru.unionfreearts.crawler;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 import ru.unionfreearts.crawler.entities.Keyword;
 import ru.unionfreearts.crawler.entities.Page;
 import ru.unionfreearts.crawler.entities.Rank;
 
 public class DBHandler {
-	private static final String url = "jdbc:mysql://localhost:3306/ufartdb";
-	private static final String user = "root";
-	private int site_id;
+	private int site_id, last_page_id = 0;
 	private ArrayList<Keyword> keywords = new ArrayList<Keyword>();
 	private ArrayList<Rank> ranks = new ArrayList<Rank>();
 	private ArrayList<Integer> persons = new ArrayList<Integer>();
-	private ArrayList<Page> pages = new ArrayList<Page>();
 	private Connection con;
+	private ResultSet rsPages;
 
-	public DBHandler(String password, int site_id) {
+	public DBHandler(int site_id) {
 		this.site_id = site_id;
 		try {
-//			con = DriverManager.getConnection(url, user, password);
+			BufferedReader br = new BufferedReader(new FileReader("sql_config.ini"));
+			br.readLine(); // tip
+			String url = br.readLine();
+			br.readLine(); // tip
+			String user = br.readLine();
+			br.readLine(); // tip
+			String password = br.readLine();
+			br.close();
+
+			con = DriverManager.getConnection(url, user, password);
 
 			loadPersonsList();
 			loadKeywordsList();
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("ERROR (DBHandler): " + e.getMessage());
 		}
 	}
 
-	public String getSite() {
-		return "https://lenta.ru";
-//		try {
-//			PreparedStatement stmt = con.prepareStatement("SELECT name FROM sites WHEN id = ?;");
-//			stmt.setInt(1, site_id);
-//			ResultSet rs = stmt.executeQuery();
-//			return rs.getString(0);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return null;
+	public String getSite() throws Exception {
+		PreparedStatement stmt = con.prepareStatement("SELECT name FROM sites WHERE id = ?");
+		stmt.setInt(1, site_id);
+		ResultSet rs = stmt.executeQuery();
+		String site = null;
+		if (rs.next())
+			site = rs.getString(1);
+		stmt.close();
+		return site;
 	}
 
-	private void loadPersonsList() {
-		persons.add(1);
-		persons.add(2);
+	private void loadPersonsList() throws Exception {
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT id FROM persons");
+		while (rs.next()) {
+			persons.add(rs.getInt(1));
+		}
+		stmt.close();
 	}
 
-	private void loadKeywordsList() {
-		keywords.add(new Keyword(1, "Путин"));
-		keywords.add(new Keyword(2, "Медведев"));
+	private void loadKeywordsList() throws Exception {
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM keywords");
+		while (rs.next()) {
+			keywords.add(new Keyword(rs.getInt(1), rs.getString(2)));
+		}
+		stmt.close();
 	}
 
 	public int countPersons() {
@@ -66,29 +77,50 @@ public class DBHandler {
 	}
 
 	public void addLink(String link) throws Exception {
-		if (!containsLink(link))
-			pages.add(new Page(link, pages.size() + 1, site_id));
+		if (containsLink(link))
+			return;
+		PreparedStatement stmt = con
+				.prepareStatement("INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
+		stmt.setString(1, link);
+		stmt.setInt(2, site_id);
+		stmt.setLong(3, System.currentTimeMillis());
+		stmt.setLong(4, 0);
+		stmt.execute();
+		stmt.close();
 	}
 
 	private boolean containsLink(String link) throws Exception {
-		for (int i = 0; i < pages.size(); i++) {
-			if (pages.get(i).getLink().equals(link)) {
-				return true;
+		PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM pages WHERE url = ?");
+		stmt.setString(1, link);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int k = rs.getInt(1);
+		stmt.close();
+		return k > 0;
+	}
+
+	public void loadPageList() throws Exception {
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM pages WHERE SiteID = ?");
+		stmt.setInt(1, site_id);
+		rsPages = stmt.executeQuery();
+	}
+
+	public Page getNextPage() throws Exception {
+		Page page = null;
+		boolean next = false;
+		if (last_page_id == 0) {
+			next = rsPages.next();
+		} else {
+			while (rsPages.next()) {
+				if (rsPages.getInt(1) == last_page_id) {
+					next = rsPages.next();
+					break;
+				}
 			}
 		}
-		return false;
-	}
-
-	public String getLink(int index_page) {
-		return pages.get(index_page).getLink();
-	}
-
-	public int countPages() {
-		return pages.size();
-	}
-
-	public int getPageId(int index_page) {
-		return pages.get(index_page).getId();
+		if (next)
+			page = new Page(rsPages.getString(2), rsPages.getInt(1));
+		return page;
 	}
 
 	public int countKeywords() {
@@ -112,18 +144,41 @@ public class DBHandler {
 		}
 	}
 
-	public int addRanksForNewPage(int index_page) {
+	public int addRanksForNewPage(int page_id) {
 		int start_index = ranks.size();
 		for (int i = 0; i < countPersons(); i++) {
-			ranks.add(new Rank(getPageId(index_page), getPersonId(i)));
+			ranks.add(new Rank(page_id, getPersonId(i)));
 		}
 		return start_index;
 	}
 
 	public void saveRanks() {
-		for (int i = 0; i < ranks.size(); i++) {
-			System.out.println("person id" + ranks.get(i).getPersonId() + " on page id" + ranks.get(i).getPageId()
-					+ ": " + ranks.get(i).getCount());
+		try {
+			PreparedStatement stmt;
+			for (int i = 0; i < ranks.size(); i++) {
+				stmt = con.prepareStatement("INSERT INTO PersonPageRank (PersonID, PageID, Rank) VALUES (?, ?, ?)");
+				stmt.setInt(1, ranks.get(i).getPersonId());
+				stmt.setInt(2, ranks.get(i).getPageId());
+				stmt.setInt(3, ranks.get(i).getCount());
+				stmt.execute();
+				stmt.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ERROR (saveRanks): " + e.getMessage());
+		}
+	}
+
+	public void updateScanDate(int page_id) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("UPDATE pages SET LastScanDate = ? WHERE id = ?");
+			stmt.setLong(1, System.currentTimeMillis());
+			stmt.setInt(2, page_id);
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ERROR (updateScanDate): " + e.getMessage());
 		}
 	}
 }

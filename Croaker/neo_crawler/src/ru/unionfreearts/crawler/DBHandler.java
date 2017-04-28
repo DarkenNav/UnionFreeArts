@@ -90,8 +90,9 @@ public class DBHandler {
 	}
 
 	private boolean containsLink(String link) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM pages WHERE url = ?");
+		PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM pages WHERE Url = ? AND SiteID = ?");
 		stmt.setString(1, link);
+		stmt.setInt(2, site_id);
 		ResultSet rs = stmt.executeQuery();
 		rs.next();
 		int k = rs.getInt(1);

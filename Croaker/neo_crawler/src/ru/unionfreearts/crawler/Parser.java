@@ -25,31 +25,42 @@ public class Parser {
 	public Parser(int site_id) throws Exception {
 		base = new DBHandler(site_id);
 		site = base.getSite();
-
 	}
 
-	public void start() throws Exception {
+	public void start() {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
 					temp_dir = new File("temp");
-					if (!temp_dir.exists())
+					if (temp_dir.exists()) {
+						for (File f : temp_dir.listFiles()) {
+							f.delete();
+						}
+					} else
 						temp_dir.mkdir();
 					System.out.println("start parsing site: " + site);
 					parseRobotsFile();
-					downloadPage(site, 0);
-					System.out.println("parsing page #0");
-					addLinksFromPage(0);
-					startDownloadThread();
-					countRankOnPage(0);
-					getFile(PAGE + 0).delete();
+
+					downloadMainPage();
+
 					startParseThread();
+					startDownloadThread();
 				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.println("ERROR (start): " + e.getMessage());
+					System.out.println("ERROR (Parser): " + e.getMessage());
 				}
 			}
 		}).start();
+	}
+
+	public void downloadMainPage() throws Exception {
+		base.addLink("/");
+		base.loadPageList();
+		Page page = base.getNextPage();
+		downloadPage(site + page.getLink(), page.getId());
+		System.out.println("parsing main page (#" + page.getId() + ")");
+		addLinksFromPage(page.getId());
+		countRankOnPage(page.getId());
 	}
 
 	public void stop() {
@@ -66,14 +77,11 @@ public class Parser {
 				try {
 					base.loadPageList();
 					Page page = base.getNextPage();
-					while (!stop) {
+					while (page != null && !stop) {
+						downloadPage(site + page.getLink(), page.getId());
+						page = base.getNextPage();
 						if (page == null) {
 							base.loadPageList();
-							page = base.getNextPage();
-							if (page == null)
-								break;
-						} else {
-							downloadPage(site + page.getLink(), page.getId());
 							page = base.getNextPage();
 						}
 					}
@@ -91,7 +99,7 @@ public class Parser {
 			public void run() {
 				try {
 					int id;
-					while (true) {
+					while (download_page > -1) {
 						for (File f : temp_dir.listFiles()) {
 							if (!f.getName().contains(String.valueOf(download_page)) && f.getName().contains(PAGE)) {
 								// first case - check that the page is not
@@ -101,21 +109,16 @@ public class Parser {
 								System.out.println("parsing page #" + id);
 								addLinksFromPage(id);
 								countRankOnPage(id);
-								base.updateScanDate(id);
-								f.delete();
 								if (stop)
 									break;
 							}
 						}
-						if (download_page == -1)
-							break;
-						Thread.sleep(500);
+						Thread.sleep(1000);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println("ERROR (startParseThread): " + e.getMessage());
 				}
-				base.saveRanks();
 				stop = true;
 			}
 		}).start();
@@ -142,8 +145,11 @@ public class Parser {
 					k++;
 				n = page.indexOf(base.getWord(i), n + 1);
 			}
-			base.addRank(k, page_id, base.getPersonIdByKeyword(i));
+			base.addRank(k, base.getPersonIdByKeyword(i));
 		}
+		base.saveRanks();
+		base.updateScanTime(page_id);
+		f.delete();
 	}
 
 	private void downloadPage(String link, int id) throws Exception {

@@ -24,7 +24,7 @@ public class Rank {
 		count += k;
 	}
 
-	public boolean isNeed(int page_id, int person_id) {
-		return this.person_id == person_id && this.page_id == page_id;
+	public boolean isNeed(int person_id) {
+		return this.person_id == person_id;
 	}
 }

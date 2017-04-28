@@ -79,12 +79,12 @@ public class DBHandler {
 	public void addLink(String link) throws Exception {
 		if (containsLink(link))
 			return;
-		PreparedStatement stmt = con
-				.prepareStatement("INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
+		PreparedStatement stmt = con.prepareStatement(
+				"INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDateTime) VALUES (?, ?, ?, ?)");
 		stmt.setString(1, link);
 		stmt.setInt(2, site_id);
-		stmt.setLong(3, System.currentTimeMillis());
-		stmt.setLong(4, 0);
+		stmt.setDate(3, new Date(System.currentTimeMillis()));
+		stmt.setDate(4, new Date(0));
 		stmt.execute();
 		stmt.close();
 	}
@@ -118,8 +118,10 @@ public class DBHandler {
 				}
 			}
 		}
-		if (next)
-			page = new Page(rsPages.getString(2), rsPages.getInt(1));
+		if (next) {
+			last_page_id = rsPages.getInt(1);
+			page = new Page(rsPages.getString(2), last_page_id);
+		}
 		return page;
 	}
 
@@ -135,21 +137,19 @@ public class DBHandler {
 		return keywords.get(index_word).getPersonId();
 	}
 
-	public void addRank(int count, int page_id, int person_id) {
+	public void addRank(int count, int person_id) {
 		for (int i = 0; i < ranks.size(); i++) {
-			if (ranks.get(i).isNeed(page_id, person_id)) {
+			if (ranks.get(i).isNeed(person_id)) {
 				ranks.get(i).addCount(count);
 				break;
 			}
 		}
 	}
 
-	public int addRanksForNewPage(int page_id) {
-		int start_index = ranks.size();
+	public void addRanksForNewPage(int page_id) {
 		for (int i = 0; i < countPersons(); i++) {
 			ranks.add(new Rank(page_id, getPersonId(i)));
 		}
-		return start_index;
 	}
 
 	public void saveRanks() {
@@ -167,12 +167,13 @@ public class DBHandler {
 			e.printStackTrace();
 			System.out.println("ERROR (saveRanks): " + e.getMessage());
 		}
+		ranks.clear();
 	}
 
-	public void updateScanDate(int page_id) {
+	public void updateScanTime(int page_id) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("UPDATE pages SET LastScanDate = ? WHERE id = ?");
-			stmt.setLong(1, System.currentTimeMillis());
+			PreparedStatement stmt = con.prepareStatement("UPDATE pages SET LastScanDateTime = ? WHERE id = ?");
+			stmt.setDate(1, new Date(System.currentTimeMillis()));
 			stmt.setInt(2, page_id);
 			stmt.execute();
 			stmt.close();

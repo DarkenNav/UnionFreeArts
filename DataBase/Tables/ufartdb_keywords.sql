@@ -16,28 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sites`
+-- Table structure for table `keywords`
 --
 
-DROP TABLE IF EXISTS `sites`;
+DROP TABLE IF EXISTS `keywords`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sites` (
+CREATE TABLE `keywords` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(2048) DEFAULT NULL,
+  `PersonId` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `SitesNameIndex` (`Name`(767))
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=cp1251;
+  KEY `KeywordNameIndex` (`Name`(767)),
+  KEY `FKPersonKeywords_idx` (`PersonId`),
+  CONSTRAINT `FKPersonKeywords` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sites`
+-- Dumping data for table `keywords`
 --
 
-LOCK TABLES `sites` WRITE;
-/*!40000 ALTER TABLE `sites` DISABLE KEYS */;
-INSERT INTO `sites` VALUES (1,'https://lenta.ru');
-/*!40000 ALTER TABLE `sites` ENABLE KEYS */;
+LOCK TABLES `keywords` WRITE;
+/*!40000 ALTER TABLE `keywords` DISABLE KEYS */;
+INSERT INTO `keywords` VALUES (1,'Путин',1),(2,'Медведев',2);
+/*!40000 ALTER TABLE `keywords` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-26 22:37:54
+-- Dump completed on 2017-04-28 14:35:13

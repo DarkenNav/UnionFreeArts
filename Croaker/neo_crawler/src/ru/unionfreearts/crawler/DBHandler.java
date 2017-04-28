@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import ru.unionfreearts.crawler.entities.Keyword;
 import ru.unionfreearts.crawler.entities.Page;
 import ru.unionfreearts.crawler.entities.Rank;
 
 public class DBHandler {
+	final Pattern paDate = Pattern.compile(".*/20\\d\\d/\\d\\d/\\d\\d.*");
 	private int site_id, last_page_id = 0;
 	private ArrayList<Keyword> keywords = new ArrayList<Keyword>();
 	private ArrayList<Rank> ranks = new ArrayList<Rank>();
@@ -83,7 +85,12 @@ public class DBHandler {
 				"INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDateTime) VALUES (?, ?, ?, ?)");
 		stmt.setString(1, link);
 		stmt.setInt(2, site_id);
-		stmt.setDate(3, new Date(System.currentTimeMillis()));
+		if (paDate.matcher(link).matches()) {
+			link = link.substring(link.indexOf("20"));
+			link = link.substring(0, 10);
+			stmt.setDate(3, new Date(java.util.Date.parse(link)));
+		} else
+			stmt.setDate(3, new Date(System.currentTimeMillis()));
 		stmt.setDate(4, new Date(0));
 		stmt.execute();
 		stmt.close();

@@ -12,12 +12,13 @@ import ru.unionfreearts.crawler.entities.Rank;
 
 public class DBHandler {
 	final Pattern paDate = Pattern.compile(".*/20\\d\\d/\\d\\d/\\d\\d.*");
-	private int site_id, last_page_id = 0;
+	private int site_id;
+	private Date dateStart;
 	private ArrayList<Keyword> keywords = new ArrayList<Keyword>();
 	private ArrayList<Rank> ranks = new ArrayList<Rank>();
+	private ArrayList<Page> pages = new ArrayList<Page>();
 	private ArrayList<Integer> persons = new ArrayList<Integer>();
 	private Connection con;
-	private ResultSet rsPages;
 
 	public DBHandler(int site_id) {
 		this.site_id = site_id;
@@ -35,6 +36,8 @@ public class DBHandler {
 
 			loadPersonsList();
 			loadKeywordsList();
+			
+			dateStart = new Date(System.currentTimeMillis());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("ERROR (DBHandler): " + e.getMessage());
@@ -107,28 +110,26 @@ public class DBHandler {
 		return k > 0;
 	}
 
-	public void loadPageList() throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM pages WHERE SiteID = ?");
+	private void loadPageList() throws Exception {
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM pages WHERE SiteID = ? AND LastScanDateTime < ?");
 		stmt.setInt(1, site_id);
-		rsPages = stmt.executeQuery();
+		stmt.setDate(2, dateStart);
+		ResultSet rs = stmt.executeQuery();
+		int k = 0;
+		while (rs.next() && k < 30) { // 30 - limit
+			pages.add(new Page(rs.getString(2), rs.getInt(1)));
+			k++;
+		}
+		stmt.close();
 	}
 
 	public Page getNextPage() throws Exception {
 		Page page = null;
-		boolean next = false;
-		if (last_page_id == 0) {
-			next = rsPages.next();
-		} else {
-			while (rsPages.next()) {
-				if (rsPages.getInt(1) == last_page_id) {
-					next = rsPages.next();
-					break;
-				}
-			}
-		}
-		if (next) {
-			last_page_id = rsPages.getInt(1);
-			page = new Page(rsPages.getString(2), last_page_id);
+		if (pages.size() == 0)
+			loadPageList();
+		if (pages.size() > 0) {
+			page = pages.get(0);
+			pages.remove(0);
 		}
 		return page;
 	}

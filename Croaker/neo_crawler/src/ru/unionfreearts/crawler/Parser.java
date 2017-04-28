@@ -55,7 +55,6 @@ public class Parser {
 
 	public void downloadMainPage() throws Exception {
 		base.addLink("/");
-		base.loadPageList();
 		Page page = base.getNextPage();
 		downloadPage(site + page.getLink(), page.getId());
 		System.out.println("parsing main page (#" + page.getId() + ")");
@@ -75,15 +74,10 @@ public class Parser {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					base.loadPageList();
 					Page page = base.getNextPage();
 					while (page != null && !stop) {
 						downloadPage(site + page.getLink(), page.getId());
 						page = base.getNextPage();
-						if (page == null) {
-							base.loadPageList();
-							page = base.getNextPage();
-						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

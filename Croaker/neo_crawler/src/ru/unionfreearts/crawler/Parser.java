@@ -147,11 +147,14 @@ public class Parser {
 	}
 
 	private void downloadPage(String link, int id) throws Exception {
+		File f = getFile(PAGE + id);
+		if(f.exists())
+			return;
 		download_page = id;
 		System.out.println("start download page #" + id + ": " + link);
 		URL url = new URL(link);
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-		BufferedWriter bw = new BufferedWriter(new FileWriter(getFile(PAGE + id)));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 		String line;
 		boolean isBody = false;
 		while ((line = br.readLine()) != null && !stop) {

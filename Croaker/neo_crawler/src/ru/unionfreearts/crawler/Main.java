@@ -19,5 +19,6 @@ public class Main {
 			e.printStackTrace();
 			System.out.println("ERROR (Main): " + e.getMessage());
 		}
+		System.out.println("FINISH Main Thread");
 	}
 }

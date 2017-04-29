@@ -14,11 +14,10 @@ import java.util.regex.Pattern;
 import ru.unionfreearts.crawler.entities.Page;
 
 public class Parser {
-	private final String PAGE = "page", HREF = " href";
-	private String site;
+	private final String HREF = " href";
+	private String site, download_page;
 	private File temp_dir;
 	private ArrayList<String> disallow = new ArrayList<String>();
-	private int download_page;
 	private boolean stop = false;
 	private DBHandler base;
 
@@ -40,7 +39,6 @@ public class Parser {
 						temp_dir.mkdir();
 					System.out.println("start parsing site: " + site);
 					parseRobotsFile();
-
 					downloadMainPage();
 
 					startParseThread();
@@ -54,12 +52,15 @@ public class Parser {
 	}
 
 	public void downloadMainPage() throws Exception {
-		base.addLink("/");
-		Page page = base.getNextPage();
-		downloadPage(site + page.getLink(), page.getId());
-		System.out.println("parsing main page (#" + page.getId() + ")");
-		addLinksFromPage(page.getId());
-		countRankOnPage(page.getId());
+		if (base.addLink("/")) { // if it first run on this site
+			Page page = base.getNextPage();
+			downloadPage(site + page.getLink(), page.getId());
+			System.out.println("parsing main page (#" + page.getId() + ")");
+			addLinksFromPage(page.getId());
+			countRankOnPage(page.getId());
+		} else {
+			download_page = HREF; // flag "it's start"
+		}
 	}
 
 	public void stop() {
@@ -74,16 +75,16 @@ public class Parser {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					Page page = base.getNextPage();
-					while (page != null && !stop) {
+					Page page;
+					while (!stop && (page = base.getNextPage()) != null) {
 						downloadPage(site + page.getLink(), page.getId());
-						page = base.getNextPage();
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println("ERROR (startDownloadThread): " + e.getMessage());
 				}
-				download_page = -1;
+				download_page = null;
+				System.out.println("FINISH Download Thread");
 			}
 		}).start();
 	}
@@ -93,13 +94,11 @@ public class Parser {
 			public void run() {
 				try {
 					int id;
-					while (download_page > -1) {
+					while (download_page != null) {
 						for (File f : temp_dir.listFiles()) {
-							if (!f.getName().contains(String.valueOf(download_page)) && f.getName().contains(PAGE)) {
-								// first case - check that the page is not
-								// loading at the moment
-								// second case - error insurance
-								id = Integer.parseInt(f.getName().substring(PAGE.length()));
+							// check that the page is not loading at the moment:
+							if (!f.getName().equals(download_page)) {
+								id = Integer.parseInt(f.getName());
 								System.out.println("parsing page #" + id);
 								addLinksFromPage(id);
 								countRankOnPage(id);
@@ -114,13 +113,14 @@ public class Parser {
 					System.out.println("ERROR (startParseThread): " + e.getMessage());
 				}
 				stop = true;
+				System.out.println("FINISH Parse Thread");
 			}
 		}).start();
 	}
 
 	private void countRankOnPage(int page_id) throws Exception {
 		base.addRanksForNewPage(page_id);
-		File f = getFile(PAGE + page_id);
+		File f = getFile(page_id);
 		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f), "utf-8"));
 		String line;
 		StringBuilder page = new StringBuilder();
@@ -147,10 +147,10 @@ public class Parser {
 	}
 
 	private void downloadPage(String link, int id) throws Exception {
-		File f = getFile(PAGE + id);
-		if(f.exists())
+		File f = getFile(id);
+		if (f.exists())
 			return;
-		download_page = id;
+		download_page = f.getName();
 		System.out.println("start download page #" + id + ": " + link);
 		URL url = new URL(link);
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -178,7 +178,7 @@ public class Parser {
 	}
 
 	private void addLinksFromPage(int page_id) throws Exception {
-		BufferedReader br = new BufferedReader(new FileReader(getFile(PAGE + page_id)));
+		BufferedReader br = new BufferedReader(new FileReader(getFile(page_id)));
 		String line, link;
 		char quote;
 		int i;
@@ -240,7 +240,7 @@ public class Parser {
 		br.close();
 	}
 
-	private File getFile(String name) {
+	private File getFile(int name) {
 		File f = new File(temp_dir.toString() + "/" + name);
 		return f;
 	}

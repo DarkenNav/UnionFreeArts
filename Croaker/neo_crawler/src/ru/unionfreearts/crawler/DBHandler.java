@@ -81,9 +81,9 @@ public class DBHandler {
 		return persons.get(index);
 	}
 
-	public void addLink(String link) throws Exception {
+	public boolean addLink(String link) throws Exception {
 		if (containsLink(link))
-			return;
+			return false;
 		PreparedStatement stmt = con.prepareStatement(
 				"INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
 		stmt.setString(1, link);
@@ -97,6 +97,7 @@ public class DBHandler {
 		stmt.setDate(4, new Date(0));
 		stmt.execute();
 		stmt.close();
+		return true;
 	}
 
 	private boolean containsLink(String link) throws Exception {

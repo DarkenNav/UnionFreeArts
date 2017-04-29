@@ -85,7 +85,7 @@ public class DBHandler {
 		if (containsLink(link))
 			return;
 		PreparedStatement stmt = con.prepareStatement(
-				"INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDateTime) VALUES (?, ?, ?, ?)");
+				"INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
 		stmt.setString(1, link);
 		stmt.setInt(2, site_id);
 		if (paDate.matcher(link).matches()) {
@@ -111,7 +111,7 @@ public class DBHandler {
 	}
 
 	private void loadPageList() throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT * FROM pages WHERE SiteID = ? AND LastScanDateTime < ?");
+		PreparedStatement stmt = con.prepareStatement("SELECT * FROM pages WHERE SiteID = ? AND LastScanDate < ?");
 		stmt.setInt(1, site_id);
 		stmt.setDate(2, dateStart);
 		ResultSet rs = stmt.executeQuery();
@@ -181,7 +181,7 @@ public class DBHandler {
 
 	public void updateScanTime(int page_id) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("UPDATE pages SET LastScanDateTime = ? WHERE id = ?");
+			PreparedStatement stmt = con.prepareStatement("UPDATE pages SET LastScanDate = ? WHERE id = ?");
 			stmt.setDate(1, new Date(System.currentTimeMillis()));
 			stmt.setInt(2, page_id);
 			stmt.execute();

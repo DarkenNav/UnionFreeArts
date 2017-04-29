@@ -1,0 +1,42 @@
+
+body {
+    background: #c5c5c5;
+    min-height: 100%;
+
+}
+
+header {
+    min-height: 130px;
+    background: #fff;
+    background: linear-gradient(to top, gray, white);
+    height: 90%;
+    margin: auto;
+}
+
+nav {
+    margin-left: 130px;
+}
+
+a {
+    float: left;
+    position: inherit;
+}
+
+footer {
+    margin-top: 10px;
+    position: absolute;
+
+}
+
+.logo {
+    float: left;
+}
+
+.content{
+    width: 50%;
+    margin: auto;
+}
+h2{
+    margin: auto;
+    text-align: center;
+}

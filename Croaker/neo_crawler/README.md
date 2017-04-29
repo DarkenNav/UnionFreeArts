@@ -7,3 +7,5 @@ Java - jre1.8.0_131
 Путь до библиотеки при необходимости можно изменить в файле .classpath
 
 [Описание алгоритма работы](https://github.com/DarkenNav/UnionFreeArts/wiki/neo_crawler)
+
+[JAR-файл для запуска](https://drive.google.com/drive/folders/0B1RdcS1jF5HdTkxuRUg2UXRyTnc?usp=sharing)

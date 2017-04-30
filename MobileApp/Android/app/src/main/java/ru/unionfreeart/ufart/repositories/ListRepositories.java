@@ -52,6 +52,10 @@ public class ListRepositories {
         items.add(new ListItem(id, name));
     }
 
+    public void add(ListItem item) {
+        items.add(item);
+    }
+
     public int getCount() {
         return items.size();
     }

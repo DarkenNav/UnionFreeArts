@@ -24,8 +24,7 @@ import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
 import ru.unionfreeart.ufart.loaders.DailyLoaderFake;
-import ru.unionfreeart.ufart.loaders.PersonsLoaderFake;
-import ru.unionfreeart.ufart.loaders.SitesLoaderFake;
+import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
 
@@ -70,8 +69,8 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
             TableRepositories table = new TableRepositories(activity, TableRepositories.TABLE_DAILY);
             table.clearTable();
             loader = new LoaderTask(DailyFragment.this);
-            ILoader loaderSites = new SitesLoaderFake();
-            ILoader loaderPersons = new PersonsLoaderFake();
+            ILoader loaderSites = new ListLoader(ListRepositories.LIST_SITES);
+            ILoader loaderPersons = new ListLoader(ListRepositories.LIST_PERSONS);
             loader.execute(loaderSites, loaderPersons);
             activity.setVisibleProgressBar(true);
         } else { //restore fragment

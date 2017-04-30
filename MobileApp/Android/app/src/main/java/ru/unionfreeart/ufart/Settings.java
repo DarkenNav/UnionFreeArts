@@ -23,7 +23,6 @@ public class Settings {
     }
 
     public void setAddress(String adr) {
-        Log.d("neo","new adr: "+adr);
         editor.putString(ADDRESS, adr);
         editor.apply();
     }

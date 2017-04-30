@@ -14,4 +14,5 @@
     <string name="total_for_period">Всего за период:</string>
     <string name="task_interrupted_error">Задача прервана ошибкой</string>
     <string name="task_completed_successfully">Операция успешно завершена</string>
+    <string name="address_to_service">Адрес к сервису:</string>
 </resources>

@@ -5,17 +5,18 @@ package ru.unionfreeart.ufart.entities;
  */
 
 public class TableRow {
-    private String name, value;
+    public String name = null, rank;
+    public long date;
     private boolean bold;
 
     public TableRow(String name, String value) {
         this.name = name;
-        this.value = value;
+        rank = value;
     }
 
     public TableRow(String name, int value) {
         this.name = name;
-        this.value = String.valueOf(value);
+        rank = String.valueOf(value);
     }
 
     public boolean isBold() {
@@ -31,6 +32,10 @@ public class TableRow {
     }
 
     public String getValue() {
-        return value;
+        return rank;
+    }
+
+    public long getDate() {
+        return date;
     }
 }

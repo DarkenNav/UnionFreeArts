@@ -1,9 +1,9 @@
-package ru.unionfreearts.webservice.repository.fake;
+package ru.unionfreearts.webservice.dao.fake;
 
-import ru.unionfreearts.webservice.entity.Keyword;
-import ru.unionfreearts.webservice.entity.Person;
-import ru.unionfreearts.webservice.repository.IRepository;
-import ru.unionfreearts.webservice.repository.specifications.Specification;
+import ru.unionfreearts.webservice.model.Keyword;
+import ru.unionfreearts.webservice.model.Person;
+import ru.unionfreearts.webservice.dao.IRepository;
+import ru.unionfreearts.webservice.dao.specifications.Specification;
 
 import java.util.ArrayList;
 import java.util.List;

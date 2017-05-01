@@ -10,7 +10,8 @@
         android:id="@+id/pOptions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"

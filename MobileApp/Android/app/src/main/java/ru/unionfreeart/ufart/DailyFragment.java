@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.loaders.DailyLoaderFake;
+import ru.unionfreeart.ufart.loaders.DailyLoader;
 import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
@@ -126,7 +127,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
             @Override
             public void onClick(View view) {
                 loader = new LoaderTask(DailyFragment.this);
-                ILoader loaderDaily = new DailyLoaderFake(
+                ILoader loaderDaily = new DailyLoader(
                         adSites.getId(spSite.getSelectedItemPosition()),
                         adPerson.getId(spPerson.getSelectedItemPosition()),
                         dateStart, dateFinish);
@@ -226,6 +227,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
     }
 
     public void putResult(String msg) {
+        Snackbar.make(fabOptions, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
         activity.setVisibleProgressBar(false);
         pOptions.setVisibility(View.GONE);

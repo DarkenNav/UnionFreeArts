@@ -1,7 +1,10 @@
-package ru.unionfreearts.webservice.repository.specifications;
+package ru.unionfreearts.webservice.dao.specifications;
 
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 public interface Specification<T> {
-    List<T> toList();
+    Predicate toPredicate(Root<T> root, CriteriaBuilder cb);
+    Class<T> getType();
 }

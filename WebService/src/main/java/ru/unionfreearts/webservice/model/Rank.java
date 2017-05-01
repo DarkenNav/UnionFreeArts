@@ -8,8 +8,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "person_page_rank")
 public class Rank implements Serializable {
+    @Id
     @ManyToOne(targetEntity = Person.class)
     private Person person;
+    @Id
     @JsonIgnore
     @ManyToOne(targetEntity = Page.class)
     private Page page;
@@ -47,5 +49,23 @@ public class Rank implements Serializable {
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Rank rank = (Rank) o;
+
+        if (!person.equals(rank.person)) return false;
+        return page.equals(rank.page);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = person.hashCode();
+        result = 31 * result + page.hashCode();
+        return result;
     }
 }

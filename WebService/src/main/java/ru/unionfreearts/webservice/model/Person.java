@@ -16,7 +16,7 @@ public class Person implements Serializable {
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
     @JsonIgnore
-    @OneToMany(targetEntity = Keyword.class, mappedBy = "person")
+    @OneToMany(targetEntity = Keyword.class, mappedBy = "person", fetch = FetchType.EAGER)
     private Set<Keyword> keywords;
     @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "person")

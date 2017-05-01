@@ -18,8 +18,10 @@ public class Page implements Serializable {
     private String url;
     @ManyToOne(targetEntity = Site.class)
     private Site site;
+    @Temporal(TemporalType.DATE)
     @Column(name = "found_datetime")
     private Date foundDateTime;
+    @Temporal(TemporalType.DATE)
     @Column(name = "last_datetime")
     private Date lastDateTime;
     @JsonIgnore

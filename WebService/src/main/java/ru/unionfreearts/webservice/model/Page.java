@@ -1,11 +1,11 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "pages")
@@ -26,7 +26,7 @@ public class Page implements Serializable {
     private Date lastDateTime;
     @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "page")
-    private Set<Rank> ranks;
+    private List<Rank> ranks;
 
     public Page() {
     }
@@ -79,11 +79,11 @@ public class Page implements Serializable {
         this.lastDateTime = lastDateTime;
     }
 
-    public Set<Rank> getRanks() {
+    public List<Rank> getRanks() {
         return ranks;
     }
 
-    public void setRanks(Set<Rank> ranks) {
+    public void setRanks(List<Rank> ranks) {
         this.ranks = ranks;
     }
 }

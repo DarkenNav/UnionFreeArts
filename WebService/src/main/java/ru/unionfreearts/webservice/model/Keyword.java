@@ -1,4 +1,4 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,7 +14,7 @@ public class Keyword implements Serializable {
     private Long id;
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
-    //@JsonIgnore
+    @JsonIgnore
     @ManyToOne(targetEntity = Person.class)
     private Person person;
 

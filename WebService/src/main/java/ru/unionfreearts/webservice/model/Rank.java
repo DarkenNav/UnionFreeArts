@@ -1,4 +1,4 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

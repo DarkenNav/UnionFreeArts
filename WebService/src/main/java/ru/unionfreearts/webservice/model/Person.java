@@ -1,10 +1,10 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "persons")
@@ -16,11 +16,11 @@ public class Person implements Serializable {
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
     @JsonIgnore
-    @OneToMany(targetEntity = Keyword.class, mappedBy = "person", fetch = FetchType.EAGER)
-    private Set<Keyword> keywords;
+    @OneToMany(targetEntity = Keyword.class, mappedBy = "person")
+    private List<Keyword> keywords;
     @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "person")
-    private Set<Rank> ranks;
+    private List<Rank> ranks;
 
     public Person() {
     }
@@ -46,19 +46,19 @@ public class Person implements Serializable {
         this.name = name;
     }
 
-    public Set<Keyword> getKeywords() {
+    public List<Keyword> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(Set<Keyword> keywords) {
+    public void setKeywords(List<Keyword> keywords) {
         this.keywords = keywords;
     }
 
-    public Set<Rank> getRanks() {
+    public List<Rank> getRanks() {
         return ranks;
     }
 
-    public void setRanks(Set<Rank> ranks) {
+    public void setRanks(List<Rank> ranks) {
         this.ranks = ranks;
     }
 }

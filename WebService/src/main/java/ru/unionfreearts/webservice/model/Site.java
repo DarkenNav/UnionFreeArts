@@ -1,11 +1,11 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Component
 @Entity
@@ -19,7 +19,7 @@ public class Site implements Serializable {
     private String name;
     @JsonIgnore
     @OneToMany(targetEntity = Page.class, mappedBy = "site")
-    private Set<Page> pages;
+    private List<Page> pages;
 
     public Site() {
     }
@@ -45,11 +45,11 @@ public class Site implements Serializable {
         this.name = name;
     }
 
-    public Set<Page> getPages() {
+    public List<Page> getPages() {
         return pages;
     }
 
-    public void setPages(Set<Page> pages) {
+    public void setPages(List<Page> pages) {
         this.pages = pages;
     }
 }

@@ -14,7 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class HSAllSites extends AbstractSpecification<Site> {
+public class AllSites extends AbstractSpecification<Site> {
     @Override
     public Predicate toPredicate(Root<Site> root, CriteriaBuilder cb) {
         return cb.conjunction();

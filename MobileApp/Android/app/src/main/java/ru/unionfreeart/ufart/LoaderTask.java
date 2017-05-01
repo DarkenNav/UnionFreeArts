@@ -42,11 +42,10 @@ public class LoaderTask extends AsyncTask<ILoader, Integer, String> implements S
                 loaders[i].run(context);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return context.getResources().getString(R.string.load_interrupted_error)
                     + ": " + e.getMessage();
         }
-        return context.getResources().getString(R.string.load_completed_successfully);
+        return null;
     }
 
     @Override
@@ -57,7 +56,10 @@ public class LoaderTask extends AsyncTask<ILoader, Integer, String> implements S
     @Override
     protected void onPostExecute(String msg) {
         super.onPostExecute(msg);
-        master.putResult(msg + "\n" + getTime());
+        if (msg == null)
+            master.putResult(msg);
+        else
+            master.putResult(msg + "\n" + getTime());
     }
 
     private String getTime() {

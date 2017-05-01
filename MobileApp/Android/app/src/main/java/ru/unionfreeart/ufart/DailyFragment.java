@@ -51,7 +51,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
                              Bundle savedInstanceState) {
         activity = (MainActivity) getActivity();
         activity.setTitle(getResources().getString(R.string.daily_statistics));
-        this.container = inflater.inflate(R.layout.fragment_daily, container, false);
+        this.container = inflater.inflate(R.layout.fragment_statistics, container, false);
         initSites();
         initPersons();
         initTable();
@@ -227,15 +227,17 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
     }
 
     public void putResult(String msg) {
-        Snackbar.make(fabOptions, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
         activity.setVisibleProgressBar(false);
-        pOptions.setVisibility(View.GONE);
-        fabOptions.setVisibility(View.VISIBLE);
-        pList.setVisibility(View.VISIBLE);
-
-        openLists();
-        openTable();
+        if (msg != null) { //error
+            fabOk.setVisibility(View.VISIBLE);
+            Snackbar.make(fabOptions, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        } else {
+            pOptions.setVisibility(View.GONE);
+            fabOptions.setVisibility(View.VISIBLE);
+            pList.setVisibility(View.VISIBLE);
+            openLists();
+            openTable();
+        }
     }
 
     private void openTable() {

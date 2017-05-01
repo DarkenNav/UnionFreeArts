@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity
     private void setFragment(int id) {
         if (navigationView != null)
             navigationView.setCheckedItem(id);
+        setVisibleProgressBar(false);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (id) {
             case R.id.nav_total:

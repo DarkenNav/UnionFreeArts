@@ -13,7 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class HSAllPersons extends AbstractSpecification<Person> {
+public class AllPerson extends AbstractSpecification<Person> {
 
     @Override
     public Predicate toPredicate(Root<Person> root, CriteriaBuilder cb) {

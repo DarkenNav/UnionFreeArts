@@ -12,17 +12,17 @@ import java.util.List;
 public class Page implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "Id")
     private Long id;
-    @Column(name = "url", length = 248, nullable = false, unique = true)
+    @Column(name = "Url", length = 2048, nullable = false, unique = true)
     private String url;
     @ManyToOne(targetEntity = Site.class)
     private Site site;
     @Temporal(TemporalType.DATE)
-    @Column(name = "found_datetime")
+    @Column(name = "FoundDateDime")
     private Date foundDateTime;
     @Temporal(TemporalType.DATE)
-    @Column(name = "last_scan_date")
+    @Column(name = "LastScanDate")
     private Date lastScanDate;
     @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "page")

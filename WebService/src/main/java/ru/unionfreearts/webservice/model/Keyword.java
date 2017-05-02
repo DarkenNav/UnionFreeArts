@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class Keyword implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "Id")
     private Long id;
-    @Column(name = "name", length = 248, nullable = false, unique = true)
+    @Column(name = "Name", length = 2048, nullable = false, unique = true)
     private String name;
     @JsonIgnore
     @ManyToOne(targetEntity = Person.class)

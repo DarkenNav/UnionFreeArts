@@ -15,7 +15,7 @@ public class Rank implements Serializable {
     @JsonIgnore
     @ManyToOne(targetEntity = Page.class)
     private Page page;
-    @Column(name = "rank")
+    @Column(name = "Rank")
     private Integer rank;
 
     public Rank() {

@@ -46,7 +46,7 @@ public class StatController {
         }
         while (nextDate.before(endDate));
 
-        if ((jsonObjects.size() > 0)) {
+        if (ranks != null) {
             return new ResponseEntity<>(jsonObjects, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -22,8 +22,8 @@ public class Page implements Serializable {
     @Column(name = "found_datetime")
     private Date foundDateTime;
     @Temporal(TemporalType.DATE)
-    @Column(name = "last_datetime")
-    private Date lastDateTime;
+    @Column(name = "last_scan_date")
+    private Date lastScanDate;
     @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "page")
     private List<Rank> ranks;
@@ -31,12 +31,12 @@ public class Page implements Serializable {
     public Page() {
     }
 
-    public Page(Long id, String url, Site site, Date foundDateTime, Date lastDateTime) {
+    public Page(Long id, String url, Site site, Date foundDateTime, Date lastScanDate) {
         this.id = id;
         this.url = url;
         this.site = site;
         this.foundDateTime = foundDateTime;
-        this.lastDateTime = lastDateTime;
+        this.lastScanDate = lastScanDate;
     }
 
     public Long getId() {
@@ -71,12 +71,12 @@ public class Page implements Serializable {
         this.foundDateTime = foundDateTime;
     }
 
-    public Date getLastDateTime() {
-        return lastDateTime;
+    public Date getLastScanDate() {
+        return lastScanDate;
     }
 
-    public void setLastDateTime(Date lastDateTime) {
-        this.lastDateTime = lastDateTime;
+    public void setLastScanDate(Date lastScanDate) {
+        this.lastScanDate = lastScanDate;
     }
 
     public List<Rank> getRanks() {

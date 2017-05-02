@@ -83,11 +83,9 @@ DROP TABLE IF EXISTS `personpagerank`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personpagerank` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `PersonId` int(11) NOT NULL,
   `PageId` int(11) NOT NULL,
   `Rank` int(11) NOT NULL,
-  PRIMARY KEY (`Id`),
   KEY `PersonIdPageIdIndex` (`PersonId`,`PageId`),
   KEY `FKPageRank_idx` (`PageId`),
   CONSTRAINT `FKPersonRank` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -101,7 +99,7 @@ CREATE TABLE `personpagerank` (
 
 LOCK TABLES `personpagerank` WRITE;
 /*!40000 ALTER TABLE `personpagerank` DISABLE KEYS */;
-INSERT INTO `personpagerank` VALUES (1,1,1,100),(2,1,2,150),(3,1,3,124),(4,1,4,130),(5,1,5,140),(6,1,6,200),(7,1,7,110),(8,1,8,90),(9,1,9,50),(10,2,1,90),(11,2,2,50),(12,2,3,70),(13,2,4,30),(14,2,5,25),(15,2,6,75),(16,2,7,34),(17,2,8,22),(18,2,9,88),(19,3,1,16),(20,3,2,30),(21,3,3,24),(22,3,4,12),(23,3,5,15),(24,3,6,17),(25,3,7,30),(26,3,8,22),(27,3,9,11);
+INSERT INTO `personpagerank` VALUES (1,1,100),(1,2,150),(1,3,124),(1,4,130),(1,5,140),(1,6,200),(1,7,110),(1,8,90),(1,9,50),(2,1,90),(2,2,50),(2,3,70),(2,4,30),(2,5,25),(2,6,75),(2,7,34),(2,8,22),(2,9,88),(3,1,16),(3,2,30),(3,3,24),(3,4,12),(3,5,15),(3,6,17),(3,7,30),(3,8,22),(3,9,11);
 /*!40000 ALTER TABLE `personpagerank` ENABLE KEYS */;
 UNLOCK TABLES;
 

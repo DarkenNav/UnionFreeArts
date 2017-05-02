@@ -83,11 +83,9 @@ DROP TABLE IF EXISTS `personpagerank`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personpagerank` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `PersonId` int(11) NOT NULL,
   `PageId` int(11) NOT NULL,
   `Rank` int(11) NOT NULL,
-  PRIMARY KEY (`Id`),
   KEY `PersonIdPageIdIndex` (`PersonId`,`PageId`),
   KEY `FKPageRank_idx` (`PageId`),
   CONSTRAINT `FKPersonRank` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,

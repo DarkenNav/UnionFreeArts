@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ru.unionfreearts.crawler.entities.Keyword;
@@ -11,7 +12,13 @@ import ru.unionfreearts.crawler.entities.Page;
 import ru.unionfreearts.crawler.entities.Rank;
 
 public class DBHandler {
-	final Pattern paDate = Pattern.compile(".*/20\\d\\d/\\d\\d/\\d\\d.*");
+	// for lenta.ru, gazeta.ru:
+	private final Pattern paDate1 = Pattern.compile("20\\d\\d/\\d\\d/\\d\\d");
+	// for rbc.ru:
+	private final Pattern paDate2 = Pattern.compile("\\d\\d/\\d\\d/20\\d\\d");
+	// for ria.ru:
+	private final Pattern paDate3 = Pattern.compile("20\\d\\d\\d\\d\\d\\d");
+	private final Date dateMin = new Date(java.util.Date.parse("2017/04/01"));
 	private int site_id;
 	private Date dateStart;
 	private ArrayList<Keyword> keywords = new ArrayList<Keyword>();
@@ -36,7 +43,7 @@ public class DBHandler {
 
 			loadPersonsList();
 			loadKeywordsList();
-			
+
 			dateStart = new Date(System.currentTimeMillis());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,20 +91,41 @@ public class DBHandler {
 	public boolean addLink(String link) throws Exception {
 		if (containsLink(link))
 			return false;
-		PreparedStatement stmt = con.prepareStatement(
-				"INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
+		PreparedStatement stmt = con
+				.prepareStatement("INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
 		stmt.setString(1, link);
 		stmt.setInt(2, site_id);
-		if (paDate.matcher(link).matches()) {
-			link = link.substring(link.indexOf("20"));
-			link = link.substring(0, 10);
-			stmt.setDate(3, new Date(java.util.Date.parse(link)));
-		} else
-			stmt.setDate(3, new Date(System.currentTimeMillis()));
+		Date d = parseDate(link);
+		if (d.getTime() < dateMin.getTime())
+			return false;
+		stmt.setDate(3, d);
 		stmt.setDate(4, new Date(0));
 		stmt.execute();
 		stmt.close();
 		return true;
+	}
+
+	private Date parseDate(String s) {
+		Matcher m = paDate1.matcher(s);
+		if (m.find()) { // 2017/05/01
+			s = s.substring(m.start());
+			s = s.substring(0, 10);
+			return new Date(java.util.Date.parse(s));
+		}
+		m = paDate2.matcher(s);
+		if (m.find()) { // 01/05/2017
+			s = s.substring(m.start());
+			s = s.substring(0, 10);
+			return new Date(java.util.Date.parse(s));
+		}
+		m = paDate3.matcher(s);
+		if (m.find()) { // 20170501
+			s = s.substring(m.start());
+			s = s.substring(0, 8);
+			s = s.substring(0, 4) + "/" + s.substring(4, 6) + "/" + s.substring(6);
+			return new Date(java.util.Date.parse(s));
+		}
+		return new Date(System.currentTimeMillis());
 	}
 
 	private boolean containsLink(String link) throws Exception {

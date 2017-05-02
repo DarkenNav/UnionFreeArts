@@ -1,29 +1,32 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
+@Component
 @Entity
-@Table(name = "keywords")
-public class Keyword implements Serializable {
+@Table(name = "sites")
+public class Site implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
-    @ManyToOne(targetEntity = Person.class)
-    private Person person;
+    @JsonIgnore
+    @OneToMany(targetEntity = Page.class, mappedBy = "site")
+    private List<Page> pages;
 
-    public Keyword() {
+    public Site() {
     }
 
-    public Keyword(Long id, String name, Person person) {
+    public Site(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.person = person;
     }
 
     public Long getId() {
@@ -42,11 +45,11 @@ public class Keyword implements Serializable {
         this.name = name;
     }
 
-    public Person getPerson() {
-        return person;
+    public List<Page> getPages() {
+        return pages;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPages(List<Page> pages) {
+        this.pages = pages;
     }
 }

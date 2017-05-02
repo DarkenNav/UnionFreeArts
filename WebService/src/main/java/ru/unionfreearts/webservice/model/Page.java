@@ -1,11 +1,11 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "pages")
@@ -18,23 +18,25 @@ public class Page implements Serializable {
     private String url;
     @ManyToOne(targetEntity = Site.class)
     private Site site;
+    @Temporal(TemporalType.DATE)
     @Column(name = "found_datetime")
     private Date foundDateTime;
-    @Column(name = "last_datetime")
-    private Date lastDateTime;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "last_scan_date")
+    private Date lastScanDate;
     @JsonIgnore
     @OneToMany(targetEntity = Rank.class, mappedBy = "page")
-    private Set<Rank> ranks;
+    private List<Rank> ranks;
 
     public Page() {
     }
 
-    public Page(Long id, String url, Site site, Date foundDateTime, Date lastDateTime) {
+    public Page(Long id, String url, Site site, Date foundDateTime, Date lastScanDate) {
         this.id = id;
         this.url = url;
         this.site = site;
         this.foundDateTime = foundDateTime;
-        this.lastDateTime = lastDateTime;
+        this.lastScanDate = lastScanDate;
     }
 
     public Long getId() {
@@ -69,19 +71,19 @@ public class Page implements Serializable {
         this.foundDateTime = foundDateTime;
     }
 
-    public Date getLastDateTime() {
-        return lastDateTime;
+    public Date getLastScanDate() {
+        return lastScanDate;
     }
 
-    public void setLastDateTime(Date lastDateTime) {
-        this.lastDateTime = lastDateTime;
+    public void setLastScanDate(Date lastScanDate) {
+        this.lastScanDate = lastScanDate;
     }
 
-    public Set<Rank> getRanks() {
+    public List<Rank> getRanks() {
         return ranks;
     }
 
-    public void setRanks(Set<Rank> ranks) {
+    public void setRanks(List<Rank> ranks) {
         this.ranks = ranks;
     }
 }

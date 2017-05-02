@@ -1,16 +1,13 @@
-package ru.unionfreearts.webservice.entity;
+package ru.unionfreearts.webservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
-@Component
 @Entity
-@Table(name = "sites")
-public class Site implements Serializable {
+@Table(name = "keywords")
+public class Keyword implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -18,15 +15,16 @@ public class Site implements Serializable {
     @Column(name = "name", length = 248, nullable = false, unique = true)
     private String name;
     @JsonIgnore
-    @OneToMany(targetEntity = Page.class, mappedBy = "site")
-    private Set<Page> pages;
+    @ManyToOne(targetEntity = Person.class)
+    private Person person;
 
-    public Site() {
+    public Keyword() {
     }
 
-    public Site(Long id, String name) {
+    public Keyword(Long id, String name, Person person) {
         this.id = id;
         this.name = name;
+        this.person = person;
     }
 
     public Long getId() {
@@ -45,11 +43,11 @@ public class Site implements Serializable {
         this.name = name;
     }
 
-    public Set<Page> getPages() {
-        return pages;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPages(Set<Page> pages) {
-        this.pages = pages;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

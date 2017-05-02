@@ -20,24 +20,28 @@ public class Parser {
 	private ArrayList<String> disallow = new ArrayList<String>();
 	private boolean stop = false;
 	private DBHandler base;
+	private int site_id;
 
 	public Parser(int site_id) throws Exception {
+		this.site_id = site_id;
 		base = new DBHandler(site_id);
 		site = base.getSite();
 	}
 
-	public void start() {
+	public boolean start() {
+		if (site == null)
+			return false;
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					temp_dir = new File("temp");
+					temp_dir = new File("temp" + site_id);
 					if (temp_dir.exists()) {
 						for (File f : temp_dir.listFiles()) {
 							f.delete();
 						}
 					} else
 						temp_dir.mkdir();
-					System.out.println("start parsing site: " + site);
+					System.out.println(getSiteId() + "start parsing site: " + site);
 					parseRobotsFile();
 					downloadMainPage();
 
@@ -45,17 +49,18 @@ public class Parser {
 					startDownloadThread();
 				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.println("ERROR (Parser): " + e.getMessage());
+					System.out.println(getSiteId() + "ERROR (Parser): " + e.getMessage());
 				}
 			}
 		}).start();
+		return true;
 	}
 
 	public void downloadMainPage() throws Exception {
 		if (base.addLink("/")) { // if it first run on this site
 			Page page = base.getNextPage();
 			downloadPage(site + page.getLink(), page.getId());
-			System.out.println("parsing main page (#" + page.getId() + ")");
+			System.out.println(getSiteId() + "parsing main page (#" + page.getId() + ")");
 			addLinksFromPage(page.getId());
 			countRankOnPage(page.getId());
 		} else {
@@ -63,12 +68,12 @@ public class Parser {
 		}
 	}
 
-	public void stop() {
-		stop = true;
+	private String getSiteId() {
+		return "#" + site_id + " ";
 	}
 
-	public boolean isRun() {
-		return !stop;
+	public void stop() {
+		stop = true;
 	}
 
 	private void startDownloadThread() {
@@ -81,10 +86,10 @@ public class Parser {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.println("ERROR (startDownloadThread): " + e.getMessage());
+					System.out.println(getSiteId() + "ERROR (startDownloadThread): " + e.getMessage());
 				}
 				download_page = null;
-				System.out.println("FINISH Download Thread");
+				System.out.println(getSiteId() + "FINISH Download Thread");
 			}
 		}).start();
 	}
@@ -99,7 +104,7 @@ public class Parser {
 							// check that the page is not loading at the moment:
 							if (!f.getName().equals(download_page)) {
 								id = Integer.parseInt(f.getName());
-								System.out.println("parsing page #" + id);
+								System.out.println(getSiteId() + "parsing page #" + id);
 								addLinksFromPage(id);
 								countRankOnPage(id);
 								if (stop)
@@ -110,10 +115,10 @@ public class Parser {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.println("ERROR (startParseThread): " + e.getMessage());
+					System.out.println(getSiteId() + "ERROR (startParseThread): " + e.getMessage());
 				}
 				stop = true;
-				System.out.println("FINISH Parse Thread");
+				System.out.println(getSiteId() + "FINISH Parse Thread");
 			}
 		}).start();
 	}
@@ -151,7 +156,7 @@ public class Parser {
 		if (f.exists())
 			return;
 		download_page = f.getName();
-		System.out.println("start download page #" + id + ": " + link);
+		System.out.println(getSiteId() + "start download page #" + id + ": " + link);
 		URL url = new URL(link);
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
@@ -174,7 +179,7 @@ public class Parser {
 		br.close();
 		bw.close();
 		if (!stop)
-			System.out.println("finish download page #" + id + ": " + link);
+			System.out.println(getSiteId() + "finish download page #" + id + ": " + link);
 	}
 
 	private void addLinksFromPage(int page_id) throws Exception {
@@ -189,18 +194,22 @@ public class Parser {
 				quote = line.substring(i - 1, i).toCharArray()[0]; // " or '
 				link = line.substring(i);
 				if (link.indexOf(quote) == -1)
-					System.out.println(i + ", line: " + line);
+					break;
 				link = link.substring(0, link.indexOf(quote));
+				i = line.indexOf(HREF, i);
+				if (link.indexOf(site) > 0) // share link: ...um=social&href=https://site....
+					continue;
 				if (link.indexOf("//") == 0)
 					link = "http:" + link;
 				if (!isDisallow(link)) {
 					if (link.contains(site)) // remove http://site.ru
 						link = link.substring(site.length());
 					if (link.length() > 1) {
+						if (link.indexOf("/") > 0) // bad link
+							continue;
 						base.addLink(link);
 					}
 				}
-				i = line.indexOf(HREF, i);
 			}
 		}
 		br.close();

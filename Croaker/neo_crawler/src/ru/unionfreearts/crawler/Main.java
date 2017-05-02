@@ -10,7 +10,7 @@ public class Main {
 			System.out.println("Enter q for quit");
 			ArrayList<Parser> parsers = new ArrayList<Parser>();
 			Parser p;
-			int i = 2;
+			int i = 1;
 			while (true) {
 				p = new Parser(i);
 				if (p.start())

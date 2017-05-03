@@ -26,23 +26,15 @@ DROP TABLE IF EXISTS `keywords`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `keywords` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(512) NOT NULL,
   `PersonId` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `KeywordNameIndex` (`Name`(767)),
+  UNIQUE KEY `Name_UNIQUE` (`Name`),
+  KEY `KeywordNameIndex` (`Name`),
   KEY `FKPersonKeywords_idx` (`PersonId`),
-  CONSTRAINT `FKPersonKeywords` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+  CONSTRAINT `FKPersonKeywords` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `keywords`
---
-
-LOCK TABLES `keywords` WRITE;
-/*!40000 ALTER TABLE `keywords` DISABLE KEYS */;
-/*!40000 ALTER TABLE `keywords` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `pages`
@@ -53,27 +45,38 @@ DROP TABLE IF EXISTS `pages`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pages` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Url` varchar(2048) DEFAULT NULL,
+  `Url` varchar(2048) NOT NULL,
   `SiteId` int(11) NOT NULL,
   `FoundDateTime` datetime DEFAULT NULL,
-  `LastScanDate` datetime DEFAULT NULL,
+  `LastScanDateTime` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `PagesFoundDateIndex` (`FoundDateTime`),
-  KEY `PagesLastScanDateIndex` (`LastScanDate`),
+  KEY `PagesLastScanDateIndex` (`LastScanDateTime`),
   KEY `PagesUrlnameIndex` (`Url`(767)),
   KEY `FKSitePage_idx` (`SiteId`),
-  CONSTRAINT `FKSitePage` FOREIGN KEY (`SiteId`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+  CONSTRAINT `FKSitePage` FOREIGN KEY (`SiteId`) REFERENCES `sites` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pages`
---
-
-LOCK TABLES `pages` WRITE;
-/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
-UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ufartdb`.`pages_BEFORE_INSERT` BEFORE INSERT ON `pages` FOR EACH ROW
+BEGIN
+	IF NEW.FoundDateTime is NULL THEN
+		SET NEW.FoundDateTime = SYSDATE();
+	END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `personpagerank`
@@ -88,19 +91,10 @@ CREATE TABLE `personpagerank` (
   `Rank` int(11) NOT NULL,
   KEY `PersonIdPageIdIndex` (`PersonId`,`PageId`),
   KEY `FKPageRank_idx` (`PageId`),
-  CONSTRAINT `FKPersonRank` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FKPageRank` FOREIGN KEY (`PageId`) REFERENCES `pages` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FKPageRank` FOREIGN KEY (`PageId`) REFERENCES `pages` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FKPersonRank` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `personpagerank`
---
-
-LOCK TABLES `personpagerank` WRITE;
-/*!40000 ALTER TABLE `personpagerank` DISABLE KEYS */;
-/*!40000 ALTER TABLE `personpagerank` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `persons`
@@ -111,20 +105,12 @@ DROP TABLE IF EXISTS `persons`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `persons` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(512) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `PersonNameIndex` (`Name`(767))
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+  UNIQUE KEY `Name_UNIQUE` (`Name`),
+  KEY `PersonNameIndex` (`Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `persons`
---
-
-LOCK TABLES `persons` WRITE;
-/*!40000 ALTER TABLE `persons` DISABLE KEYS */;
-/*!40000 ALTER TABLE `persons` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `sites`
@@ -135,20 +121,11 @@ DROP TABLE IF EXISTS `sites`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sites` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(2048) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `SitesNameIndex` (`Name`(767))
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sites`
---
-
-LOCK TABLES `sites` WRITE;
-/*!40000 ALTER TABLE `sites` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sites` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -159,4 +136,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-26 13:47:39
+-- Dump completed on 2017-05-03 13:41:13

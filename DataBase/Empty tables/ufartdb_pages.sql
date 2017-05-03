@@ -24,17 +24,17 @@ DROP TABLE IF EXISTS `pages`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pages` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Url` varchar(2048) DEFAULT NULL,
+  `Url` varchar(2048) NOT NULL,
   `SiteId` int(11) NOT NULL,
   `FoundDateTime` datetime DEFAULT NULL,
-  `LastScanDate` datetime DEFAULT NULL,
+  `LastScanDateTime` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `PagesFoundDateIndex` (`FoundDateTime`),
-  KEY `PagesLastScanDateIndex` (`LastScanDate`),
+  KEY `PagesLastScanDateIndex` (`LastScanDateTime`),
   KEY `PagesUrlnameIndex` (`Url`(767)),
   KEY `FKSitePage_idx` (`SiteId`),
-  CONSTRAINT `FKSitePage` FOREIGN KEY (`SiteId`) REFERENCES `sites` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
+  CONSTRAINT `FKSitePage` FOREIGN KEY (`SiteId`) REFERENCES `sites` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

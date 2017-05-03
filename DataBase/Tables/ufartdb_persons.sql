@@ -24,10 +24,11 @@ DROP TABLE IF EXISTS `persons`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `persons` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(512) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `PersonNameIndex` (`Name`(767))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251;
+  UNIQUE KEY `Name_UNIQUE` (`Name`),
+  KEY `PersonNameIndex` (`Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +37,7 @@ CREATE TABLE `persons` (
 
 LOCK TABLES `persons` WRITE;
 /*!40000 ALTER TABLE `persons` DISABLE KEYS */;
-INSERT INTO `persons` VALUES (1,'Путин'),(2,'Медведев');
+INSERT INTO `persons` VALUES (1,'Путин'),(2,'Медведев'),(3,'Навальный'),(4,'Шойгу');
 /*!40000 ALTER TABLE `persons` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-28 14:35:13
+-- Dump completed on 2017-05-02 19:50:26

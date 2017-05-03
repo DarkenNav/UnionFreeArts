@@ -24,11 +24,12 @@ DROP TABLE IF EXISTS `sites`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sites` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(2048) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `SitesNameIndex` (`Name`(767))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `sites`
@@ -36,7 +37,7 @@ CREATE TABLE `sites` (
 
 LOCK TABLES `sites` WRITE;
 /*!40000 ALTER TABLE `sites` DISABLE KEYS */;
-INSERT INTO `sites` VALUES (1,'https://lenta.ru'),(2,'https://ria.ru');
+INSERT INTO `sites` VALUES (1,'https://lenta.ru'),(2,'https://ria.ru'),(3,'https://www.gazeta.ru'),(4,'http://www.rbc.ru');
 /*!40000 ALTER TABLE `sites` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-28 14:35:14
+-- Dump completed on 2017-05-02 19:50:26

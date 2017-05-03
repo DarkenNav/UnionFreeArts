@@ -24,11 +24,12 @@ DROP TABLE IF EXISTS `sites`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sites` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(2048) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `SitesNameIndex` (`Name`(767))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `sites`

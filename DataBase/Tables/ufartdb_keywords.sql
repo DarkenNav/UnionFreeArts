@@ -24,13 +24,14 @@ DROP TABLE IF EXISTS `keywords`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `keywords` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(512) NOT NULL,
   `PersonId` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `KeywordNameIndex` (`Name`(767)),
+  UNIQUE KEY `Name_UNIQUE` (`Name`),
+  KEY `KeywordNameIndex` (`Name`),
   KEY `FKPersonKeywords_idx` (`PersonId`),
-  CONSTRAINT `FKPersonKeywords` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=cp1251;
+  CONSTRAINT `FKPersonKeywords` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +40,7 @@ CREATE TABLE `keywords` (
 
 LOCK TABLES `keywords` WRITE;
 /*!40000 ALTER TABLE `keywords` DISABLE KEYS */;
-INSERT INTO `keywords` VALUES (1,'Путин',1),(2,'Медведев',2);
+INSERT INTO `keywords` VALUES (1,'Путин',1),(2,'Медведев',2),(3,'Навальный',3),(4,'Навальному',3),(5,'Навального',3),(6,'Навальным',3),(7,'Навальном',3),(8,'Шойгу',4);
 /*!40000 ALTER TABLE `keywords` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-28 14:35:13
+-- Dump completed on 2017-05-02 19:50:26

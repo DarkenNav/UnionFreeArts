@@ -24,12 +24,13 @@ DROP TABLE IF EXISTS `keywords`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `keywords` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(512) NOT NULL,
   `PersonId` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `KeywordNameIndex` (`Name`(767)),
+  UNIQUE KEY `Name_UNIQUE` (`Name`),
+  KEY `KeywordNameIndex` (`Name`),
   KEY `FKPersonKeywords_idx` (`PersonId`),
-  CONSTRAINT `FKPersonKeywords` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FKPersonKeywords` FOREIGN KEY (`PersonId`) REFERENCES `persons` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -24,10 +24,11 @@ DROP TABLE IF EXISTS `persons`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `persons` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(2048) DEFAULT NULL,
+  `Name` varchar(512) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `PersonNameIndex` (`Name`(767))
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=cp1251;
+  UNIQUE KEY `Name_UNIQUE` (`Name`),
+  KEY `PersonNameIndex` (`Name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=cp1251;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

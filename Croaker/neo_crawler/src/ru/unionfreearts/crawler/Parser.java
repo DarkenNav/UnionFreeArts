@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
 import ru.unionfreearts.crawler.entities.Page;
 
 public class Parser {
+	private final int TIMEOUT = 5000;
 	private final String HREF = " href";
 	private String site, download_page;
 	private File temp_dir;
@@ -48,8 +50,7 @@ public class Parser {
 					startParseThread();
 					startDownloadThread();
 				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println(getSiteId() + "ERROR (Parser): " + e.getMessage());
+					Main.appendLog(getSiteId() + "ERROR (Parser): ", e);
 				}
 			}
 		}).start();
@@ -85,8 +86,7 @@ public class Parser {
 						downloadPage(site + page.getLink(), page.getId());
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println(getSiteId() + "ERROR (startDownloadThread): " + e.getMessage());
+					Main.appendLog(getSiteId() + "ERROR (startDownloadThread): ", e);
 				}
 				download_page = null;
 				System.out.println(getSiteId() + "FINISH Download Thread");
@@ -114,8 +114,7 @@ public class Parser {
 						Thread.sleep(1000);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println(getSiteId() + "ERROR (startParseThread): " + e.getMessage());
+					Main.appendLog(getSiteId() + "ERROR (startParseThread): ", e);
 				}
 				stop = true;
 				System.out.println(getSiteId() + "FINISH Parse Thread");
@@ -151,35 +150,62 @@ public class Parser {
 		f.delete();
 	}
 
-	private void downloadPage(String link, int id) throws Exception {
+	private void downloadPage(String link, int id) {
 		File f = getFile(id);
-		if (f.exists())
-			return;
-		download_page = f.getName();
-		System.out.println(getSiteId() + "start download page #" + id + ": " + link);
-		URL url = new URL(link);
-		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-		String line;
-		boolean isBody = false;
-		while ((line = br.readLine()) != null && !stop) {
-			if (!isBody) {
-				if (line.contains("<body")) {
-					isBody = true;
-					bw.write(line.substring(line.indexOf("<body")));
+		try {
+			if (f.exists())
+				return;
+			download_page = f.getName();
+			System.out.println(getSiteId() + "start download page #" + id + ": " + link);
+			URL url = new URL(link);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(TIMEOUT);
+			conn.setReadTimeout(TIMEOUT);
+			conn.connect();
+			if (conn.getResponseCode() != 200) {
+				Main.appendLog(getSiteId() + "page #" + id + ": SERVER ERROR #" + conn.getResponseCode() + ", "
+						+ conn.getResponseMessage() + " on " + link, null);
+				conn.disconnect();
+				if (conn.getResponseCode() == 404 || conn.getResponseCode() == 301) {
+					// delete not found page or Moved Permanently:
+					base.deleteLink(id);
+				} else if (conn.getResponseCode() == 302) {
+					// "Found" - replace link from Location-head:
+					link = handlingLink(conn.getHeaderField("Location"));
+					if (link == null)
+						base.deleteLink(id);
+					else
+						base.replaceLink(id, link);
+				}
+				return;
+			}
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+			String line;
+			boolean isBody = false;
+			while ((line = br.readLine()) != null && !stop) {
+				if (!isBody) {
+					if (line.contains("<body")) {
+						isBody = true;
+						bw.write(line.substring(line.indexOf("<body")));
+						bw.newLine();
+						bw.flush();
+					}
+				} else {
+					bw.write(line);
 					bw.newLine();
 					bw.flush();
 				}
-			} else {
-				bw.write(line);
-				bw.newLine();
-				bw.flush();
 			}
+			br.close();
+			bw.close();
+			if (!stop)
+				System.out.println(getSiteId() + "finish download page #" + id + ": " + link);
+		} catch (Exception e) {
+			if (f.exists())
+				f.delete();
+			Main.appendLog(getSiteId() + "ERROR (downloadPage) #" + id + ":", e);
 		}
-		br.close();
-		bw.close();
-		if (!stop)
-			System.out.println(getSiteId() + "finish download page #" + id + ": " + link);
 	}
 
 	private void addLinksFromPage(int page_id) throws Exception {
@@ -197,22 +223,37 @@ public class Parser {
 					break;
 				link = link.substring(0, link.indexOf(quote));
 				i = line.indexOf(HREF, i);
-				if (link.indexOf(site) > 0) // share link: ...um=social&href=https://site....
+				link = handlingLink(link);
+				if (link == null) {
 					continue;
-				if (link.indexOf("//") == 0)
-					link = "http:" + link;
-				if (!isDisallow(link)) {
-					if (link.contains(site)) // remove http://site.ru
-						link = link.substring(site.length());
-					if (link.length() > 1) {
-						if (link.indexOf("/") > 0) // bad link
-							continue;
-						base.addLink(link);
-					}
+				} else {
+					base.addLink(link);
 				}
 			}
 		}
 		br.close();
+	}
+
+	private String handlingLink(String link) {
+		if (link.contains(" ")) // bad link
+			return null;
+		if (link.indexOf(site) > 0) // share link:
+			return null; // ...um=social&href=https://site....
+		if (link.indexOf("//") == 0) // not full link
+			link = "http:" + link;
+		if (isDisallow(link)) // disallow link
+			return null;
+		if (link.contains(site)) // remove http://site.ru
+			link = link.substring(site.length());
+		if (link.contains("#")) // remove tag #name
+			link = link.substring(0, link.indexOf("#"));
+		if (link.contains("?")) // remove parameters ?name
+			link = link.substring(0, link.indexOf("?"));
+		if (link.indexOf("/") > 0) // bad link
+			return null;
+		if (link.length() > 1)
+			return link;
+		return null;
 	}
 
 	private boolean isDisallow(String url) {

@@ -46,9 +46,12 @@ public class DBHandler {
 
 			dateStart = new Date(System.currentTimeMillis());
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("ERROR (DBHandler): " + e.getMessage());
+			Main.appendLog(getSiteId() + "ERROR (DBHandler): ", e);
 		}
+	}
+
+	private String getSiteId() {
+		return "#" + site_id + " ";
 	}
 
 	public String getSite() throws Exception {
@@ -88,21 +91,26 @@ public class DBHandler {
 		return persons.get(index);
 	}
 
-	public boolean addLink(String link) throws Exception {
-		if (containsLink(link))
-			return false;
-		PreparedStatement stmt = con
-				.prepareStatement("INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
-		stmt.setString(1, link);
-		stmt.setInt(2, site_id);
-		Date d = parseDate(link);
-		if (d.getTime() < dateMin.getTime())
-			return false;
-		stmt.setDate(3, d);
-		stmt.setDate(4, new Date(0));
-		stmt.execute();
-		stmt.close();
-		return true;
+	public boolean addLink(String link) {
+		try {
+			if (containsLink(link))
+				return false;
+			PreparedStatement stmt = con.prepareStatement(
+					"INSERT INTO pages (Url, SiteID, FoundDateTime, LastScanDate) VALUES (?, ?, ?, ?)");
+			stmt.setString(1, link);
+			stmt.setInt(2, site_id);
+			Date d = parseDate(link);
+			if (d.getTime() < dateMin.getTime())
+				return false;
+			stmt.setDate(3, d);
+			stmt.setDate(4, new Date(0));
+			stmt.execute();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			Main.appendLog(getSiteId() + "ERROR (addLink): ", e);
+		}
+		return false;
 	}
 
 	private Date parseDate(String s) {
@@ -205,8 +213,7 @@ public class DBHandler {
 				stmt.close();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("ERROR (saveRanks): " + e.getMessage());
+			Main.appendLog(getSiteId() + "ERROR (saveRanks): ", e);
 		}
 		ranks.clear();
 	}
@@ -219,8 +226,35 @@ public class DBHandler {
 			stmt.execute();
 			stmt.close();
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("ERROR (updateScanDate): " + e.getMessage());
+			Main.appendLog(getSiteId() + "ERROR (updateScanDate) #" + page_id + ":", e);
+		}
+	}
+
+	public void deleteLink(int page_id) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM pages WHERE id = ?");
+			stmt.setInt(1, page_id);
+			stmt.execute();
+			stmt.close();
+			Main.appendLog("DELETED page #" + page_id, null);
+		} catch (Exception e) {
+			Main.appendLog(getSiteId() + "ERROR (deleteLink) #" + page_id + ":", e);
+		}
+	}
+
+	public void replaceLink(int page_id, String new_link) {
+		try {
+			if (containsLink(new_link)) {
+				deleteLink(page_id);
+				return;
+			}
+			PreparedStatement stmt = con.prepareStatement("UPDATE pages SET Url = ? WHERE id = ?");
+			stmt.setString(1, new_link);
+			stmt.setInt(2, page_id);
+			stmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			Main.appendLog(getSiteId() + "ERROR (replaceLink) #" + page_id + ":", e);
 		}
 	}
 }

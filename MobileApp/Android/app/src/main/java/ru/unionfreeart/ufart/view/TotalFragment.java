@@ -1,4 +1,4 @@
-package ru.unionfreeart.ufart;
+package ru.unionfreeart.ufart.view;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.ListAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;

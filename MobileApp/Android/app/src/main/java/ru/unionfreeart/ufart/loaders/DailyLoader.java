@@ -15,7 +15,7 @@ import org.json.JSONArray;
 
 import java.util.Date;
 
-import ru.unionfreeart.ufart.Settings;
+import ru.unionfreeart.ufart.view.Settings;
 import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.repositories.TableRepositories;

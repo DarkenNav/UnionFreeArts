@@ -13,7 +13,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
-import ru.unionfreeart.ufart.Settings;
+import ru.unionfreeart.ufart.view.Settings;
 import ru.unionfreeart.ufart.entities.ListItem;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;

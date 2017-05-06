@@ -1,4 +1,4 @@
-package ru.unionfreeart.ufart;
+package ru.unionfreeart.ufart.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;

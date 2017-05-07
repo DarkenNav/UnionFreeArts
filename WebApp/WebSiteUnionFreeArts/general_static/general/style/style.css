@@ -1,0 +1,53 @@
+
+body {
+    background: #c5c5c5;
+    min-height: 100%;
+
+}
+
+header {
+    min-height: 130px;
+    background: #fff;
+    background: linear-gradient(to top, gray, white);
+    height: 90%;
+    margin: auto;
+}
+
+nav {
+    margin-left: 130px;
+}
+
+header a {
+    float: left;
+    position: inherit;
+}
+
+footer {
+    margin-top: 10px;
+    position: absolute;
+
+}
+
+.logo {
+    float: left;
+}
+
+.content{
+    width: 50%;
+    margin: auto;
+}
+h2{
+    margin: auto;
+    text-align: center;
+}
+.table_members {
+    margin: 5px auto;
+    border: solid 1px;
+}
+.table_members tr:first-child {
+    text-align: center;
+}
+.table_members td {
+    border: solid 1px;
+    padding: 2px 3px;
+}

@@ -1,5 +1,5 @@
 # neo_crawler
-### Самобытный краулер от Юрия Тихомирова (Neosvet)
+### Краулер от Юрия Тихомирова (Neosvet)
 
 Проект разработан в Eclipse (Version: Mars.2 Release 4.5.2).
 Java - jre1.8.0_131

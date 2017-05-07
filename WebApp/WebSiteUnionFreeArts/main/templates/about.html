@@ -1,8 +1,62 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}О компании{% endblock %}
 
 {% block content  %}
+    <p><b>Это учебнгый проект.</b>
+    </p>
     <h1> О компании</h1>
-    <P>Компания UnionFreeArts занимается разработкой ПО для образовательного портала Geekbrains в рамках стажировки</P>
+    <P>Компания UnionFreeArts занимается разработкой ПО для образовательного портала Geekbrains в рамках стажировки.
+    </P>
+    <h2>
+        Участники разработки:
+    </h2>
+    <table class="table_members">
+        <tr>
+            <td>
+                Участник
+            </td>
+            <td>
+                Роль в компании
+            </td>
+            <td>
+                Контакты
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                Иван Голубых
+            </td>
+            <td>
+                Разработчик веб-сайта компании на Python/Django. Создание back-end-а, доработка и наполнение информацией на front-end-е.
+            </td>
+            <td>
+                Город: Санкт-Петербург
+                <br>Телефон: 8-921-355-04-60
+                <br>Git: <a href="https://github.com/ivangolubykh">ivangolubykh</a>
+                <br>E-mail: <a href="mailto:ivan9@allworld.xyz">ivan9@allworld.xyz</a>
+                <br>Skype: <a href="skype:kreoya">kreoya</a>
+                <br>ВКонтакте: <a href="https://vk.com/id52396437">https://vk.com/id52396437</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                Алексей Ермаков
+            </td>
+            <td>
+                Разработчик веб-сайта компании на Python/Django. Разработка и вёрстка front-end-а, доработка и наполнение информацией на front-end-е.
+            </td>
+            <td>
+                Город: Санкт-Петербург
+                <br>Телефон: -
+                <br>Git: <a href="https://github.com/SayWho">SayWho</a>
+                <br>E-mail: <a href="mailto:ermakov.lesha@gmail.com">ermakov.lesha@gmail.com</a>
+                <br>Skype: <a href="skype:santoruy">santoruy</a>
+                <br>ВКонтакте: -
+            </td>
+        </tr>
+    </table>
 {% endblock %}

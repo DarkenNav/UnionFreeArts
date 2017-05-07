@@ -40,3 +40,14 @@ h2{
     margin: auto;
     text-align: center;
 }
+.table_members {
+    margin: 5px auto;
+    border: solid 1px;
+}
+.table_members tr:first-child {
+    text-align: center;
+}
+.table_members td {
+    border: solid 1px;
+    padding: 2px 3px;
+}

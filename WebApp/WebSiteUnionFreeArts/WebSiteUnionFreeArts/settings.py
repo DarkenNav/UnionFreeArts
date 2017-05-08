@@ -172,3 +172,11 @@ if DEBUG:
     INSTALLED_APPS += ('debug_toolbar',)
     # IP-адрес браузера, а не сервера:
     INTERNAL_IPS = ('127.0.0.1',)
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'testing@example.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_PORT = 1025

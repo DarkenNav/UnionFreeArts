@@ -176,7 +176,7 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
         if(adList.getSelectIndex() > -1)
             return true;
         else
-            Toast.makeText(activity, getResources().getString(R.string.need_select), Toast.LENGTH_LONG).show();;
+            Toast.makeText(activity, getResources().getString(R.string.need_select), Toast.LENGTH_LONG).show();
         return false;
     }
 
@@ -187,7 +187,7 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     public void putResult(String msg) {
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
-            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();;
+            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
         } else {
             openPerson();
             openList();

@@ -139,7 +139,7 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
         if(adList.getSelectIndex() > -1)
             return true;
         else
-            Toast.makeText(activity, getResources().getString(R.string.need_select), Toast.LENGTH_LONG).show();;
+            Toast.makeText(activity, getResources().getString(R.string.need_select), Toast.LENGTH_LONG).show();
         return false;
     }
 
@@ -150,7 +150,7 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     public void putResult(String msg) {
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
-            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();;
+            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
         } else {
             openList();
         }

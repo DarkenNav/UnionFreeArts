@@ -2,10 +2,11 @@ from django import forms
 
 
 class ContactForm(forms.Form):
-    Имя = forms.CharField(required=True)
-    Email = forms.EmailField(required=True)
-    Тема = forms.CharField(required=True)
-    Сообщение = forms.CharField(
+    Name = forms.CharField(required=True, label='Ваше имя')
+    Email = forms.EmailField(required=True, label='Ваш e-mail')
+    Topic = forms.CharField(required=True, label='Тема сообщения')
+    Message = forms.CharField(
         required=True,
-        widget=forms.Textarea
+        widget=forms.Textarea,
+        label='Сообщение'
     )

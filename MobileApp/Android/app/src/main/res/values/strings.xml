@@ -12,6 +12,7 @@
     <string name="add">Добавить</string>
     <string name="edit">Редактировать</string>
     <string name="delete">Удалить</string>
+    <string name="need_select">Сначала выберите элемент списка</string>
     <string name="site">Сайт:</string>
     <string name="name">Имя</string>
     <string name="count_mentions">Количество упоминаний</string>

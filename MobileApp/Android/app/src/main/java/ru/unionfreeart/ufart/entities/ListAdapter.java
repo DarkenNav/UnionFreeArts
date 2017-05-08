@@ -73,6 +73,7 @@ public class ListAdapter extends BaseAdapter {
     }
 
     public void clear() {
+        select_index = -1;
         data.clear();
     }
 }

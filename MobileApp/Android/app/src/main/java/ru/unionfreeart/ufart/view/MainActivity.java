@@ -87,6 +87,15 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_daily:
                 fragmentTransaction.replace(R.id.fragment, new DailyFragment());
                 break;
+            case R.id.nav_persons:
+                fragmentTransaction.replace(R.id.fragment, new PersonsFragment());
+                break;
+            case R.id.nav_keywords:
+                fragmentTransaction.replace(R.id.fragment, new KeywordsFragment());
+                break;
+            case R.id.nav_sites:
+                fragmentTransaction.replace(R.id.fragment, new SitesFragment());
+                break;
             case R.id.nav_settings:
                 fragmentTransaction.replace(R.id.fragment, new SettingsFragment());
                 break;

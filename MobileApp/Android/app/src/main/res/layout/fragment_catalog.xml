@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:maxLines="1"
             android:padding="10dp"
             android:text="@string/add"
             android:textColor="@color/colorAccent" />
@@ -67,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:maxLines="1"
             android:padding="10dp"
             android:text="@string/edit"
             android:textColor="@color/colorAccent" />
@@ -82,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:maxLines="1"
             android:padding="10dp"
             android:text="@string/delete"
             android:textColor="@color/colorAccent" />

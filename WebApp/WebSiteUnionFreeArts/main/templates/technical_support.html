@@ -4,27 +4,17 @@
 
 {% block content  %}
 <article>
-    <div class="qew">
-        <p>
-        <h2>Напишите нам</h2></p>
-        <form class="form-horizontal">
-            <label for="login">Имя</label></br>
-            <input type="login" class="form-control" cols="25" rows="1" placeholder="Ваше имя"/></br>
-            <div class="control-group">
-                <label class="control-label" for="inputEmail">Email</label>
-                <div class="controls">
-                    <input type="text" class="form-control" id="inputEmail" placeholder="Email">
-                </div>
-            </div>
-            <label for="Theme">Тема</label><br>
-            <input type="text" class="form-control" cols="25" rows="1" placeholder="Тема письма"/><br>
-            <label for="textarea">Ваше сообщение</label><br>
-            <textarea class="form-control" cols="25" rows="5" placeholder="Введите текст.
-Не больше 300 символов" maxlength="300"></textarea><br>
-            <div class="controls">
-                <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-        </form>
-    </div>
+    <p><b>Это учебный проект.</b>
+    </p>
+    <h2>Часто задаваемые вопросы:</h2>
+    <p><b>В:</b> Когда была основана ваша компания?</p>
+    <p><b>О:</b> Компания была основана 4 апреля 2017 г., на первом занятии по курсу «Стажировка в GeekBrains»</p>
+    <p><b>В:</b> Есть ли официальный git-репозиторий вашего проекта с открытым доступом?</p>
+    <p><b>О:</b> Да, git-репозиторий этого проекта доступен по ссылке: <a href="https://github.com/DarkenNav/UnionFreeArts" target="_blank">https://github.com/DarkenNav/UnionFreeArts</a></p>
+    <p><b>В:</b> Использовались ли при разработке проекта приложения для управления проектами?</p>
+    <p><b>О:</b> Да, использовалось приложение <a href="https://trello.com/" target="_blank">Trello</a>.</p>
+
+    {% include 'form_mail.html' %}
+
 </article>
     {% endblock %}

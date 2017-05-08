@@ -26,5 +26,3 @@ python3 ./manage.py runserver
 #Запускаем интерактивную консоль django:
 #./manage.py shell
 
-
-#test223

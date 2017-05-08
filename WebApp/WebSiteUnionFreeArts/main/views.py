@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .forms import ContactForm
 from django.core.mail import EmailMessage
 from django.shortcuts import redirect
-from django.template import Context
 from django.template.loader import get_template
 
 
@@ -18,11 +17,6 @@ def about(request):
     return render(request, 'about.html', context)
 
 
-# def technical_support(request):
-#     '''Страница "Техническая помощь"'''
-#     context = {}
-#     return render(request, 'technical_support.html', context)
-
 def technical_support(request):
     form_class = ContactForm
     # new logic!
@@ -30,19 +24,20 @@ def technical_support(request):
         form = form_class(data=request.POST)
 
         if form.is_valid():
-            contact_name = request.POST.get('Имя', '')
+            contact_name = request.POST.get('Name', '')
             contact_email = request.POST.get('Email', '')
-            contact_email = request.POST.get('Email', '')
-            form_content = request.POST.get('content', '')
+            topic = request.POST.get('Topic', '')
+            message = request.POST.get('Message', '')
 
             # Email the profile with the
             # contact information
             template = get_template('contact_template.txt')
-        context = Context({
+        context = {
             'contact_name': contact_name,
             'contact_email': contact_email,
-            'form_content': form_content,
-        })
+            'topic': topic,
+            'message': message,
+        }
         content = template.render(context)
 
         email = EmailMessage("New contact form submission", content, "Your website" + '',
@@ -50,7 +45,7 @@ def technical_support(request):
                              headers={'Reply-To': contact_email}
                              )
         email.send()
-        return redirect('contact')
+        return redirect('technical_support')
 
     return render(request, 'technical_support.html', {'form': form_class, })
 
@@ -62,19 +57,20 @@ def contact(request):
         form = form_class(data=request.POST)
 
         if form.is_valid():
-            contact_name = request.POST.get('Имя', '')
+            contact_name = request.POST.get('Name', '')
             contact_email = request.POST.get('Email', '')
-            contact_email = request.POST.get('Email', '')
-            form_content = request.POST.get('content', '')
+            topic = request.POST.get('Topic', '')
+            message = request.POST.get('Message', '')
 
             # Email the profile with the
             # contact information
             template = get_template('contact_template.txt')
-        context = Context({
+        context = {
             'contact_name': contact_name,
             'contact_email': contact_email,
-            'form_content': form_content,
-        })
+            'topic': topic,
+            'message': message,
+        }
         content = template.render(context)
 
         email = EmailMessage("New contact form submission", content, "Your website" + '',
@@ -91,3 +87,8 @@ def comment(request):
     '''Страница "Отзывы"'''
     context = {}
     return render(request, 'comment.html', context)
+
+
+def form_success_tech_sup(request):
+    context = {}
+    return render(request, 'form_success_tech_sup.html', context)

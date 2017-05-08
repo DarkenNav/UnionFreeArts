@@ -44,16 +44,7 @@
         <p><b>О:</b> Да, использовалось приложение <a href="https://trello.com/" target="_blank">Trello</a>.</p>
 
 
-        <div class="qew">
-            <p>
-            <h2>Напишите нам</h2></p>
-
-            <form role="form" action="" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Отправить</button>
-            </form>
-        </div>
+        {% include 'form_mail.html' %}
     </article>
 {% endblock %}
 

@@ -1,7 +1,9 @@
 package ru.unionfreeart.ufart.view;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,11 +19,13 @@ import ru.unionfreeart.ufart.entities.ListAdapter;
 import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
+import ru.unionfreeart.ufart.loaders.CatalogTask;
 import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
+import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.LoaderTask;
 
-public class KeywordsFragment extends Fragment implements IMasterTask {
+public class KeywordsFragment extends Fragment implements IMasterTask, InputDialog.Result {
     private final String LOADER = "loader", PERSON = "person", SELECT = "sel";
     private MainActivity activity;
     private LoaderTask loader;
@@ -117,24 +121,63 @@ public class KeywordsFragment extends Fragment implements IMasterTask {
         container.findViewById(R.id.bAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                loader = new LoaderTask(SitesFragment.this);
-//                ILoader loaderTotal = new TotalLoader(adSites.getId(spSite.getSelectedItemPosition()));
-//                loader.execute(loaderTotal);
-                activity.setVisibleProgressBar(true);
+                InputDialog dialog = new InputDialog(activity);
+                dialog.setResult(KeywordsFragment.this);
+                dialog.show();
             }
         });
         container.findViewById(R.id.bEdit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.setVisibleProgressBar(true);
+                if (isCorrectIndex()) {
+                    InputDialog dialog = new InputDialog(activity);
+                    dialog.setResult(KeywordsFragment.this);
+                    dialog.show(adList.getSelectName());
+                }
             }
         });
         container.findViewById(R.id.bDelete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.setVisibleProgressBar(true);
+                if (isCorrectIndex()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setTitle(getResources().getString(R.string.delete) + "?");
+                    builder.setMessage(adList.getSelectName());
+                    builder.setNegativeButton(getResources().getString(android.R.string.no),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.setPositiveButton(getResources().getString(android.R.string.yes),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    deleteItem();
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
             }
         });
+    }
+
+    private void deleteItem() {
+        loader = new LoaderTask(KeywordsFragment.this);
+        ILoader catalogTask = new CatalogTask(ListRepositories.LIST_KEYWORDS,
+                Const.DELETE, adList.getSelectName(), person, adList.getSelectIndex());
+        ListLoader loaderKeywords = new ListLoader(ListRepositories.LIST_KEYWORDS);
+        loaderKeywords.setId(person);
+        loader.execute(catalogTask, loaderKeywords);
+        activity.setVisibleProgressBar(true);
+    }
+
+    private boolean isCorrectIndex() {
+        if(adList.getSelectIndex() > -1)
+            return true;
+        else
+            Toast.makeText(activity, getResources().getString(R.string.need_select), Toast.LENGTH_LONG).show();;
+        return false;
     }
 
     public Context getContext() {
@@ -144,7 +187,7 @@ public class KeywordsFragment extends Fragment implements IMasterTask {
     public void putResult(String msg) {
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
-            Toast.makeText(activity, msg, Toast.LENGTH_LONG);
+            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();;
         } else {
             openPerson();
             openList();
@@ -170,5 +213,24 @@ public class KeywordsFragment extends Fragment implements IMasterTask {
             adPerson.addItem(persons.getItem(i));
         }
         adPerson.notifyDataSetChanged();
+    }
+
+    @Override
+    public void putString(int action, String input) {
+        if (action == Const.CANCEL)
+            return;
+        loader = new LoaderTask(KeywordsFragment.this);
+        CatalogTask catalogTask;
+        if (action == Const.ADD) {
+            catalogTask = new CatalogTask(ListRepositories.LIST_KEYWORDS,
+                    Const.ADD, input, person, -1);
+        } else { //action == Const.EDIT
+            catalogTask = new CatalogTask(ListRepositories.LIST_KEYWORDS,
+                    Const.EDIT, input, person, adList.getSelectIndex());
+        }
+        ListLoader loaderKeywords = new ListLoader(ListRepositories.LIST_KEYWORDS);
+        loaderKeywords.setId(person);
+        loader.execute(catalogTask, loaderKeywords);
+        activity.setVisibleProgressBar(true);
     }
 }

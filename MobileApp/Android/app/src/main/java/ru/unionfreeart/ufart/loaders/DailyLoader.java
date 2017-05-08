@@ -15,17 +15,17 @@ import org.json.JSONArray;
 
 import java.util.Date;
 
-import ru.unionfreeart.ufart.view.Settings;
 import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
+import ru.unionfreeart.ufart.utils.Const;
+import ru.unionfreeart.ufart.utils.Settings;
 
 /**
  * Created by NeoSvet on 01.05.2017.
  */
 
 public class DailyLoader implements ILoader {
-    private final int TIMEOUT = 5000;
     private int id_site, id_person;
     private Date dateStart, dateFinish;
 
@@ -38,8 +38,8 @@ public class DailyLoader implements ILoader {
 
     public void run(Context context) throws Exception {
         BasicHttpParams httpParameters = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParameters, TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpParameters, TIMEOUT);
+        HttpConnectionParams.setConnectionTimeout(httpParameters, Const.TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpParameters, Const.TIMEOUT);
         DefaultHttpClient client = new DefaultHttpClient(httpParameters);
         Settings settings = new Settings(context);
         HttpGet rget = new HttpGet(settings.getAddress() + "/stat/daily?personId="

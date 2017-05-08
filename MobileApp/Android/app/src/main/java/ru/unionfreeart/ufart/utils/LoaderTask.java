@@ -1,4 +1,4 @@
-package ru.unionfreeart.ufart.view;
+package ru.unionfreeart.ufart.utils;
 
 import android.content.Context;
 import android.os.AsyncTask;

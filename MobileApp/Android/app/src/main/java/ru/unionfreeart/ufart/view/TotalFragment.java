@@ -21,6 +21,7 @@ import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.loaders.TotalLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
+import ru.unionfreeart.ufart.utils.LoaderTask;
 
 public class TotalFragment extends Fragment implements IMasterTask {
     private final String LOADER = "loader", SITE_POSITON = "site", VISIBLE_OPTIONS = "options";

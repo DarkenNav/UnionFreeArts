@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import ru.unionfreeart.ufart.R;
+import ru.unionfreeart.ufart.utils.Settings;
 
 public class SettingsFragment extends Fragment {
     private MainActivity act;

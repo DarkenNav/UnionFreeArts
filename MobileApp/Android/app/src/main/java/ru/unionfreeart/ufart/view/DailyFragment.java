@@ -29,6 +29,7 @@ import ru.unionfreeart.ufart.loaders.DailyLoader;
 import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
+import ru.unionfreeart.ufart.utils.LoaderTask;
 
 public class DailyFragment extends Fragment implements View.OnClickListener, IMasterTask {
     private final String START = "start", FINISH = "finish", LOADER = "loader",

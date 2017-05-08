@@ -4,12 +4,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.ListAdapter;
@@ -17,6 +17,7 @@ import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
 import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
+import ru.unionfreeart.ufart.utils.LoaderTask;
 
 public class SitesFragment extends Fragment implements IMasterTask {
     private final String LOADER = "loader", SELECT = "sel";
@@ -107,7 +108,7 @@ public class SitesFragment extends Fragment implements IMasterTask {
     public void putResult(String msg) {
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
-            Snackbar.make(null, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            Toast.makeText(activity, msg, Toast.LENGTH_LONG);
         } else {
             openList();
         }

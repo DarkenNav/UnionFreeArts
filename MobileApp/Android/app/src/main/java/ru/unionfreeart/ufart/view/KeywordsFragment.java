@@ -4,13 +4,13 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.ListAdapter;
@@ -19,29 +19,29 @@ import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
 import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
+import ru.unionfreeart.ufart.utils.LoaderTask;
 
 public class KeywordsFragment extends Fragment implements IMasterTask {
-    private final String LOADER = "loader", SELECT = "sel";
+    private final String LOADER = "loader", PERSON = "person", SELECT = "sel";
     private MainActivity activity;
     private LoaderTask loader;
     private Spinner spPerson;
     private SpinnerAdapter adPerson;
     private ListView lvList;
     private ListAdapter adList;
+    private int person = 0;
     private View container;
-    private boolean boolLoad = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         activity = (MainActivity) getActivity();
-        activity.setTitle(getResources().getString(R.string.sites));
+        activity.setTitle(getResources().getString(R.string.keywords));
         this.container = inflater.inflate(R.layout.fragment_catalog, container, false);
         initPerson();
         initList();
         initButtons();
         restoreFragmentState(savedInstanceState);
-        boolLoad = false;
         return this.container;
     }
 
@@ -58,6 +58,9 @@ public class KeywordsFragment extends Fragment implements IMasterTask {
             if (loader != null && loader.getStatus() != AsyncTask.Status.RUNNING) {
                 loader.newMaster(KeywordsFragment.this);
             }
+            openPerson();
+            person = state.getInt(PERSON);
+            spPerson.setSelection(person);
             openList();
             adList.setSelectIndex(state.getInt(SELECT));
             adList.notifyDataSetChanged();
@@ -68,6 +71,7 @@ public class KeywordsFragment extends Fragment implements IMasterTask {
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(LOADER, loader);
         outState.putInt(SELECT, adList.getSelectIndex());
+        outState.putInt(PERSON, person);
         super.onSaveInstanceState(outState);
     }
 
@@ -78,12 +82,14 @@ public class KeywordsFragment extends Fragment implements IMasterTask {
         spPerson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!boolLoad) {
+                if (i != person) {
+                    adList.setSelectIndex(-1);
                     loader = new LoaderTask(KeywordsFragment.this);
                     ListLoader loaderKeywords = new ListLoader(ListRepositories.LIST_KEYWORDS);
                     loaderKeywords.setId(i);
                     loader.execute(loaderKeywords);
                     activity.setVisibleProgressBar(true);
+                    person = i;
                 }
             }
 
@@ -138,7 +144,7 @@ public class KeywordsFragment extends Fragment implements IMasterTask {
     public void putResult(String msg) {
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
-            Snackbar.make(null, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            Toast.makeText(activity, msg, Toast.LENGTH_LONG);
         } else {
             openPerson();
             openList();

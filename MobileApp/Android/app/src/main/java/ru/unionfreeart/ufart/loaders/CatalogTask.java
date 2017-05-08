@@ -20,28 +20,28 @@ import ru.unionfreeart.ufart.utils.Settings;
 
 public class CatalogTask implements ILoader {
     private final String PARAMETER_NAME = "data";
-    private String name, reqest;
+    private String name, request;
     private int method;
 
     public CatalogTask(String name, String item) {
         this.name = name;
         method = Const.ADD;
-        reqest = "{\"name\": \"" + item + "\"}";
+        request = "{\"name\": \"" + item + "\"}";
     }
 
     public CatalogTask(String name, int method, String item, int id) {
         this.name = name;
         this.method = method;
-        reqest = "{\"id\": " + id + ", \"name\": \"" + item + "\"}";
+        request = "{\"id\": " + id + ", \"name\": \"" + item + "\"}";
     }
 
     public CatalogTask(String name, int method, String item, int person, int id) {
         this.name = name;
         this.method = method;
         if (id > 0)
-            reqest = "{\"id\": " + id + ", \"name\": \"" + item + "\", \"personId\": " + person + "}";
+            request = "{\"id\": " + id + ", \"name\": \"" + item + "\", \"personId\": " + person + "}";
         else
-            reqest = "{\"name\": \"" + item + "\", \"personId\": " + person + "}";
+            request = "{\"name\": \"" + item + "\", \"personId\": " + person + "}";
     }
 
     public void run(Context context) throws Exception {
@@ -52,7 +52,7 @@ public class CatalogTask implements ILoader {
         Settings settings = new Settings(context);
         HttpResponse res;
         httpParameters = new BasicHttpParams();
-        httpParameters.setParameter(PARAMETER_NAME, reqest);
+        httpParameters.setParameter(PARAMETER_NAME, request);
         switch (method) {
             case Const.ADD:
                 HttpPost post = new HttpPost(settings.getAddress() + name + "/");

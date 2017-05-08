@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import ru.unionfreeart.ufart.R;
-import ru.unionfreeart.ufart.entities.ListAdapter;
+import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
@@ -27,7 +27,7 @@ public class TotalFragment extends Fragment implements IMasterTask {
     private MainActivity activity;
     private LoaderTask loader;
     private Spinner spSite;
-    private ListAdapter adSites;
+    private SpinnerAdapter adSites;
     private TableAdapter adTable;
     private View container, pOptions, pList, fabOptions, fabOk;
 
@@ -114,7 +114,7 @@ public class TotalFragment extends Fragment implements IMasterTask {
 
     private void initSites() {
         spSite = (Spinner) container.findViewById(R.id.spSite);
-        adSites = new ListAdapter(activity);
+        adSites = new SpinnerAdapter(activity);
         spSite.setAdapter(adSites);
     }
 

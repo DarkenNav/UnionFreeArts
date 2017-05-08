@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ru.unionfreeart.ufart.R;
-import ru.unionfreeart.ufart.entities.ListAdapter;
+import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
@@ -39,7 +39,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
     private MainActivity activity;
     private LoaderTask loader;
     private Spinner spSite, spPerson;
-    private ListAdapter adSites, adPerson;
+    private SpinnerAdapter adSites, adPerson;
     private TableAdapter adTable;
     private EditText etStartDate, etFinishDate;
     private Date dateStart, dateFinish;
@@ -150,13 +150,13 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
 
     private void initSites() {
         spSite = (Spinner) container.findViewById(R.id.spSite);
-        adSites = new ListAdapter(activity);
+        adSites = new SpinnerAdapter(activity);
         spSite.setAdapter(adSites);
     }
 
     private void initPersons() {
         spPerson = (Spinner) container.findViewById(R.id.spPerson);
-        adPerson = new ListAdapter(activity);
+        adPerson = new SpinnerAdapter(activity);
         spPerson.setAdapter(adPerson);
     }
 

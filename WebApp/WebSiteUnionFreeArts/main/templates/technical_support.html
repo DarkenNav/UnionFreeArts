@@ -2,6 +2,7 @@
 
 {% block title %}Техническая помощь{% endblock %}
 
+<<<<<<< HEAD
 {#{% block content %}#}
 {#<article>#}
 {#    <div class="qew">#}
@@ -30,6 +31,17 @@
 
 {% block content %}
     <article>
+		<p><b>Это учебный проект.</b>
+    </p>
+    <h2>Часто задаваемые вопросы:</h2>
+    <p><b>В:</b> Когда была основана ваша компания?</p>
+    <p><b>О:</b> Компания была основана 4 апреля 2017 г., на первом занятии по курсу «Стажировка в GeekBrains»</p>
+    <p><b>В:</b> Есть ли официальный git-репозиторий вашего проекта с открытым доступом?</p>
+    <p><b>О:</b> Да, git-репозиторий этого проекта доступен по ссылке: <a href="https://github.com/DarkenNav/UnionFreeArts" target="_blank">https://github.com/DarkenNav/UnionFreeArts</a></p>
+    <p><b>В:</b> Использовались ли при разработке проекта приложения для управления проектами?</p>
+    <p><b>О:</b> Да, использовалось приложение <a href="https://trello.com/" target="_blank">Trello</a>.</p>
+
+    {% include 'form_mail.html' %}
         <div class="qew">
             <p>
             <h2>Напишите нам</h2></p>
@@ -42,4 +54,5 @@
         </div>
     </article>
 {% endblock %}
+
 

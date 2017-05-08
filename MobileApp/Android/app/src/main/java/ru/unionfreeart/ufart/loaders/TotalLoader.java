@@ -14,17 +14,17 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
-import ru.unionfreeart.ufart.Settings;
 import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
+import ru.unionfreeart.ufart.utils.Const;
+import ru.unionfreeart.ufart.utils.Settings;
 
 /**
  * Created by NeoSvet on 01.05.2017.
  */
 
 public class TotalLoader implements ILoader {
-    private final int TIMEOUT = 5000;
     private int id_site;
 
     public TotalLoader(int id_site) {
@@ -33,8 +33,8 @@ public class TotalLoader implements ILoader {
 
     public void run(Context context) throws Exception {
         BasicHttpParams httpParameters = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParameters, TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpParameters, TIMEOUT);
+        HttpConnectionParams.setConnectionTimeout(httpParameters, Const.TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpParameters, Const.TIMEOUT);
         DefaultHttpClient client = new DefaultHttpClient(httpParameters);
         Settings settings = new Settings(context);
         HttpGet rget = new HttpGet(settings.getAddress() + "/stat/total/" + id_site);

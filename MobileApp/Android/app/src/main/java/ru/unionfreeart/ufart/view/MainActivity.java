@@ -1,4 +1,4 @@
-package ru.unionfreeart.ufart;
+package ru.unionfreeart.ufart.view;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import ru.unionfreeart.ufart.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +86,15 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_daily:
                 fragmentTransaction.replace(R.id.fragment, new DailyFragment());
+                break;
+            case R.id.nav_persons:
+                fragmentTransaction.replace(R.id.fragment, new PersonsFragment());
+                break;
+            case R.id.nav_keywords:
+                fragmentTransaction.replace(R.id.fragment, new KeywordsFragment());
+                break;
+            case R.id.nav_sites:
+                fragmentTransaction.replace(R.id.fragment, new SitesFragment());
                 break;
             case R.id.nav_settings:
                 fragmentTransaction.replace(R.id.fragment, new SettingsFragment());

@@ -13,15 +13,14 @@ import java.util.List;
 import ru.unionfreeart.ufart.R;
 
 /**
- * Created by NeoSvet on 08.05.2017.
+ * Created by NeoSvet on 20.04.2017.
  */
 
-public class ListAdapter extends BaseAdapter {
+public class SpinnerAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<ListItem> data = new ArrayList<ListItem>();
-    private int select_index = -1;
 
-    public ListAdapter(Context context) {
+    public SpinnerAdapter(Context context) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -48,32 +47,13 @@ public class ListAdapter extends BaseAdapter {
         return (i >= data.size()) ? 0 : data.get(i).getId();
     }
 
-    public String getSelectName() {
-        return data.get(select_index).getName();
-    }
-
-    public int getSelectIndex() {
-        return select_index;
-    }
-
-    public void setSelectIndex(int select_index) {
-        this.select_index = select_index;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (position == select_index) {
-            convertView = inflater.inflate(R.layout.list_item_bold, null);
-        } else {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_item, null);
         }
         TextView tvName = (TextView) convertView.findViewById(R.id.name);
         tvName.setText(data.get(position).getName());
         return convertView;
-    }
-
-    public void clear() {
-        select_index = -1;
-        data.clear();
     }
 }

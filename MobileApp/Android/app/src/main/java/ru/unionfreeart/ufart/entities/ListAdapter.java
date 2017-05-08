@@ -48,6 +48,10 @@ public class ListAdapter extends BaseAdapter {
         return (i >= data.size()) ? 0 : data.get(i).getId();
     }
 
+    public String getSelectName() {
+        return data.get(select_index).getName();
+    }
+
     public int getSelectIndex() {
         return select_index;
     }

@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ru.unionfreeart.ufart.R;
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
 
 
@@ -17,11 +17,11 @@ import ru.unionfreeart.ufart.interfaces.IMasterTask;
  * Created by NeoSvet on 19.04.2017.
  */
 
-public class LoaderTask extends AsyncTask<ILoader, Integer, String> implements Serializable {
+public class RunnableTask extends AsyncTask<IRunnable, Integer, String> implements Serializable {
     private transient Context context;
     private transient IMasterTask master;
 
-    public LoaderTask(IMasterTask master) {
+    public RunnableTask(IMasterTask master) {
         this.master = master;
         this.context = master.getContext();
     }
@@ -37,7 +37,7 @@ public class LoaderTask extends AsyncTask<ILoader, Integer, String> implements S
     }
 
     @Override
-    protected String doInBackground(ILoader... loaders) {
+    protected String doInBackground(IRunnable... loaders) {
         try {
             for (int i = 0; i < loaders.length; i++) {
                 loaders[i].run(context);

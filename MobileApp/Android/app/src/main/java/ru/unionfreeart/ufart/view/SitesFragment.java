@@ -15,18 +15,18 @@ import android.widget.Toast;
 
 import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.ListAdapter;
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.loaders.CatalogTask;
-import ru.unionfreeart.ufart.loaders.ListLoader;
+import ru.unionfreeart.ufart.runnable.CatalogRunnable;
+import ru.unionfreeart.ufart.runnable.ListRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.utils.Const;
-import ru.unionfreeart.ufart.utils.LoaderTask;
+import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class SitesFragment extends Fragment implements IMasterTask, InputDialog.Result {
-    private final String LOADER = "loader", SELECT = "sel";
+    private final String SELECT = "sel";
     private MainActivity activity;
-    private LoaderTask loader;
+    private RunnableTask task;
     private ListView lvList;
     private ListAdapter adList;
     private View container;
@@ -45,14 +45,14 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
 
     private void restoreFragmentState(Bundle state) {
         if (state == null) { //first open fragment
-            loader = new LoaderTask(SitesFragment.this);
-            ILoader loaderSites = new ListLoader(ListRepositories.LIST_SITES);
-            loader.execute(loaderSites);
+            task = new RunnableTask(SitesFragment.this);
+            IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
+            task.execute(taskSites);
             activity.setVisibleProgressBar(true);
         } else { //restore fragment
-            loader = (LoaderTask) state.getSerializable(LOADER);
-            if (loader != null && loader.getStatus() != AsyncTask.Status.RUNNING) {
-                loader.newMaster(SitesFragment.this);
+            task = (RunnableTask) state.getSerializable(Const.TASK);
+            if (task != null && task.getStatus() != AsyncTask.Status.RUNNING) {
+                task.newMaster(SitesFragment.this);
             }
             openList();
             adList.setSelectIndex(state.getInt(SELECT));
@@ -62,7 +62,7 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(LOADER, loader);
+        outState.putSerializable(Const.TASK, task);
         outState.putInt(SELECT, adList.getSelectIndex());
         super.onSaveInstanceState(outState);
     }
@@ -127,11 +127,11 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     }
 
     private void deleteItem() {
-        loader = new LoaderTask(SitesFragment.this);
-        ILoader catalogTask = new CatalogTask(ListRepositories.LIST_SITES,
+        task = new RunnableTask(SitesFragment.this);
+        IRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_SITES,
                 Const.DELETE, adList.getSelectName(), adList.getSelectIndex());
-        ILoader loaderSites = new ListLoader(ListRepositories.LIST_SITES);
-        loader.execute(catalogTask, loaderSites);
+        IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
+        task.execute(catalogTask, taskSites);
         activity.setVisibleProgressBar(true);
     }
 
@@ -170,16 +170,16 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     public void putString(int action, String input) {
         if (action == Const.CANCEL)
             return;
-        loader = new LoaderTask(SitesFragment.this);
-        CatalogTask catalogTask;
+        task = new RunnableTask(SitesFragment.this);
+        CatalogRunnable catalogRunnable;
         if (action == Const.ADD) {
-            catalogTask = new CatalogTask(ListRepositories.LIST_SITES, input);
+            catalogRunnable = new CatalogRunnable(ListRepositories.LIST_SITES, input);
         } else { //action == Const.EDIT
-            catalogTask = new CatalogTask(ListRepositories.LIST_SITES,
+            catalogRunnable = new CatalogRunnable(ListRepositories.LIST_SITES,
                     Const.EDIT, input, adList.getSelectIndex());
         }
-        ILoader loaderSites = new ListLoader(ListRepositories.LIST_SITES);
-        loader.execute(catalogTask, loaderSites);
+        IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
+        task.execute(catalogRunnable, taskSites);
         activity.setVisibleProgressBar(true);
     }
 }

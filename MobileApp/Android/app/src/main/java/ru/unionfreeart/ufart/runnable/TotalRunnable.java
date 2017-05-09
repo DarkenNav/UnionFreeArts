@@ -1,6 +1,7 @@
-package ru.unionfreeart.ufart.loaders;
+package ru.unionfreeart.ufart.runnable;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,10 +14,8 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
-import java.util.Date;
-
 import ru.unionfreeart.ufart.entities.TableRow;
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
 import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.Settings;
@@ -25,15 +24,11 @@ import ru.unionfreeart.ufart.utils.Settings;
  * Created by NeoSvet on 01.05.2017.
  */
 
-public class DailyLoader implements ILoader {
-    private int id_site, id_person;
-    private Date dateStart, dateFinish;
+public class TotalRunnable implements IRunnable {
+    private int id_site;
 
-    public DailyLoader(int id_site, int id_person, Date dateStart, Date dateFinish) {
+    public TotalRunnable(int id_site) {
         this.id_site = id_site;
-        this.id_person = id_person;
-        this.dateStart = dateStart;
-        this.dateFinish = dateFinish;
     }
 
     public void run(Context context) throws Exception {
@@ -42,15 +37,16 @@ public class DailyLoader implements ILoader {
         HttpConnectionParams.setSoTimeout(httpParameters, Const.TIMEOUT);
         DefaultHttpClient client = new DefaultHttpClient(httpParameters);
         Settings settings = new Settings(context);
-        HttpGet rget = new HttpGet(settings.getAddress() + "/stat/daily?personId="
-                + id_person + "&siteId=" + id_site + "&startDate=" + dateStart.getTime() +
-                "&finishDate=" + dateFinish.getTime());
+        HttpGet rget = new HttpGet(settings.getAddress() + "/stat/total/" + id_site);
         HttpResponse res = client.execute(rget);
+        Log.d("neo","code="+res.getStatusLine().getStatusCode());
         if (res.getStatusLine().getStatusCode() == 200) { //ok
-            JSONArray jsonA = new JSONArray(EntityUtils.toString(res.getEntity()));
+            String r = EntityUtils.toString(res.getEntity());
+            Log.d("neo",r);
+            JSONArray jsonA = new JSONArray(r);
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            TableRepositories table = new TableRepositories(context, TableRepositories.TABLE_DAILY);
+            TableRepositories table = new TableRepositories(context, TableRepositories.TABLE_TOTAL);
             for (int i = 0; i < jsonA.length(); i++) {
                 table.add(gson.fromJson(jsonA.get(i).toString(), TableRow.class));
             }

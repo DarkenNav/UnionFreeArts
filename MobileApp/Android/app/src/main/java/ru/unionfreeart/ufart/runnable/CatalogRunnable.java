@@ -1,4 +1,4 @@
-package ru.unionfreeart.ufart.loaders;
+package ru.unionfreeart.ufart.runnable;
 
 import android.content.Context;
 
@@ -10,7 +10,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.Settings;
 
@@ -18,24 +18,24 @@ import ru.unionfreeart.ufart.utils.Settings;
  * Created by NeoSvet on 08.05.2017.
  */
 
-public class CatalogTask implements ILoader {
+public class CatalogRunnable implements IRunnable {
     private final String PARAMETER_NAME = "data";
     private String name, request;
     private int method;
 
-    public CatalogTask(String name, String item) {
+    public CatalogRunnable(String name, String item) {
         this.name = name;
         method = Const.ADD;
         request = "{\"name\": \"" + item + "\"}";
     }
 
-    public CatalogTask(String name, int method, String item, int id) {
+    public CatalogRunnable(String name, int method, String item, int id) {
         this.name = name;
         this.method = method;
         request = "{\"id\": " + id + ", \"name\": \"" + item + "\"}";
     }
 
-    public CatalogTask(String name, int method, String item, int person, int id) {
+    public CatalogRunnable(String name, int method, String item, int person, int id) {
         this.name = name;
         this.method = method;
         if (id > 0)

@@ -10,6 +10,9 @@
 
 Команда UnionFreeArts разрабатывает программный комплекс аналитики веб-сайтов в рамках обучающей программы портала [GeekBrain].
 
+### Информация об участниках проекта:
+* [Веб-сайт]
+
 
 [Архитектура]: <https://github.com/DarkenNav/UnionFreeArts/wiki/architecture>
 [Спецификация Краулера]: <https://github.com/DarkenNav/UnionFreeArts/wiki/Croaker-Spec>
@@ -18,3 +21,5 @@
 [ТЗ Мобильного и десктопного приложений]: <https://github.com/DarkenNav/UnionFreeArts/wiki/App-TTask>
 
 [GeekBrain]: <https://geekbrains.ru/>
+
+[Веб-сайт]: <https://github.com/DarkenNav/UnionFreeArts/tree/master/WebApp/README.md>

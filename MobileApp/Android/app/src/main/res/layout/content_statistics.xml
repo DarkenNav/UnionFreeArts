@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ru.unionfreeart.ufart.DailyFragment"
+    tools:context="ru.unionfreeart.ufart.view.DailyFragment"
     tools:showIn="@layout/fragment_statistics">
 
     <LinearLayout
@@ -20,7 +20,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvSite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -28,7 +27,7 @@
 
             <Spinner
                 android:id="@+id/spSite"
-                android:layout_width="247dp"
+                android:layout_width="@dimen/width_field"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -40,7 +39,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvPerson"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -48,7 +46,7 @@
 
             <Spinner
                 android:id="@+id/spPerson"
-                android:layout_width="215dp"
+                android:layout_width="@dimen/width_field_little"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -95,22 +93,18 @@
         android:orientation="vertical">
 
         <View
-            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/pPeriod"
             android:background="@color/colorPrimary" />
 
         <ListView
             android:id="@+id/lvTable"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/view" />
+            android:layout_height="match_parent" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/lvTable"
             android:background="@color/colorPrimary" />
     </LinearLayout>
 </LinearLayout>

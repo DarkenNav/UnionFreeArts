@@ -16,7 +16,8 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:gravity="right" />
+            android:gravity="right"
+            android:textColor="@android:color/black" />
 
         <View
             android:layout_width="1dp"
@@ -29,7 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:gravity="right" />
+            android:gravity="right"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 

@@ -1,8 +1,7 @@
-package ru.unionfreeart.ufart;
+package ru.unionfreeart.ufart.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
  * Created by NeoSvet on 30.04.2017.

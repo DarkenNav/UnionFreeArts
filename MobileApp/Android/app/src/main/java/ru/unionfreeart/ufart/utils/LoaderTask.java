@@ -1,4 +1,4 @@
-package ru.unionfreeart.ufart;
+package ru.unionfreeart.ufart.utils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.interfaces.ILoader;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
 

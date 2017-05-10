@@ -18,6 +18,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="right"
+            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <View
@@ -33,6 +34,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="right"
+            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
     </LinearLayout>

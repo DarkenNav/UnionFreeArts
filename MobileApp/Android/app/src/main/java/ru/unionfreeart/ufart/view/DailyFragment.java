@@ -1,4 +1,4 @@
-package ru.unionfreeart.ufart;
+package ru.unionfreeart.ufart.view;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -19,7 +19,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import ru.unionfreeart.ufart.entities.ListAdapter;
+import ru.unionfreeart.ufart.R;
+import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
 import ru.unionfreeart.ufart.interfaces.ILoader;
@@ -28,6 +29,7 @@ import ru.unionfreeart.ufart.loaders.DailyLoader;
 import ru.unionfreeart.ufart.loaders.ListLoader;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
+import ru.unionfreeart.ufart.utils.LoaderTask;
 
 public class DailyFragment extends Fragment implements View.OnClickListener, IMasterTask {
     private final String START = "start", FINISH = "finish", LOADER = "loader",
@@ -38,7 +40,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
     private MainActivity activity;
     private LoaderTask loader;
     private Spinner spSite, spPerson;
-    private ListAdapter adSites, adPerson;
+    private SpinnerAdapter adSites, adPerson;
     private TableAdapter adTable;
     private EditText etStartDate, etFinishDate;
     private Date dateStart, dateFinish;
@@ -149,13 +151,13 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
 
     private void initSites() {
         spSite = (Spinner) container.findViewById(R.id.spSite);
-        adSites = new ListAdapter(activity);
+        adSites = new SpinnerAdapter(activity);
         spSite.setAdapter(adSites);
     }
 
     private void initPersons() {
         spPerson = (Spinner) container.findViewById(R.id.spPerson);
-        adPerson = new ListAdapter(activity);
+        adPerson = new SpinnerAdapter(activity);
         spPerson.setAdapter(adPerson);
     }
 

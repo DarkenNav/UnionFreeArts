@@ -29,6 +29,14 @@
                 <li><a href="{% url 'contact' %}">Связь</a></li>
                 <li><a href="{% url 'comment' %}">Отзывы</a></li>
             </ul>
+            {% if user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+
+            {% else %}
+                <a href="{% url 'main' %}" title="Sign in" class="btn btn-default navbar-btn navbar-right">Sign in</a>
+                <a href="{% url 'main' %}" title="Sign up" class="btn btn-primary navbar-btn navbar-right"
+                   style="margin-right: 5px;">Sign up</a>
+            {% endif %}
         </div>
     </div>
 </nav>

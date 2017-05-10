@@ -1,97 +1,103 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
 
 body {
-    background: #c5c5c5;
-    height: 100%;
-
-}
-html, body {
-  height: 100%;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    
 }
 
-header {
-    min-height: 130px;
-    background: #fff;
-    background: linear-gradient(to top, gray, white);
-    height: 90%;
-    margin: auto;
-}
-.wrapper {
-  position: relative;
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -50px;
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 50px;
+    background-color: #fff;
+    border-top: 1px solid #E7E7E7;
+    padding-top: 14px;
 }
 
-nav {
-    margin-left: 130px;
-}
 
-header a {
-    float: left;
-    position: inherit;
-}
 
-footer {
-  border-top: 1px solid #E7E7E7;
-  background-color: #fff;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
 
-}
+/*.navbar .navbar-brand {*/
+/*padding-top: 24px;*/
+/*}*/
+/*.navbar .navbar-brand img {*/
+/*height: 40px;*/
+/*width: 40px;*/
+/*}*/
+/*header {*/
+/*min-height: 130px;*/
+/*background: #fff;*/
+/*background: linear-gradient(to top, gray, white);*/
+/*height: 90%;*/
+/*margin: auto;*/
+/*}*/
+/*.wrapper {*/
+/*position: relative;*/
+/*min-height: 100%;*/
+/*height: auto !important;*/
+/*height: 100%;*/
+/*margin: 0 auto -50px;*/
+/*}*/
 
-footer .legal {
-  padding-top: 14px;
-}
+/*header a {*/
+/*float: left;*/
+/*position: inherit;*/
+/*}*/
+
 
 footer ul li {
-  display: inline;
-  margin-right: 15px;
+    display: inline;
+    margin-right: 15px;
 }
 
 footer .social {
-  padding-top: 10px;
-  font-size: 20px;
-  text-align: right;
+
+    font-size: 20px;
+    text-align: right;
 }
 
 footer .social a {
-  color: #777;
-  margin-left: 10px;
-  transition: all 0.2s ease 0s;
+    color: #777;
+    margin-left: 10px;
+    transition: all 0.2s ease 0s;
 }
 
 footer .social a:hover {
-  color: #333;
+    color: #333;
 }
 
 .logo {
     float: left;
+    margin-right: 5px;
 }
 
-.content{
+.content {
     width: 50%;
     margin: auto;
 }
-h2{
+
+h2 {
     margin: 10px auto;
     text-align: center;
 }
+
 .table_members {
     margin: 5px auto;
     border: solid 1px;
 }
+
 .table_members tr:first-child {
     text-align: center;
 }
+
 .table_members td {
     border: solid 1px;
     padding: 2px 3px;
 }
 
-.push {
-  height: 50px;
-}

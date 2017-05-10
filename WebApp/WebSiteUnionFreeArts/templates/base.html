@@ -5,53 +5,112 @@
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'general/style/reset.css' %}">
-    <link rel="stylesheet" href="{% static 'general/style/bootstrap.css' %}">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'general/style/style.css' %}">
     <link href="{% static 'general/style/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet">
 </head>
 <body>
-<div class="wrapper">
-<header>
-    <div class="masthead clearfix">
-        <div class="inner">
-            <img src="{% static 'general/IMG/logo.ico' %} " class="logo">
-            <nav>
-                <ul class="nav masthead-nav">
-                    <li><a href="{% url 'main' %}">Главная</a></li>
-                    <li><a href="{% url 'about' %}">О компании</a></li>
-                    <li><a href="{% url 'technical_support' %}">Техническая помощь</a></li>
-                    <li><a href="{% url 'contact' %}">Связь</a></li>
-                    <li><a href="{% url 'comment' %}">Отзывы</a></li>
-                </ul>
-            </nav>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/"><img src="{% static 'general/IMG/logo1.ico' %} " class="logo" height="50px"></a>
+            <a href="/" class="navbar-brand">UnionFreeArts</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'main' %}">Главная</a></li>
+                <li><a href="{% url 'about' %}">О компании</a></li>
+                <li><a href="{% url 'technical_support' %}">Техническая помощь</a></li>
+                <li><a href="{% url 'contact' %}">Связь</a></li>
+                <li><a href="{% url 'comment' %}">Отзывы</a></li>
+            </ul>
         </div>
     </div>
-</header>
+</nav>
 
-<article class="content">
-    {% block content %}
-    <p>Тут-то всё и будет. Это текст базового шаблона.</p>
-    {% endblock %}
-</article>
-<div class="push"></div>
-
-<footer>
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div class="col-xs-6 legal">
-          <span>© {% now "Y" %} <a href="http://unionfreearts.pythonanywhere.com/">UnionFreeArts Ltd</a>.</span>
-      </div>
-      <div class="col-xs-6 social">
-        <a href="https://github.com/DarkenNav/UnionFreeArts/" target="_blank" data-toggle="tooltip" title="Github" data-placement="top"><span class="fa
-        fa-github"></span></a>
-        <a href="/" target="_blank" data-toggle="tooltip" title="Twitter" data-placement="top"><span class="fa
-        fa-twitter"></span></a>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" data-toggle="tooltip" title="Youtube" data-placement="top"><span class="fa fa-youtube"></span></a>
-        <a href="/" target="_blank" data-toggle="tooltip" title="Google+" data-placement="top"><span class="fa fa-google-plus"></span></a>
-      </div>
+        {% block content %}
+            <p>Тут-то всё и будет. Это текст базового шаблона.</p>
+        {% endblock %}
     </div>
-  </div>
-</footer>
 </div>
+{#<div class="wrapper">#}
+{#    <header>#}
+{#        <div class="masthead clearfix">#}
+{#            <div class="inner">#}
+{#                <img src="{% static 'general/IMG/logo.ico' %} " class="logo">#}
+{#                <nav>#}
+{#                    <ul class="nav masthead-nav">#}
+{#                        <li><a href="{% url 'main' %}">Главная</a></li>#}
+{#                        <li><a href="{% url 'about' %}">О компании</a></li>#}
+{#                        <li><a href="{% url 'technical_support' %}">Техническая помощь</a></li>#}
+{#                        <li><a href="{% url 'contact' %}">Связь</a></li>#}
+{#                        <li><a href="{% url 'comment' %}">Отзывы</a></li>#}
+{#                    </ul>#}
+{#                </nav>#}
+{#            </div>#}
+{#        </div>#}
+{#    </header>#}
+{##}
+{#    <article class="content">#}
+{#        {% block content %}#}
+{#            <p>Тут-то всё и будет. Это текст базового шаблона.</p>#}
+{#        {% endblock %}#}
+{#    </article>#}
+{#    <div class="push"></div>#}
+
+{#<footer class="footer">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-xs-6 legal">#}
+{#                    <span>© {% now "Y" %} <a#}
+{#                            href="http://unionfreearts.pythonanywhere.com/">UnionFreeArts Ltd</a>.</span>#}
+{#            </div>#}
+{#            <div class="col-xs-6 social">#}
+{#                <a href="https://github.com/DarkenNav/UnionFreeArts/" target="_blank" data-toggle="tooltip"#}
+{#                   title="Github" data-placement="top"><span class="fa#}
+{#        fa-github"></span></a>#}
+{#                <a href="/" target="_blank" data-toggle="tooltip" title="Twitter" data-placement="top"><span class="fa#}
+{#        fa-twitter"></span></a>#}
+{#                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" data-toggle="tooltip"#}
+{#                   title="Youtube" data-placement="top"><span class="fa fa-youtube"></span></a>#}
+{#                <a href="/" target="_blank" data-toggle="tooltip" title="Google+" data-placement="top"><span#}
+{#                        class="fa fa-google-plus"></span></a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</footer>#}
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 legal">
+                    <span>© {% now "Y" %} <a
+                            href="http://unionfreearts.pythonanywhere.com/">UnionFreeArts Ltd</a>.</span>
+            </div>
+            <div class="col-xs-6 social">
+                <a href="https://github.com/DarkenNav/UnionFreeArts/" target="_blank" data-toggle="tooltip"
+                   title="Github" data-placement="top"><span class="fa
+        fa-github"></span></a>
+                <a href="/" target="_blank" data-toggle="tooltip" title="Twitter" data-placement="top"><span class="fa
+        fa-twitter"></span></a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" data-toggle="tooltip"
+                   title="Youtube" data-placement="top"><span class="fa fa-youtube"></span></a>
+                <a href="/" target="_blank" data-toggle="tooltip" title="Google+" data-placement="top"><span
+                        class="fa fa-google-plus"></span></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>

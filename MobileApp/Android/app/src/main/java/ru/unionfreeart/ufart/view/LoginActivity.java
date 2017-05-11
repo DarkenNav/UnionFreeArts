@@ -26,13 +26,13 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.bUser).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                MainActivity.open(LoginActivity.this, true);
             }
         });
         findViewById(R.id.bAdmin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                MainActivity.open(LoginActivity.this, false);
             }
         });
         findViewById(R.id.fabOk).setOnClickListener(new View.OnClickListener() {

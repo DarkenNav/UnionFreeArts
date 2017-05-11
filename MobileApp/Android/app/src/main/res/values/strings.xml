@@ -9,6 +9,7 @@
     <string name="restore_password">Восстановить пароль</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="exit">выйти</string>
     <string name="total_statistics">Общая статистика</string>
     <string name="daily_statistics">Ежедевная статистика</string>
     <string name="settings">Настройки</string>

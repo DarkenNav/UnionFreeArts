@@ -28,56 +28,31 @@
 
     <TextView
         android:id="@+id/bUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextLoginActivity"
         android:layout_below="@+id/etPassword"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:text="@string/user"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:text="@string/user" />
 
     <TextView
         android:id="@+id/bAdmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextLoginActivity"
         android:layout_below="@+id/bUser"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:text="@string/admin"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:text="@string/admin" />
 
     <TextView
         android:id="@+id/bForgetMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextLoginActivity"
         android:layout_above="@+id/bRestorePassword"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:text="@string/forget_me"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:text="@string/forget_me" />
 
     <TextView
         android:id="@+id/bRestorePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextLoginActivity"
         android:layout_above="@+id/bRegistration"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:text="@string/restore_password"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:text="@string/restore_password" />
 
     <TextView
         android:id="@+id/bRegistration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextLoginActivity"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:text="@string/registration"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        android:text="@string/registration" />
 </RelativeLayout>

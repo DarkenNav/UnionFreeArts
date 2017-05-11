@@ -15,18 +15,19 @@ import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.loaders.ListLoader;
-import ru.unionfreeart.ufart.loaders.TotalLoader;
+import ru.unionfreeart.ufart.runnable.ListRunnable;
+import ru.unionfreeart.ufart.runnable.TotalRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
-import ru.unionfreeart.ufart.utils.LoaderTask;
+import ru.unionfreeart.ufart.utils.Const;
+import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class TotalFragment extends Fragment implements IMasterTask {
-    private final String LOADER = "loader", SITE_POSITON = "site", VISIBLE_OPTIONS = "options";
+    private final String SITE_POSITON = "site", VISIBLE_OPTIONS = "options";
     private MainActivity activity;
-    private LoaderTask loader;
+    private RunnableTask task;
     private Spinner spSite;
     private SpinnerAdapter adSites;
     private TableAdapter adTable;
@@ -52,14 +53,14 @@ public class TotalFragment extends Fragment implements IMasterTask {
             pOptions.setVisibility(View.VISIBLE);
             TableRepositories table = new TableRepositories(activity, TableRepositories.TABLE_TOTAL);
             table.clearTable();
-            loader = new LoaderTask(TotalFragment.this);
-            ILoader loaderSites = new ListLoader(ListRepositories.LIST_SITES);
-            loader.execute(loaderSites);
+            task = new RunnableTask(TotalFragment.this);
+            IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
+            task.execute(taskSites);
             activity.setVisibleProgressBar(true);
         } else { //restore fragment
-            loader = (LoaderTask) state.getSerializable(LOADER);
-            if (loader != null && loader.getStatus() != AsyncTask.Status.RUNNING) {
-                loader.newMaster(TotalFragment.this);
+            task = (RunnableTask) state.getSerializable(Const.TASK);
+            if (task != null && task.getStatus() != AsyncTask.Status.RUNNING) {
+                task.newMaster(TotalFragment.this);
             }
             openList();
             openTable();
@@ -76,7 +77,7 @@ public class TotalFragment extends Fragment implements IMasterTask {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(LOADER, loader);
+        outState.putSerializable(Const.TASK, task);
         outState.putInt(SITE_POSITON, spSite.getSelectedItemPosition());
         outState.putBoolean(VISIBLE_OPTIONS, pOptions.getVisibility() == View.VISIBLE);
         super.onSaveInstanceState(outState);
@@ -95,9 +96,9 @@ public class TotalFragment extends Fragment implements IMasterTask {
         fabOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loader = new LoaderTask(TotalFragment.this);
-                ILoader loaderTotal = new TotalLoader(adSites.getId(spSite.getSelectedItemPosition()));
-                loader.execute(loaderTotal);
+                task = new RunnableTask(TotalFragment.this);
+                IRunnable taskTotal = new TotalRunnable(adSites.getId(spSite.getSelectedItemPosition()));
+                task.execute(taskTotal);
                 fabOk.setVisibility(View.GONE);
                 activity.setVisibleProgressBar(true);
             }

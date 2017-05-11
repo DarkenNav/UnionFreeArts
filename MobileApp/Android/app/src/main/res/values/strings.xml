@@ -3,6 +3,10 @@
     <string name="authorization">Авторизация</string>
     <string name="user">Пользователь</string>
     <string name="admin">Администатор</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="registration">Регистрация</string>
+    <string name="restore_password">Восстановить пароль</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="total_statistics">Общая статистика</string>

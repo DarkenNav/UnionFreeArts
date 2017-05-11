@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 settings.setLogin(etLogin.getText().toString());
-                settings.setLogin(etPassword.getText().toString());
+                settings.setPassword(etPassword.getText().toString());
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
             }

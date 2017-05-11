@@ -23,6 +23,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initButtons() {
+        findViewById(R.id.bForgetMe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                settings.setLogin("");
+                settings.setPassword("");
+                etLogin.setText("");
+                etPassword.setText("");
+            }
+        });
         findViewById(R.id.bUser).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -49,6 +49,17 @@
         android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/bForgetMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bRestorePassword"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:text="@string/forget_me"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/bRestorePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -7,6 +7,7 @@
     <string name="password">Пароль</string>
     <string name="registration">Регистрация</string>
     <string name="restore_password">Восстановить пароль</string>
+    <string name="forget_me">Забыть меня</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="exit">выйти</string>

@@ -6,6 +6,6 @@ import android.content.Context;
  * Created by NeoSvet on 19.04.2017.
  */
 
-public interface ILoader {
+public interface IRunnable {
     void run(Context context) throws Exception;
 }

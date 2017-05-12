@@ -1,7 +1,6 @@
-package ru.unionfreeart.ufart.loaders;
+package ru.unionfreeart.ufart.runnable;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,43 +13,49 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
-import ru.unionfreeart.ufart.entities.TableRow;
-import ru.unionfreeart.ufart.interfaces.ILoader;
-import ru.unionfreeart.ufart.repositories.TableRepositories;
-import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.Settings;
+import ru.unionfreeart.ufart.entities.ListItem;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
+import ru.unionfreeart.ufart.repositories.ListRepositories;
 
 /**
- * Created by NeoSvet on 01.05.2017.
+ * Created by NeoSvet on 24.04.2017.
  */
 
-public class TotalLoader implements ILoader {
-    private int id_site;
+public class ListRunnable implements IRunnable {
+    private final int TIMEOUT = 5000;
+    private String name;
+    private int id = -1;
 
-    public TotalLoader(int id_site) {
-        this.id_site = id_site;
+    public ListRunnable(String name) {
+        this.name = name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void run(Context context) throws Exception {
         BasicHttpParams httpParameters = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParameters, Const.TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpParameters, Const.TIMEOUT);
+        HttpConnectionParams.setConnectionTimeout(httpParameters, TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpParameters, TIMEOUT);
         DefaultHttpClient client = new DefaultHttpClient(httpParameters);
         Settings settings = new Settings(context);
-        HttpGet rget = new HttpGet(settings.getAddress() + "/stat/total/" + id_site);
+        HttpGet rget;
+        if (id == -1)
+            rget = new HttpGet(settings.getAddress() + name + "/");
+        else
+            rget = new HttpGet(settings.getAddress() + name + "/" + id);
         HttpResponse res = client.execute(rget);
-        Log.d("neo","code="+res.getStatusLine().getStatusCode());
         if (res.getStatusLine().getStatusCode() == 200) { //ok
-            String r = EntityUtils.toString(res.getEntity());
-            Log.d("neo",r);
-            JSONArray jsonA = new JSONArray(r);
+            JSONArray jsonA = new JSONArray(EntityUtils.toString(res.getEntity()));
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            TableRepositories table = new TableRepositories(context, TableRepositories.TABLE_TOTAL);
+            ListRepositories list = new ListRepositories(context, name);
             for (int i = 0; i < jsonA.length(); i++) {
-                table.add(gson.fromJson(jsonA.get(i).toString(), TableRow.class));
+                list.add(gson.fromJson(jsonA.get(i).toString(), ListItem.class));
             }
-            table.saveTable();
+            list.saveList();
         } else { //error
             throw new Exception("Code: " + res.getStatusLine().getStatusCode());
         }

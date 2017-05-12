@@ -2,9 +2,11 @@ package ru.unionfreeart.ufart.view;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import ru.unionfreeart.ufart.R;
@@ -15,6 +17,7 @@ import ru.unionfreeart.ufart.utils.Const;
  */
 
 public class InputDialog extends Dialog {
+    private Activity activity;
     private EditText etInput;
     private Result result;
     private String string = "";
@@ -23,6 +26,7 @@ public class InputDialog extends Dialog {
 
     public InputDialog(Activity activity) {
         super(activity);
+        this.activity = activity;
     }
 
     public void setResult(Result result) {
@@ -36,6 +40,12 @@ public class InputDialog extends Dialog {
         setContentView(R.layout.dialog_input);
 
         initInterface();
+        showKeyboard();
+    }
+
+    private void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void initInterface() {

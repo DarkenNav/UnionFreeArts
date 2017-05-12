@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        LoginActivity.this.setTitle(getResources().getString(R.string.authorization));
 
         settings = new Settings(LoginActivity.this);
 

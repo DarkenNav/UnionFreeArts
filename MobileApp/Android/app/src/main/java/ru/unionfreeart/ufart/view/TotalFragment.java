@@ -15,12 +15,12 @@ import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
-import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.runnable.ListRunnable;
-import ru.unionfreeart.ufart.runnable.TotalRunnable;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
+import ru.unionfreeart.ufart.runnable.ListRunnable;
+import ru.unionfreeart.ufart.runnable.TotalRunnable;
 import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.RunnableTask;
 
@@ -31,7 +31,7 @@ public class TotalFragment extends Fragment implements IMasterTask {
     private Spinner spSite;
     private SpinnerAdapter adSites;
     private TableAdapter adTable;
-    private View container, pOptions, pList, fabOptions, fabOk;
+    private View container, pOptions, pList, fabOptions, fabOk, fabGraph;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,6 +99,7 @@ public class TotalFragment extends Fragment implements IMasterTask {
     private void initButtons() {
         fabOk = container.findViewById(R.id.fabOk);
         fabOptions = container.findViewById(R.id.fabOptions);
+        fabGraph = container.findViewById(R.id.fabGraph);
         fabOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,10 +113,17 @@ public class TotalFragment extends Fragment implements IMasterTask {
         fabOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fabGraph.setVisibility(View.GONE);
                 fabOptions.setVisibility(View.GONE);
                 fabOk.setVisibility(View.VISIBLE);
                 pList.setVisibility(View.GONE);
                 pOptions.setVisibility(View.VISIBLE);
+            }
+        });
+        fabGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GraphActivity.open(activity, TableRepositories.TABLE_TOTAL);
             }
         });
     }
@@ -162,6 +170,7 @@ public class TotalFragment extends Fragment implements IMasterTask {
             pOptions.setVisibility(View.VISIBLE);
             return;
         }
+        fabGraph.setVisibility(View.VISIBLE);
         pList.setVisibility(View.VISIBLE);
         adTable.addItem(new TableRow(getResources().getString(R.string.name),
                 getResources().getString(R.string.count_mentions)));

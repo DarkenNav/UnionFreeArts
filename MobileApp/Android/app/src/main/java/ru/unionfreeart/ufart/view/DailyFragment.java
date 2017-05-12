@@ -23,12 +23,12 @@ import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
-import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.runnable.DailyRunnable;
-import ru.unionfreeart.ufart.runnable.ListRunnable;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
+import ru.unionfreeart.ufart.runnable.DailyRunnable;
+import ru.unionfreeart.ufart.runnable.ListRunnable;
 import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.RunnableTask;
 
@@ -45,7 +45,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
     private TableAdapter adTable;
     private EditText etStartDate, etFinishDate;
     private Date dateStart, dateFinish;
-    private View container, pOptions, pList, fabOptions, fabOk;
+    private View container, pOptions, pList, fabOptions, fabOk, fabGraph;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -132,6 +132,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
     private void initButtons() {
         fabOk = container.findViewById(R.id.fabOk);
         fabOptions = container.findViewById(R.id.fabOptions);
+        fabGraph = container.findViewById(R.id.fabGraph);
         fabOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,10 +149,17 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         fabOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fabGraph.setVisibility(View.GONE);
                 fabOptions.setVisibility(View.GONE);
                 fabOk.setVisibility(View.VISIBLE);
                 pList.setVisibility(View.GONE);
                 pOptions.setVisibility(View.VISIBLE);
+            }
+        });
+        fabGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GraphActivity.open(activity, TableRepositories.TABLE_DAILY);
             }
         });
     }
@@ -261,6 +269,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
             pOptions.setVisibility(View.VISIBLE);
             return;
         }
+        fabGraph.setVisibility(View.VISIBLE);
         pList.setVisibility(View.VISIBLE);
         adTable.addItem(new TableRow(getResources().getString(R.string.date),
                 getResources().getString(R.string.count_new_pages)));

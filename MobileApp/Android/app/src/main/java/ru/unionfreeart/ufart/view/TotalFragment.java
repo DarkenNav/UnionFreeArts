@@ -64,7 +64,13 @@ public class TotalFragment extends Fragment implements IMasterTask {
             }
             openList();
             openTable();
-            spSite.setSelection(state.getInt(SITE_POSITON));
+            int pos = state.getInt(SITE_POSITON);
+            if (pos == -1) {
+                fabOk.setVisibility(View.GONE);
+                fabOptions.setVisibility(View.GONE);
+                return;
+            }
+            spSite.setSelection(pos);
             if (state.getBoolean(VISIBLE_OPTIONS)) {
                 pList.setVisibility(View.GONE);
                 fabOptions.setVisibility(View.GONE);
@@ -133,8 +139,12 @@ public class TotalFragment extends Fragment implements IMasterTask {
     public void putResult(String msg) {
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
-            fabOk.setVisibility(View.VISIBLE);
             Snackbar.make(fabOptions, msg, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            if (adSites.getCount() == 0) {
+                fabOk.setVisibility(View.GONE);
+                fabOptions.setVisibility(View.GONE);
+            } else
+                fabOk.setVisibility(View.VISIBLE);
         } else {
             pOptions.setVisibility(View.GONE);
             fabOptions.setVisibility(View.VISIBLE);

@@ -39,20 +39,14 @@
         android:text="@string/admin" />
 
     <TextView
-        android:id="@+id/bForgetMe"
-        style="@style/TextLoginActivity"
-        android:layout_above="@+id/bRestorePassword"
-        android:text="@string/forget_me" />
-
-    <TextView
         android:id="@+id/bRestorePassword"
         style="@style/TextLoginActivity"
-        android:layout_above="@+id/bRegistration"
+        android:layout_above="@+id/bForgetMe"
         android:text="@string/restore_password" />
 
     <TextView
-        android:id="@+id/bRegistration"
+        android:id="@+id/bForgetMe"
         style="@style/TextLoginActivity"
         android:layout_alignParentBottom="true"
-        android:text="@string/registration" />
+        android:text="@string/forget_me" />
 </RelativeLayout>

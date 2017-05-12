@@ -21,7 +21,7 @@ import ru.unionfreeart.ufart.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String USER = "user";
-    private final int INDEX_CATALOGS = 3;
+    private final int INDEX_ADMIN = 3;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FragmentManager fragmentManager;
@@ -48,10 +48,12 @@ public class MainActivity extends AppCompatActivity
         TextView tvLogin = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvLogim);
         if (boolUser) {
             tvLogin.setText(getResources().getString(R.string.user));
-            navigationView.getMenu().getItem(INDEX_CATALOGS).setVisible(false);
+            for (int i = INDEX_ADMIN; i <  navigationView.getMenu().size(); i++) {
+                navigationView.getMenu().getItem(i).setVisible(false);
+            }
         } else {
             tvLogin.setText(getResources().getString(R.string.admin));
-            for (int i = 1; i < INDEX_CATALOGS; i++) {
+            for (int i = 1; i < INDEX_ADMIN; i++) {
                 navigationView.getMenu().getItem(i).setVisible(false);
             }
         }
@@ -124,6 +126,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_daily:
                 fragmentTransaction.replace(R.id.fragment, new DailyFragment());
+                break;
+            case R.id.nav_reg:
+                fragmentTransaction.replace(R.id.fragment, new RegFragment());
                 break;
             case R.id.nav_persons:
                 fragmentTransaction.replace(R.id.fragment, new PersonsFragment());

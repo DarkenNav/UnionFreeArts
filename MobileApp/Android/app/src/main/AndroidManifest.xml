@@ -24,7 +24,6 @@
 
         <activity
             android:name=".view.MainActivity"
-            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

@@ -45,7 +45,7 @@ def technical_support(request):
                              headers={'Reply-To': contact_email}
                              )
         email.send()
-        return redirect('technical_support')
+        return render(request, 'form_success_tech_sup.html', {'form': form_class, })
 
     return render(request, 'technical_support.html', {'form': form_class, })
 
@@ -78,7 +78,7 @@ def contact(request):
                              headers={'Reply-To': contact_email}
                              )
         email.send()
-        return redirect('contact')
+        return render(request, 'form_success_contact.html', {'form': form_class, })
 
     return render(request, 'contact.html', {'form': form_class, })
 
@@ -91,4 +91,9 @@ def comment(request):
 
 def form_success_tech_sup(request):
     context = {}
-    return render(request, 'form_success_tech_sup.html', context)
+    return render(request, 'form_success_tech_sup', context)
+
+
+def form_success_contact(request):
+    context = {}
+    return render(request, 'form_success_contact', context)

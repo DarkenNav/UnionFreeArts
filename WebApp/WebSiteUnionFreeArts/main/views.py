@@ -89,11 +89,4 @@ def comment(request):
     return render(request, 'comment.html', context)
 
 
-def form_success_tech_sup(request):
-    context = {}
-    return render(request, 'form_success_tech_sup', context)
 
-
-def form_success_contact(request):
-    context = {}
-    return render(request, 'form_success_contact', context)

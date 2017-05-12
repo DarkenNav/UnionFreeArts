@@ -39,10 +39,10 @@
         android:text="@string/admin" />
 
     <TextView
-        android:id="@+id/bRestorePassword"
+        android:id="@+id/bForgetPassword"
         style="@style/TextLoginActivity"
         android:layout_above="@+id/bForgetMe"
-        android:text="@string/restore_password" />
+        android:text="@string/forget_password" />
 
     <TextView
         android:id="@+id/bForgetMe"

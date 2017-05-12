@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Статистика</string>
     <string name="authorization">Авторизация</string>
+    <string name="graph">Графики</string>
     <string name="user">Пользователь</string>
     <string name="admin">Администатор</string>
     <string name="login">Логин</string>

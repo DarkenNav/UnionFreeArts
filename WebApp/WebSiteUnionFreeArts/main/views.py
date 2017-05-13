@@ -17,6 +17,11 @@ def about(request):
     return render(request, 'about.html', context)
 
 
+def signin(request):
+    context = {}
+    return render(request, 'signin.html', context)
+
+
 def technical_support(request):
     form_class = ContactForm
     # new logic!

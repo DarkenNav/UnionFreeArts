@@ -205,12 +205,14 @@ public class DBHandler {
 		try {
 			PreparedStatement stmt;
 			for (int i = 0; i < ranks.size(); i++) {
-				stmt = con.prepareStatement("INSERT INTO PersonPageRank (PersonID, PageID, Rank) VALUES (?, ?, ?)");
-				stmt.setInt(1, ranks.get(i).getPersonId());
-				stmt.setInt(2, ranks.get(i).getPageId());
-				stmt.setInt(3, ranks.get(i).getCount());
-				stmt.execute();
-				stmt.close();
+				if (ranks.get(i).getCount() > 0) {
+					stmt = con.prepareStatement("INSERT INTO PersonPageRank (PersonID, PageID, Rank) VALUES (?, ?, ?)");
+					stmt.setInt(1, ranks.get(i).getPersonId());
+					stmt.setInt(2, ranks.get(i).getPageId());
+					stmt.setInt(3, ranks.get(i).getCount());
+					stmt.execute();
+					stmt.close();
+				}
 			}
 		} catch (Exception e) {
 			Main.appendLog(getSiteId() + "ERROR (saveRanks): ", e);

@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFart.Desktop.DataAccess", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFart.Desktop.Domain", "UI.Desktop.UFart.Domain\UFart.Desktop.Domain.csproj", "{2173CCB4-4E8E-4570-A286-BFCAA440A3BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UFart.WebApi.Test", "UFart.WebApi.Test\UFart.WebApi.Test.csproj", "{6D1A9DA9-B4CF-461E-B434-8BA218BEE86B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{2173CCB4-4E8E-4570-A286-BFCAA440A3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2173CCB4-4E8E-4570-A286-BFCAA440A3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2173CCB4-4E8E-4570-A286-BFCAA440A3BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D1A9DA9-B4CF-461E-B434-8BA218BEE86B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D1A9DA9-B4CF-461E-B434-8BA218BEE86B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D1A9DA9-B4CF-461E-B434-8BA218BEE86B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D1A9DA9-B4CF-461E-B434-8BA218BEE86B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

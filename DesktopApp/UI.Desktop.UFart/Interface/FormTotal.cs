@@ -35,14 +35,13 @@ namespace UI.Desktop.UFart.Interface
             var selectedSite = (SiteDTO)cbStatTotalSite.SelectedValue;
 
             var stats = AppWrapper.Data.PersonPagesRank.GetBySite(selectedSite.ID);
-            var persons = AppWrapper.Data.Persons.GetAll();
 
             listViewStatTotal.Items.Clear();
-            foreach (var person in persons)
+            foreach (var stat in stats)
             {
                 listViewStatTotal.Items.Add(new ListViewItem(new string[] {
-                    person.Name,
-                    stats.Where(s => s.PersonID == person.ID).Sum(s => s.Rank).ToString()
+                    stat.PersonName,
+                    stat.PersonRank.ToString()
                 }));
             }
 

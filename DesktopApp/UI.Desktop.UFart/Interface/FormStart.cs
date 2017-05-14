@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UFart.Desktop.DataAccess.Repositories;
 using UFart.Desktop.DataAccess.Repositories.FakeDataRepositories;
+using UFart.Desktop.DataAccess.Repositories.WebApi;
 using UFart.Desktop.UI;
 using UFart.Desktop.UI.Interface;
 using UI.Desktop.UFart.Implimentation;
@@ -26,6 +27,7 @@ namespace UI.Desktop.UFart.Interface
 
         private void btnDemoRepo_Click(object sender, EventArgs e)
         {
+            DisposeRepository();
             AppWrapper.Data = new DataRepository(new FakeDataRepository());
             ToMainScreen();
 
@@ -33,7 +35,8 @@ namespace UI.Desktop.UFart.Interface
 
         private void btnWebApiRepo_Click(object sender, EventArgs e)
         {
-
+            DisposeRepository();
+            AppWrapper.Data = new DataRepository(new WebApiRepository());
             ToMainScreen();
         }
 
@@ -51,9 +54,18 @@ namespace UI.Desktop.UFart.Interface
             this.Show();
         }
 
+        private void DisposeRepository()
+        {
+            if (AppWrapper.Data != null)
+            {
+                AppWrapper.Data.Dispose();
+                AppWrapper.Data = null;
+            }
+        }
+
         private void FormStart_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AppWrapper.Data.Dispose();
+            DisposeRepository();
         }
 
         private void btnExit_Click(object sender, EventArgs e)

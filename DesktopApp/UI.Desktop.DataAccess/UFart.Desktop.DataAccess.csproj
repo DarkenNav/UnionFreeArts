@@ -34,6 +34,10 @@
       <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,12 +55,14 @@
     <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakeSitesList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\AbstractRepository.cs" />
-    <Compile Include="Repositories\WebApi\EntityRepositoryBase.cs" />
+    <Compile Include="DTO\RankWithPersonDTO.cs" />
+    <Compile Include="Repositories\WebApi\WebApiRepository.cs" />
+    <Compile Include="Repositories\WebApi\WebApiRepositoryBase.cs" />
     <Compile Include="Repositories\Base\Interfaces\IPersonPageRankRepository.cs" />
     <Compile Include="Repositories\Base\Interfaces\IEntityRepositoryBase.cs" />
     <Compile Include="Repositories\DataRepository.cs" />
     <Compile Include="Repositories\FakeDataRepositories\FakeDataRepository.cs" />
-    <Compile Include="Repositories\WebApi\PersonPageRankRepository.cs" />
+    <Compile Include="Repositories\WebApi\WebApiPersonPageRankRepository.cs" />
     <Compile Include="Repositories\FakeDataRepositories\FakeDataRepositoryBase.cs" />
     <Compile Include="Repositories\FakeDataRepositories\FakePersonPageRankRepository.cs" />
     <Compile Include="Repositories\Base\Interfaces\IDataRepository.cs" />

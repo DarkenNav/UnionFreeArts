@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using UFart.Desktop.DataAccess.FakeData;
 using UFart.Desktop.DataAccess.Repositories.Base;
 using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
 using UFart.Desktop.Domain.Entity;
+using UI.Desktop.DataAccess.DTO;
 
 namespace UFart.Desktop.DataAccess.Repositories
 {
@@ -18,6 +20,7 @@ namespace UFart.Desktop.DataAccess.Repositories
             : base()
         {
             this.dataRepository = dataRepository;
+
         }
 
         public IEntityRepositoryBase<Keyword> Keywords

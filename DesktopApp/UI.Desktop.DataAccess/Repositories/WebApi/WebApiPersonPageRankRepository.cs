@@ -30,7 +30,7 @@ namespace UFart.Desktop.DataAccess.Repositories.WebApi
             return JsonConvert.DeserializeObject<IEnumerable<RankWithPersonDTO>>(reply);
         }
 
-        public IEnumerable<PersonPageRank> GetBy(
+        public IEnumerable<RankOnDateDTO> GetBy(
             int? idSite = null, 
             int? idPerson = null, 
             DateTime? fromDate = null, 
@@ -39,7 +39,24 @@ namespace UFart.Desktop.DataAccess.Repositories.WebApi
             int? take = null)
         {
 
-            return new List<PersonPageRank>();
+            var reply = string.Empty;
+            try
+            {
+                var fullUrl = string.Format("{0}?{1}&{2}&{3}&{4}",
+                    $"{url}daily",
+                    $"personId={((idPerson != null) ? idPerson.ToString() : "null")}",
+                    $"siteId={((idSite != null) ? idSite.ToString() : "null")}",
+                    $"startDate={((fromDate != null) ? fromDate.Value.Ticks.ToString() : "null")}",
+                    $"finishDate={((toDate != null) ? toDate.Value.Ticks.ToString() : "null")}"
+                    );
+
+                reply = client.DownloadString(fullUrl);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return JsonConvert.DeserializeObject<IEnumerable<RankOnDateDTO>>(reply);
         }
     }
 }

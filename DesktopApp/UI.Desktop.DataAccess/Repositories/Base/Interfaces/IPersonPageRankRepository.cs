@@ -15,7 +15,7 @@ namespace UFart.Desktop.DataAccess.Repositories.Base.Interfaces
     {
         IEnumerable<RankWithPersonDTO> GetBySite(int idSite);
 
-        IEnumerable<PersonPageRank> GetBy(
+        IEnumerable<RankOnDateDTO> GetBy(
             int? idSite = null,
             int? idPerson = null,
             DateTime? fromDate = null,

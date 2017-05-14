@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\RankOnDateDTO.cs" />
+    <Compile Include="Mapping\MapperConfigurate.cs" />
     <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakeDataBase.cs" />
     <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakePagesList.cs" />
     <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakePersonPagesRankList.cs" />

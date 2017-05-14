@@ -55,7 +55,7 @@ namespace UI.Desktop.UFart.Interface
             foreach (var stat in stats)
             {
                 listViewStatEveryDay.Items.Add(new ListViewItem(new string[] {
-                stat.Page.LastScanDate?.ToString("dd.mm.yyyy"),
+                stat.Date.ToString("dd.mm.yyyy"),
                 stat.Rank.ToString()
             }));
             }

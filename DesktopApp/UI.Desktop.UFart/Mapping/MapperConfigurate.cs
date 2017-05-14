@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UFart.Desktop.Domain.Entity;
 using UFart.Desktop.UI.DTO;
 
-namespace UI.Desktop.UFart.Mapping
+namespace UFart.Desktop.UI.Mapping
 {
     public static class MapperConfigurate
     {

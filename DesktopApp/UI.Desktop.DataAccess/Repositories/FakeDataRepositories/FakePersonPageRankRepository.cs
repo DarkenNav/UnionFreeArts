@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,7 @@ namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
             return result;
         }
 
-        public IEnumerable<PersonPageRank> GetBy(
+        public IEnumerable<RankOnDateDTO> GetBy(
             int? idSite = null, 
             int? idPerson = null, 
             DateTime? fromDate = null, 
@@ -45,12 +46,15 @@ namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
             int? skip = null, 
             int? take = null)
         {
-            return fakeData.FindAll(f =>
+
+            var stats = fakeData.FindAll(f =>
                 ((idSite.HasValue) ? f.Page.SiteID == idSite : true)
                 && ((idPerson.HasValue) ? f.PersonID == idPerson : true)
                 && (((fromDate.HasValue) ? fromDate.Value.Date.CompareTo((f.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0 : true)
                     && ((toDate.HasValue) ? toDate.Value.Date.CompareTo((f.Page.LastScanDate ?? DateTime.MinValue).Date) <= 0 : true))
                 && f.Page.LastScanDate.HasValue);
+
+            return Mapper.Map<IEnumerable<RankOnDateDTO>>(stats);
         }
     }
 }

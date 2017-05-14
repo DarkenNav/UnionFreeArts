@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2 class="text-left"><strong>UnionFreeArts</strong></h2>
+        <p>Мы молодая IT-компания "<b>UnionFreeArts</b>", предоставляющая свой собственный продукт – универсальный
+            инструмент, который позволяет определить популярность кого угодно, и где угодно.</p>
+        <p>Например, мы можем узнать кто популярнее на новостном сайте: «Путин, Медведев, или Навальный». Или о какой
+            религии чаще пишут в ЖЖ и многое другое.
+        </p>
+        <p>Пример очета в программе выглядит подобным образом:</p><br>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr class="active">
+                <th><strong>Имя</strong></th>
+                <th><strong>Количество упоминаний</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Путин</td>
+                <td>100500</td>
+            </tr>
+            <tr>
+                <td>Медведев</td>
+                <td>5000</td>
+            </tr>
+            <tr>
+                <td>Навальный</td>
+                <td>2000</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Статистика</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="total_statistics">Общая статистика</string>
+    <string name="daily_statistics">Ежедевная статистика</string>
+    <string name="settings">Настройки</string>
+    <string name="catalogs">Справочники</string>
+    <string name="persons">Личности</string>
+    <string name="keywords">Ключевые слова</string>
+    <string name="sites">Сайты</string>
+    <string name="add">Добавить</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="need_select">Сначала выберите элемент списка</string>
+    <string name="site">Сайт:</string>
+    <string name="name">Имя</string>
+    <string name="count_mentions">Количество упоминаний</string>
+    <string name="person">Личность:</string>
+    <string name="period_from">Период с</string>
+    <string name="to">по</string>
+    <string name="date">Дата</string>
+    <string name="count_new_pages">Количество новых страниц</string>
+    <string name="total_for_period">Всего за период:</string>
+    <string name="load_interrupted_error">Загрузка прервана ошибкой</string>
+    <string name="address_to_service">Адрес к сервису:</string>
+</resources>

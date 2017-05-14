@@ -115,25 +115,28 @@ public class DBHandler {
 
 	private Date parseDate(String s) {
 		try {
+			Date d = new Date(System.currentTimeMillis());
 			Matcher m = paDate1.matcher(s);
 			if (m.find()) { // 2017/05/01
 				s = s.substring(m.start());
 				s = s.substring(0, 10);
-				return new Date(java.util.Date.parse(s));
+				d = new Date(java.util.Date.parse(s));
 			}
 			m = paDate2.matcher(s);
 			if (m.find()) { // 01/05/2017
 				s = s.substring(m.start());
 				s = s.substring(0, 10);
-				return new Date(java.util.Date.parse(s));
+				d = new Date(java.util.Date.parse(s));
 			}
 			m = paDate3.matcher(s);
 			if (m.find()) { // 20170501
 				s = s.substring(m.start());
 				s = s.substring(0, 8);
 				s = s.substring(0, 4) + "/" + s.substring(4, 6) + "/" + s.substring(6);
-				return new Date(java.util.Date.parse(s));
+				d = new Date(java.util.Date.parse(s));
 			}
+			if (d.getTime() <= System.currentTimeMillis())
+				return d;
 		} catch (Exception e) {
 		}
 		return new Date(System.currentTimeMillis());

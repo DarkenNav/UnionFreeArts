@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UI.Desktop.UFart.Interface;
 using UI.Desktop.UFart.Mapping;
 
 namespace UFart.Desktop.UI
@@ -21,7 +22,7 @@ namespace UFart.Desktop.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new FormMain());
+            Application.Run(new FormStart());
         }
     }
 }

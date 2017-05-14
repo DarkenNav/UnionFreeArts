@@ -59,26 +59,45 @@
     <Compile Include="DTO\PersonDTO.cs" />
     <Compile Include="DTO\PersonPageRankDTO.cs" />
     <Compile Include="DTO\SiteDTO.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="Interface\FormEveryDay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="Interface\FormEveryDay.Designer.cs">
+      <DependentUpon>FormEveryDay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Implimentation\AppWrapper.cs" />
     <Compile Include="Interface\FormStart.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\FormStart.Designer.cs">
       <DependentUpon>FormStart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interface\FormTotal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\FormTotal.Designer.cs">
+      <DependentUpon>FormTotal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mapping\MapperConfigurate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="Interface\FormEveryDay.resx">
+      <DependentUpon>FormEveryDay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\FormStart.resx">
       <DependentUpon>FormStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\FormTotal.resx">
+      <DependentUpon>FormTotal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,18 +1,20 @@
-﻿using UFart.Desktop.DataAccess.FakeData;
-using UFart.Desktop.DataAccess.Repositories.Base;
+﻿using UFart.Desktop.DataAccess.Repositories.Base;
 using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
 using UFart.Desktop.Domain.Entity;
 
-namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
+namespace UFart.Desktop.DataAccess.Repositories.WebApi
 {
-    public class FakeDataRepository
+    public class WebApiRepository
         : AbstractRepository, IDataRepository
     {
-        private FakeDataBase fakeContext;
-        public FakeDataRepository()
+        private string url;
+        public WebApiRepository(string url = "")
             : base()
         {
-            this.fakeContext = new FakeDataBase();
+            if (url == "")
+                this.url = @"http://localhost:8080";
+            else
+                this.url = url;
         }
 
         IEntityRepositoryBase<Keyword> keywordsRepository;
@@ -22,7 +24,7 @@ namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
             {
                 if (keywordsRepository == null)
                 {
-                    keywordsRepository = new FakeDataRepositoryBase<Keyword>(fakeContext.Keywords);
+                    keywordsRepository = new WebApiRepositoryBase<Keyword>($"{url}/keyword/");
                 }
                 return keywordsRepository;
             }
@@ -35,7 +37,7 @@ namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
             {
                 if (pagesRepository == null)
                 {
-                    pagesRepository = new FakeDataRepositoryBase<Page>(fakeContext.Pages);
+                    pagesRepository = new WebApiRepositoryBase<Page>($"{url}/page/");
                 }
                 return pagesRepository;
             }
@@ -48,7 +50,7 @@ namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
             {
                 if (personPagesRankRepository == null)
                 {
-                    personPagesRankRepository = new FakePersonPageRankRepository(fakeContext);
+                    personPagesRankRepository = new WebApiPersonPageRankRepository($"{url}/stat/");
                 }
                 return personPagesRankRepository;
             }
@@ -61,7 +63,7 @@ namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
             {
                 if (personsRepository == null)
                 {
-                    personsRepository = new FakeDataRepositoryBase<Person>(fakeContext.Persons);
+                    personsRepository = new WebApiRepositoryBase<Person>($"{url}/person/");
                 }
                 return personsRepository;
             }
@@ -74,7 +76,7 @@ namespace UFart.Desktop.DataAccess.Repositories.FakeDataRepositories
             {
                 if (sitesRepository == null)
                 {
-                    sitesRepository = new FakeDataRepositoryBase<Site>(fakeContext.Sites);
+                    sitesRepository = new WebApiRepositoryBase<Site>($"{url}/site/");
                 }
                 return sitesRepository;
             }

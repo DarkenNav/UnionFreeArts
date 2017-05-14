@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
 using UFart.Desktop.Domain.Entity;
+using UI.Desktop.DataAccess.DTO;
 
 namespace UFart.Desktop.DataAccess.Repositories.Base.Interfaces
 {
     public interface IPersonPageRankRepository
         : IEntityRepositoryBase<PersonPageRank>
     {
-        IEnumerable<PersonPageRank> GetBySite(int idSite);
+        IEnumerable<RankWithPersonDTO> GetBySite(int idSite);
 
         IEnumerable<PersonPageRank> GetBy(
             int? idSite = null,

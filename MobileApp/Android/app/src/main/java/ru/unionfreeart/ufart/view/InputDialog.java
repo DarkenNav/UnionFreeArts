@@ -17,6 +17,7 @@ import ru.unionfreeart.ufart.utils.Const;
  */
 
 public class InputDialog extends Dialog {
+    private InputMethodManager manager;
     private Activity activity;
     private EditText etInput;
     private Result result;
@@ -44,11 +45,15 @@ public class InputDialog extends Dialog {
     }
 
     private void showKeyboard() {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        manager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    private void hideKeyboard() {
+        manager.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
     }
 
     private void initInterface() {
+        manager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         etInput = (EditText) findViewById(R.id.etInput);
         etInput.setText(string);
         findViewById(R.id.bCancel).setOnClickListener(new View.OnClickListener() {
@@ -79,6 +84,7 @@ public class InputDialog extends Dialog {
     public void dismiss() {
         if (boolCancel)
             result.putString(0, "");
+        hideKeyboard();
         super.dismiss();
     }
 

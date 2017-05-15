@@ -48,10 +48,10 @@ CREATE TABLE `pages` (
   `Url` varchar(2048) NOT NULL,
   `SiteId` int(11) NOT NULL,
   `FoundDateTime` datetime DEFAULT NULL,
-  `LastScanDateTime` datetime DEFAULT NULL,
+  `LastScanDate` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `PagesFoundDateIndex` (`FoundDateTime`),
-  KEY `PagesLastScanDateIndex` (`LastScanDateTime`),
+  KEY `PagesLastScanDateIndex` (`LastScanDate`),
   KEY `PagesUrlnameIndex` (`Url`(767)),
   KEY `FKSitePage_idx` (`SiteId`),
   CONSTRAINT `FKSitePage` FOREIGN KEY (`SiteId`) REFERENCES `sites` (`Id`) ON DELETE CASCADE ON UPDATE NO ACTION

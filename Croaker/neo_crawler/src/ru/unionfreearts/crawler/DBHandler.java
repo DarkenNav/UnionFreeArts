@@ -115,25 +115,28 @@ public class DBHandler {
 
 	private Date parseDate(String s) {
 		try {
+			Date d = new Date(System.currentTimeMillis());
 			Matcher m = paDate1.matcher(s);
 			if (m.find()) { // 2017/05/01
 				s = s.substring(m.start());
 				s = s.substring(0, 10);
-				return new Date(java.util.Date.parse(s));
+				d = new Date(java.util.Date.parse(s));
 			}
 			m = paDate2.matcher(s);
 			if (m.find()) { // 01/05/2017
 				s = s.substring(m.start());
 				s = s.substring(0, 10);
-				return new Date(java.util.Date.parse(s));
+				d = new Date(java.util.Date.parse(s));
 			}
 			m = paDate3.matcher(s);
 			if (m.find()) { // 20170501
 				s = s.substring(m.start());
 				s = s.substring(0, 8);
 				s = s.substring(0, 4) + "/" + s.substring(4, 6) + "/" + s.substring(6);
-				return new Date(java.util.Date.parse(s));
+				d = new Date(java.util.Date.parse(s));
 			}
+			if (d.getTime() <= System.currentTimeMillis())
+				return d;
 		} catch (Exception e) {
 		}
 		return new Date(System.currentTimeMillis());
@@ -205,12 +208,14 @@ public class DBHandler {
 		try {
 			PreparedStatement stmt;
 			for (int i = 0; i < ranks.size(); i++) {
-				stmt = con.prepareStatement("INSERT INTO PersonPageRank (PersonID, PageID, Rank) VALUES (?, ?, ?)");
-				stmt.setInt(1, ranks.get(i).getPersonId());
-				stmt.setInt(2, ranks.get(i).getPageId());
-				stmt.setInt(3, ranks.get(i).getCount());
-				stmt.execute();
-				stmt.close();
+				if (ranks.get(i).getCount() > 0) {
+					stmt = con.prepareStatement("INSERT INTO PersonPageRank (PersonID, PageID, Rank) VALUES (?, ?, ?)");
+					stmt.setInt(1, ranks.get(i).getPersonId());
+					stmt.setInt(2, ranks.get(i).getPageId());
+					stmt.setInt(3, ranks.get(i).getCount());
+					stmt.execute();
+					stmt.close();
+				}
 			}
 		} catch (Exception e) {
 			Main.appendLog(getSiteId() + "ERROR (saveRanks): ", e);

@@ -11,21 +11,17 @@ namespace UI.Desktop.DataAccess.Repositories.Base
     public class EntityRepositoryBase<TEntity>
         : IEntityRepositoryBase<TEntity> where TEntity : class
     {
+        public EntityRepositoryBase()
+        {
+
+        }
+
         public void Create(TEntity item)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> func)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null, 
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null, 
-            int? skip = default(int?), 
-            int? take = default(int?))
+        public IEnumerable<TEntity> Get(int id)
         {
             throw new NotImplementedException();
         }

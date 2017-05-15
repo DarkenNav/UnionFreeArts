@@ -44,9 +44,20 @@
     <Compile Include="Repositories\Base\AbstractRepository.cs" />
     <Compile Include="Repositories\Base\EntityRepositoryBase.cs" />
     <Compile Include="Repositories\Base\Interfaces\IEntityRepositoryBase.cs" />
-    <Compile Include="Repositories\Base\Interfaces\IRepositoryBase.cs" />
+    <Compile Include="Repositories\DataRepository.cs" />
+    <Compile Include="Repositories\Entities\PersonPageRankRepository.cs" />
+    <Compile Include="Repositories\Entities\PagesRepository.cs" />
+    <Compile Include="Repositories\Entities\SitesRepository.cs" />
+    <Compile Include="Repositories\Entities\KeywordsRepository.cs" />
+    <Compile Include="Repositories\Entities\PersonsRepository.cs" />
+    <Compile Include="Repositories\IDataRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\UI.Desktop.UFart.Domain\UFart.Desktop.Domain.csproj">
+      <Project>{2173CCB4-4E8E-4570-A286-BFCAA440A3BC}</Project>
+      <Name>UFart.Desktop.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

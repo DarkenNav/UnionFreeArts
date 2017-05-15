@@ -1,11 +1,11 @@
 package ru.unionfreearts.webservice.dao.fake;
 
+import ru.unionfreearts.webservice.dao.IRepository;
+import ru.unionfreearts.webservice.dao.specifications.Specification;
 import ru.unionfreearts.webservice.model.Page;
 import ru.unionfreearts.webservice.model.Person;
 import ru.unionfreearts.webservice.model.Rank;
 import ru.unionfreearts.webservice.model.Site;
-import ru.unionfreearts.webservice.dao.IRepository;
-import ru.unionfreearts.webservice.dao.specifications.Specification;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -67,7 +67,7 @@ public class GraphActivity extends AppCompatActivity {
                 getIntent().getStringExtra(TABLE_NAME));
         table.loadTable();
 
-        list = new DataPoint[table.getCount() + 6];
+        list = new DataPoint[table.getCount()];
         for (int i = 0; i < table.getCount(); i++) {
             title.add(table.getName(i));
             list[i] = new DataPoint(i, i * 100 + Integer.parseInt(table.getValue(i)));

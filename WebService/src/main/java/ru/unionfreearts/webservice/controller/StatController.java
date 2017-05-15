@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.unionfreearts.webservice.dao.specifications.hibernate.AllRanksByPersonAndTime;
-import ru.unionfreearts.webservice.model.Rank;
 import ru.unionfreearts.webservice.dao.IRepository;
+import ru.unionfreearts.webservice.dao.specifications.hibernate.AllRanksByPersonAndTime;
 import ru.unionfreearts.webservice.dao.specifications.hibernate.AllRanksBySite;
+import ru.unionfreearts.webservice.model.Rank;
 
 import java.util.*;
 
@@ -46,10 +46,10 @@ public class StatController {
         }
         while (nextDate.before(endDate));
 
-        if (ranks != null) {
+        if (jsonObjects.size() > 0) {
             return new ResponseEntity<>(jsonObjects, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/total/{siteId}", method = RequestMethod.GET)
@@ -72,9 +72,9 @@ public class StatController {
             totalRank.put("rank", rank.getRank());
             jsonObjects.add(totalRank);
         }
-        if (ranks != null) {
+        if (jsonObjects.size() > 0) {
             return new ResponseEntity<>(jsonObjects, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

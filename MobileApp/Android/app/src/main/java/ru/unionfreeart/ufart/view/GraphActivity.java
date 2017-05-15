@@ -70,7 +70,7 @@ public class GraphActivity extends AppCompatActivity {
         list = new DataPoint[table.getCount()];
         for (int i = 0; i < table.getCount(); i++) {
             title.add(table.getName(i));
-            list[i] = new DataPoint(i, i * 100 + Integer.parseInt(table.getValue(i)));
+            list[i] = new DataPoint(i, Integer.parseInt(table.getValue(i)));
         }
     }
 }

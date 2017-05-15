@@ -9,6 +9,7 @@
     <string name="registration">Регистрация</string>
     <string name="forget_password">Забыл пароль</string>
     <string name="forget_me">Забыть меня</string>
+    <string name="enter">Войти</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="exit">выйти</string>
@@ -33,5 +34,5 @@
     <string name="count_new_pages">Количество новых страниц</string>
     <string name="total_for_period">Всего за период:</string>
     <string name="load_interrupted_error">Загрузка прервана ошибкой</string>
-    <string name="address_to_service">Адрес к сервису:</string>
+    <string name="address_to_service">Адрес к сервису</string>
 </resources>

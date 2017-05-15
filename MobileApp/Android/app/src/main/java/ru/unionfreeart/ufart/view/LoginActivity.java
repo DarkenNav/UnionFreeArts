@@ -2,14 +2,14 @@ package ru.unionfreeart.ufart.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
 import ru.unionfreeart.ufart.R;
+import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.Settings;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements InputDialog.Result {
     private EditText etLogin, etPassword;
     private Settings settings;
 
@@ -32,23 +32,24 @@ public class LoginActivity extends AppCompatActivity {
                 etPassword.setText("");
             }
         });
-        findViewById(R.id.bUser).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bAddress).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.open(LoginActivity.this, true);
+                InputDialog dialog = new InputDialog(LoginActivity.this);
+                dialog.setResult(LoginActivity.this);
+                dialog.show(settings.getAddress());
             }
         });
-        findViewById(R.id.bAdmin).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bEnter).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.open(LoginActivity.this, false);
-            }
-        });
-        findViewById(R.id.fabOk).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                settings.setLogin(etLogin.getText().toString());
+                String login = etLogin.getText().toString();
+                settings.setLogin(login);
                 settings.setPassword(etPassword.getText().toString());
+                if (login.equals("user"))
+                    MainActivity.open(LoginActivity.this, true);
+                else if (login.equals("admin"))
+                    MainActivity.open(LoginActivity.this, false);
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
             }
@@ -56,8 +57,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         LoginActivity.this.setTitle(getResources().getString(R.string.authorization));
 
         settings = new Settings(LoginActivity.this);
@@ -68,4 +67,10 @@ public class LoginActivity extends AppCompatActivity {
         etPassword.setText(settings.getPassword());
     }
 
+    @Override
+    public void putString(int action, String input) {
+        if (action == Const.CANCEL)
+            return;
+        settings.setAddress(input);
+    }
 }

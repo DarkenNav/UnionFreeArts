@@ -17,9 +17,10 @@ public class Page implements Serializable {
     @Column(name = "Url", length = 2048, nullable = false, unique = true)
     private String url;
     @ManyToOne(targetEntity = Site.class)
+    @JoinColumn(name = "SiteId")
     private Site site;
     @Temporal(TemporalType.DATE)
-    @Column(name = "FoundDateDime")
+    @Column(name = "FoundDateTime")
     private Date foundDateTime;
     @Temporal(TemporalType.DATE)
     @Column(name = "LastScanDate")

@@ -13,7 +13,7 @@ public class Person implements Serializable {
     @GeneratedValue
     @Column(name = "Id")
     private Long id;
-    @Column(name = "Name", length = 2048, nullable = false, unique = true)
+    @Column(name = "Name")
     private String name;
     @JsonIgnore
     @OneToMany(targetEntity = Keyword.class, mappedBy = "person")

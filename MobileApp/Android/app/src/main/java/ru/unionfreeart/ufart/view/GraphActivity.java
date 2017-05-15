@@ -45,13 +45,15 @@ public class GraphActivity extends AppCompatActivity {
         graph.getViewport().setScalable(true);
         graph.getViewport().setScrollable(true);
         graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(5);
+        graph.getViewport().setMaxX(list.length - 1);
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if (isValueX) {
+                    if (value >= title.size() - 1.2)
+                        return title.get(title.size() - 1);
                     int i = (int) value;
-                    if (value - i == 0d && i < title.size() && i > 0)
+                    if (value - i == 0d && i > -1 && i < title.size())
                         return title.get(i);
                     else
                         return "";

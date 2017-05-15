@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.unionfreearts.webservice.dao.IRepository;
 import ru.unionfreearts.webservice.dao.specifications.hibernate.KeywordsByPersonId;
 import ru.unionfreearts.webservice.model.Keyword;
-import ru.unionfreearts.webservice.dao.IRepository;
-import ru.unionfreearts.webservice.model.Person;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/keyword")
@@ -33,11 +30,10 @@ public class KeywordController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Keyword> add(@RequestBody Keyword keyword) {
-        System.out.println(keyword.getId()+" "+keyword.getName()+" "+keyword.getPerson().getId());
         if (keywordRepository.add(keyword)) {
             return new ResponseEntity<>(keyword, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(keyword, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
@@ -46,7 +42,7 @@ public class KeywordController {
         if (keywordRepository.set(keyword)) {
             return new ResponseEntity<>(keyword, HttpStatus.OK);
         }
-        return new ResponseEntity<>(keyword, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
@@ -55,6 +51,6 @@ public class KeywordController {
         if (keywordRepository.remove(keyword)) {
             return new ResponseEntity<>(keyword, HttpStatus.OK);
         }
-        return new ResponseEntity<>(keyword, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

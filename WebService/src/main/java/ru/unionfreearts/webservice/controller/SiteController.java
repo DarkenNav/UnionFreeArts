@@ -4,17 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.unionfreearts.webservice.model.Site;
 import ru.unionfreearts.webservice.dao.IRepository;
 import ru.unionfreearts.webservice.dao.specifications.hibernate.AllSites;
+import ru.unionfreearts.webservice.model.Site;
 
 import java.util.List;
 
-
-/**
- * Контроллер для сайтов
- * @author Dmitry Kostyukov
- */
 @RestController
 @RequestMapping(value = "/site")
 public class SiteController {
@@ -29,14 +24,14 @@ public class SiteController {
         if (site != null) {
             return new ResponseEntity<>(site, HttpStatus.OK);
         }
-        return new ResponseEntity<>(site, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Site>> getAll() {
         List<Site> siteList = siteRepository.query(new AllSites());
-        if (siteList != null) {
+        if (siteList.size() > 0) {
             return new ResponseEntity<>(siteList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -48,7 +43,7 @@ public class SiteController {
         if (siteRepository.add(site)) {
             return new ResponseEntity<>(site, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(site, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
@@ -57,7 +52,7 @@ public class SiteController {
         if (siteRepository.set(site)) {
             return new ResponseEntity<>(site, HttpStatus.OK);
         }
-        return new ResponseEntity<>(site, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
@@ -66,6 +61,6 @@ public class SiteController {
         if (siteRepository.remove(site)) {
             return new ResponseEntity<>(site, HttpStatus.OK);
         }
-        return new ResponseEntity<>(site, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

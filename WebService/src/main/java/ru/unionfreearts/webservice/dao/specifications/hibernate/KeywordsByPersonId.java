@@ -1,7 +1,9 @@
 package ru.unionfreearts.webservice.dao.specifications.hibernate;
 
 import ru.unionfreearts.webservice.dao.specifications.AbstractSpecification;
-import ru.unionfreearts.webservice.model.*;
+import ru.unionfreearts.webservice.model.Keyword;
+import ru.unionfreearts.webservice.model.Keyword_;
+import ru.unionfreearts.webservice.model.Person_;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;

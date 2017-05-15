@@ -6,16 +6,18 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "person_page_rank")
+@Table(name = "personpagerank")
 public class Rank implements Serializable {
     @Id
     @ManyToOne(targetEntity = Person.class)
+    @JoinColumn(name = "PersonId")
     private Person person;
     @Id
     @JsonIgnore
     @ManyToOne(targetEntity = Page.class)
+    @JoinColumn(name = "PageId")
     private Page page;
-    @Column(name = "rank")
+    @Column(name = "Rank")
     private Integer rank;
 
     public Rank() {

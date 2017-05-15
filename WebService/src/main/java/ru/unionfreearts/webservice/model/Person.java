@@ -11,9 +11,9 @@ import java.util.List;
 public class Person implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "Id")
     private Long id;
-    @Column(name = "name", length = 248, nullable = false, unique = true)
+    @Column(name = "Name")
     private String name;
     @JsonIgnore
     @OneToMany(targetEntity = Keyword.class, mappedBy = "person")

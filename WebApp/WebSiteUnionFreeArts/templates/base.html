@@ -4,6 +4,10 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <link rel="stylesheet" href="{% static 'general/style/reset.css' %}">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -33,7 +37,7 @@
                 <ul class="nav navbar-nav navbar-right">
 
             {% else %}
-                <a href="{% url 'main' %}" title="Sign in" class="btn btn-default navbar-btn navbar-right">Sign in</a>
+                <a href="{% url 'signin' %}" title="Sign in" class="btn btn-default navbar-btn navbar-right">Sign in</a>
                 <a href="{% url 'main' %}" title="Sign up" class="btn btn-primary navbar-btn navbar-right"
                    style="margin-right: 5px;">Sign up</a>
             {% endif %}

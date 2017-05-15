@@ -1,7 +1,5 @@
 package ru.unionfreearts.webservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,10 +10,10 @@ public class Keyword implements Serializable {
     @GeneratedValue
     @Column(name = "Id")
     private Long id;
-    @Column(name = "Name", length = 2048, nullable = false, unique = true)
+    @Column(name = "Name")
     private String name;
-    @JsonIgnore
     @ManyToOne(targetEntity = Person.class)
+    @JoinColumn(name = "PersonId")
     private Person person;
 
     public Keyword() {

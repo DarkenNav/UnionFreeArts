@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.unionfreearts.webservice.dao.IRepository;
 import ru.unionfreearts.webservice.dao.specifications.hibernate.AllPerson;
 import ru.unionfreearts.webservice.model.Person;
-import ru.unionfreearts.webservice.dao.IRepository;
 
 import java.util.List;
 
@@ -24,14 +24,14 @@ public class PersonController {
         if (person != null) {
             return new ResponseEntity<>(person, HttpStatus.OK);
         }
-        return new ResponseEntity<>(person, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Person>> getAll() {
         List<Person> personList = personRepository.query(new AllPerson());
-        if (personList != null) {
+        if (personList.size() > 0) {
             return new ResponseEntity<>(personList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,7 +44,7 @@ public class PersonController {
         if (personRepository.add(person)) {
             return new ResponseEntity<>(person, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(person, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
@@ -53,7 +53,7 @@ public class PersonController {
         if (personRepository.set(person)) {
             return new ResponseEntity<>(person, HttpStatus.OK);
         }
-        return new ResponseEntity<>(person, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
@@ -62,6 +62,6 @@ public class PersonController {
         if (personRepository.remove(person)) {
             return new ResponseEntity<>(person, HttpStatus.OK);
         }
-        return new ResponseEntity<>(person, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

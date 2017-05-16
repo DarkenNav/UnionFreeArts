@@ -56,6 +56,10 @@ public class ListAdapter extends BaseAdapter {
         return select_index;
     }
 
+    public int getSelectId() {
+        return data.get(select_index).getId();
+    }
+
     public void setSelectIndex(int select_index) {
         this.select_index = select_index;
     }

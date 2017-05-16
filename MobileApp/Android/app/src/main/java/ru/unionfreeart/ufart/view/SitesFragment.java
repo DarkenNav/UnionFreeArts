@@ -129,7 +129,7 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     private void deleteItem() {
         task = new RunnableTask(SitesFragment.this);
         IRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_SITES,
-                Const.DELETE, adList.getSelectName(), adList.getSelectIndex());
+                Const.DELETE, adList.getSelectName(), adList.getSelectId());
         IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
         task.execute(catalogTask, taskSites);
         activity.setVisibleProgressBar(true);
@@ -176,7 +176,7 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_SITES, input);
         } else { //action == Const.EDIT
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_SITES,
-                    Const.EDIT, input, adList.getSelectIndex());
+                    Const.EDIT, input, adList.getSelectId());
         }
         IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
         task.execute(catalogRunnable, taskSites);

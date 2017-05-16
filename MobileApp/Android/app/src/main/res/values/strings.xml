@@ -21,7 +21,7 @@
     <string name="keywords">Ключевые слова</string>
     <string name="sites">Сайты</string>
     <string name="add">Добавить</string>
-    <string name="edit">Редактировать</string>
+    <string name="edit">Изменить</string>
     <string name="delete">Удалить</string>
     <string name="need_select">Сначала выберите элемент списка</string>
     <string name="site">Сайт:</string>

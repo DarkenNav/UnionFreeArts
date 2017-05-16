@@ -29,15 +29,15 @@ public class SettingsFragment extends Fragment {
     }
 
     private void initUI() {
-        etAddress = (EditText)container.findViewById(R.id.etAddress);
+//        etAddress = (EditText)container.findViewById(R.id.etAddress);
 
-        settings = new Settings(activity);
-        etAddress.setText(settings.getAddress());
+//        settings = new Settings(activity);
+//        etAddress.setText(settings.getAddress());
     }
 
     @Override
     public void onPause() {
-        settings.setAddress(etAddress.getText().toString());
+//        settings.setAddress(etAddress.getText().toString());
         super.onPause();
     }
 }

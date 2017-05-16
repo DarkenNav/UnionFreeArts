@@ -7,6 +7,15 @@
     <include layout="@layout/content_statistics" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabGraph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        app:srcCompat="@drawable/graph" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

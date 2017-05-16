@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  */
 
 public class Settings {
-    private final String ADDRESS = "address";
+    private final String ADDRESS = "address", LOGIN = "login", PASSWORD = "password";
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -23,6 +23,24 @@ public class Settings {
 
     public void setAddress(String adr) {
         editor.putString(ADDRESS, adr);
+        editor.apply();
+    }
+
+    public String getLogin() {
+        return pref.getString(LOGIN, "");
+    }
+
+    public void setLogin(String login) {
+        editor.putString(LOGIN, login);
+        editor.apply();
+    }
+
+    public String getPassword() {
+        return pref.getString(PASSWORD, "");
+    }
+
+    public void setPassword(String password) {
+        editor.putString(PASSWORD, password);
         editor.apply();
     }
 }

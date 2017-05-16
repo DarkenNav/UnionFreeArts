@@ -23,22 +23,23 @@ import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.SpinnerAdapter;
 import ru.unionfreeart.ufart.entities.TableAdapter;
 import ru.unionfreeart.ufart.entities.TableRow;
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.loaders.DailyLoader;
-import ru.unionfreeart.ufart.loaders.ListLoader;
+import ru.unionfreeart.ufart.runnable.DailyRunnable;
+import ru.unionfreeart.ufart.runnable.ListRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.repositories.TableRepositories;
-import ru.unionfreeart.ufart.utils.LoaderTask;
+import ru.unionfreeart.ufart.utils.Const;
+import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class DailyFragment extends Fragment implements View.OnClickListener, IMasterTask {
-    private final String START = "start", FINISH = "finish", LOADER = "loader",
+    private final String START = "start", FINISH = "finish",
             SITE_POSITON = "site", PERSON_POSITON = "person", VISIBLE_OPTIONS = "options";
     private final int MIN_DAY = 1, MIN_MONTH = 3, MIN_YEAR = 2017;
     private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private DatePickerDialog.OnDateSetListener dateStartListener, dateFinishListener;
     private MainActivity activity;
-    private LoaderTask loader;
+    private RunnableTask task;
     private Spinner spSite, spPerson;
     private SpinnerAdapter adSites, adPerson;
     private TableAdapter adTable;
@@ -71,15 +72,15 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
             pOptions.setVisibility(View.VISIBLE);
             TableRepositories table = new TableRepositories(activity, TableRepositories.TABLE_DAILY);
             table.clearTable();
-            loader = new LoaderTask(DailyFragment.this);
-            ILoader loaderSites = new ListLoader(ListRepositories.LIST_SITES);
-            ILoader loaderPersons = new ListLoader(ListRepositories.LIST_PERSONS);
-            loader.execute(loaderSites, loaderPersons);
+            task = new RunnableTask(DailyFragment.this);
+            IRunnable loaderSites = new ListRunnable(ListRepositories.LIST_SITES);
+            IRunnable loaderPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
+            task.execute(loaderSites, loaderPersons);
             activity.setVisibleProgressBar(true);
         } else { //restore fragment
-            loader = (LoaderTask) state.getSerializable(LOADER);
-            if (loader != null && loader.getStatus() != AsyncTask.Status.RUNNING) {
-                loader.newMaster(DailyFragment.this);
+            task = (RunnableTask) state.getSerializable(Const.TASK);
+            if (task != null && task.getStatus() != AsyncTask.Status.RUNNING) {
+                task.newMaster(DailyFragment.this);
             }
             openLists();
             openTable();
@@ -97,7 +98,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(LOADER, loader);
+        outState.putSerializable(Const.TASK, task);
         outState.putInt(SITE_POSITON, spSite.getSelectedItemPosition());
         outState.putInt(PERSON_POSITON, spPerson.getSelectedItemPosition());
         outState.putBoolean(VISIBLE_OPTIONS, pOptions.getVisibility() == View.VISIBLE);
@@ -128,12 +129,12 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         fabOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loader = new LoaderTask(DailyFragment.this);
-                ILoader loaderDaily = new DailyLoader(
+                task = new RunnableTask(DailyFragment.this);
+                IRunnable loaderDaily = new DailyRunnable(
                         adSites.getId(spSite.getSelectedItemPosition()),
                         adPerson.getId(spPerson.getSelectedItemPosition()),
                         dateStart, dateFinish);
-                loader.execute(loaderDaily);
+                task.execute(loaderDaily);
                 fabOk.setVisibility(View.GONE);
                 activity.setVisibleProgressBar(true);
             }

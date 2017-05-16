@@ -34,6 +34,10 @@
       <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,24 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeData\FakeDataBase.cs" />
-    <Compile Include="FakeData\FakePagesList.cs" />
-    <Compile Include="FakeData\FakePersonPagesRankList.cs" />
-    <Compile Include="FakeData\FakePersonsList.cs" />
-    <Compile Include="FakeData\FakeSitesList.cs" />
+    <Compile Include="DTO\RankOnDateDTO.cs" />
+    <Compile Include="Mapping\MapperConfigurate.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakeDataBase.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakePagesList.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakePersonPagesRankList.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakePersonsList.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakeDataContext\FakeSitesList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Base\AbstractRepositoryBase.cs" />
     <Compile Include="Repositories\Base\AbstractRepository.cs" />
-    <Compile Include="Repositories\Base\EntityRepositoryBase.cs" />
-    <Compile Include="Repositories\Entities\Base\IPersonPageRankRepository.cs" />
+    <Compile Include="DTO\RankWithPersonDTO.cs" />
+    <Compile Include="Repositories\WebApi\WebApiRepository.cs" />
+    <Compile Include="Repositories\WebApi\WebApiRepositoryBase.cs" />
+    <Compile Include="Repositories\Base\Interfaces\IPersonPageRankRepository.cs" />
     <Compile Include="Repositories\Base\Interfaces\IEntityRepositoryBase.cs" />
     <Compile Include="Repositories\DataRepository.cs" />
-    <Compile Include="Repositories\Entities\PersonPageRankRepository.cs" />
-    <Compile Include="Repositories\Entities\PagesRepository.cs" />
-    <Compile Include="Repositories\Entities\SitesRepository.cs" />
-    <Compile Include="Repositories\Entities\KeywordsRepository.cs" />
-    <Compile Include="Repositories\Entities\PersonsRepository.cs" />
-    <Compile Include="Repositories\IDataRepository.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakeDataRepository.cs" />
+    <Compile Include="Repositories\WebApi\WebApiPersonPageRankRepository.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakeDataRepositoryBase.cs" />
+    <Compile Include="Repositories\FakeDataRepositories\FakePersonPageRankRepository.cs" />
+    <Compile Include="Repositories\Base\Interfaces\IDataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UI.Desktop.UFart.Domain\UFart.Desktop.Domain.csproj">

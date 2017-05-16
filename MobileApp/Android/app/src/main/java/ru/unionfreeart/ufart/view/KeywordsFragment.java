@@ -17,18 +17,18 @@ import android.widget.Toast;
 import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.ListAdapter;
 import ru.unionfreeart.ufart.entities.SpinnerAdapter;
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.loaders.CatalogTask;
-import ru.unionfreeart.ufart.loaders.ListLoader;
+import ru.unionfreeart.ufart.runnable.CatalogRunnable;
+import ru.unionfreeart.ufart.runnable.ListRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.utils.Const;
-import ru.unionfreeart.ufart.utils.LoaderTask;
+import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class KeywordsFragment extends Fragment implements IMasterTask, InputDialog.Result {
-    private final String LOADER = "loader", PERSON = "person", SELECT = "sel";
+    private final String PERSON = "person", SELECT = "sel";
     private MainActivity activity;
-    private LoaderTask loader;
+    private RunnableTask task;
     private Spinner spPerson;
     private SpinnerAdapter adPerson;
     private ListView lvList;
@@ -51,16 +51,16 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
 
     private void restoreFragmentState(Bundle state) {
         if (state == null) { //first open fragment
-            loader = new LoaderTask(KeywordsFragment.this);
-            ILoader loaderPersons = new ListLoader(ListRepositories.LIST_PERSONS);
-            ListLoader loaderKeywords = new ListLoader(ListRepositories.LIST_KEYWORDS);
-            loaderKeywords.setId(1);
-            loader.execute(loaderPersons, loaderKeywords);
+            task = new RunnableTask(KeywordsFragment.this);
+            IRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
+            ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
+            taskKeywords.setId(1);
+            task.execute(taskPersons, taskKeywords);
             activity.setVisibleProgressBar(true);
         } else { //restore fragment
-            loader = (LoaderTask) state.getSerializable(LOADER);
-            if (loader != null && loader.getStatus() != AsyncTask.Status.RUNNING) {
-                loader.newMaster(KeywordsFragment.this);
+            task = (RunnableTask) state.getSerializable(Const.TASK);
+            if (task != null && task.getStatus() != AsyncTask.Status.RUNNING) {
+                task.newMaster(KeywordsFragment.this);
             }
             openPerson();
             person = state.getInt(PERSON);
@@ -73,7 +73,7 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(LOADER, loader);
+        outState.putSerializable(Const.TASK, task);
         outState.putInt(SELECT, adList.getSelectIndex());
         outState.putInt(PERSON, person);
         super.onSaveInstanceState(outState);
@@ -88,10 +88,10 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i != person) {
                     adList.setSelectIndex(-1);
-                    loader = new LoaderTask(KeywordsFragment.this);
-                    ListLoader loaderKeywords = new ListLoader(ListRepositories.LIST_KEYWORDS);
-                    loaderKeywords.setId(i);
-                    loader.execute(loaderKeywords);
+                    task = new RunnableTask(KeywordsFragment.this);
+                    ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
+                    taskKeywords.setId(i);
+                    task.execute(taskKeywords);
                     activity.setVisibleProgressBar(true);
                     person = i;
                 }
@@ -163,12 +163,12 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     }
 
     private void deleteItem() {
-        loader = new LoaderTask(KeywordsFragment.this);
-        ILoader catalogTask = new CatalogTask(ListRepositories.LIST_KEYWORDS,
+        task = new RunnableTask(KeywordsFragment.this);
+        IRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_KEYWORDS,
                 Const.DELETE, adList.getSelectName(), person, adList.getSelectIndex());
-        ListLoader loaderKeywords = new ListLoader(ListRepositories.LIST_KEYWORDS);
-        loaderKeywords.setId(person);
-        loader.execute(catalogTask, loaderKeywords);
+        ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
+        taskKeywords.setId(person);
+        task.execute(catalogTask, taskKeywords);
         activity.setVisibleProgressBar(true);
     }
 
@@ -219,18 +219,18 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     public void putString(int action, String input) {
         if (action == Const.CANCEL)
             return;
-        loader = new LoaderTask(KeywordsFragment.this);
-        CatalogTask catalogTask;
+        task = new RunnableTask(KeywordsFragment.this);
+        CatalogRunnable catalogRunnable;
         if (action == Const.ADD) {
-            catalogTask = new CatalogTask(ListRepositories.LIST_KEYWORDS,
+            catalogRunnable = new CatalogRunnable(ListRepositories.LIST_KEYWORDS,
                     Const.ADD, input, person, -1);
         } else { //action == Const.EDIT
-            catalogTask = new CatalogTask(ListRepositories.LIST_KEYWORDS,
+            catalogRunnable = new CatalogRunnable(ListRepositories.LIST_KEYWORDS,
                     Const.EDIT, input, person, adList.getSelectIndex());
         }
-        ListLoader loaderKeywords = new ListLoader(ListRepositories.LIST_KEYWORDS);
-        loaderKeywords.setId(person);
-        loader.execute(catalogTask, loaderKeywords);
+        ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
+        taskKeywords.setId(person);
+        task.execute(catalogRunnable, taskKeywords);
         activity.setVisibleProgressBar(true);
     }
 }

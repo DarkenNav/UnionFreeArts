@@ -5,6 +5,7 @@ package ru.unionfreeart.ufart.utils;
  */
 
 public interface Const {
+    String TASK = "task";
     int TIMEOUT = 5000;
     int CANCEL = 0, ADD = 1, EDIT = 2, DELETE = 3;
 }

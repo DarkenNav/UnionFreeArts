@@ -15,18 +15,18 @@ import android.widget.Toast;
 
 import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.ListAdapter;
-import ru.unionfreeart.ufart.interfaces.ILoader;
+import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
-import ru.unionfreeart.ufart.loaders.CatalogTask;
-import ru.unionfreeart.ufart.loaders.ListLoader;
+import ru.unionfreeart.ufart.runnable.CatalogRunnable;
+import ru.unionfreeart.ufart.runnable.ListRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.utils.Const;
-import ru.unionfreeart.ufart.utils.LoaderTask;
+import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class PersonsFragment extends Fragment implements IMasterTask, InputDialog.Result {
-    private final String LOADER = "loader", SELECT = "sel";
+    private final String SELECT = "sel";
     private MainActivity activity;
-    private LoaderTask loader;
+    private RunnableTask task;
     private ListView lvList;
     private ListAdapter adList;
     private View container;
@@ -45,14 +45,14 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
 
     private void restoreFragmentState(Bundle state) {
         if (state == null) { //first open fragment
-            loader = new LoaderTask(PersonsFragment.this);
-            ILoader loaderPersons = new ListLoader(ListRepositories.LIST_PERSONS);
-            loader.execute(loaderPersons);
+            task = new RunnableTask(PersonsFragment.this);
+            IRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
+            task.execute(taskPersons);
             activity.setVisibleProgressBar(true);
         } else { //restore fragment
-            loader = (LoaderTask) state.getSerializable(LOADER);
-            if (loader != null && loader.getStatus() != AsyncTask.Status.RUNNING) {
-                loader.newMaster(PersonsFragment.this);
+            task = (RunnableTask) state.getSerializable(Const.TASK);
+            if (task != null && task.getStatus() != AsyncTask.Status.RUNNING) {
+                task.newMaster(PersonsFragment.this);
             }
             openList();
             adList.setSelectIndex(state.getInt(SELECT));
@@ -62,7 +62,7 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(LOADER, loader);
+        outState.putSerializable(Const.TASK, task);
         outState.putInt(SELECT, adList.getSelectIndex());
         super.onSaveInstanceState(outState);
     }
@@ -127,11 +127,11 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
     }
 
     private void deleteItem() {
-        loader = new LoaderTask(PersonsFragment.this);
-        ILoader catalogTask = new CatalogTask(ListRepositories.LIST_PERSONS,
+        task = new RunnableTask(PersonsFragment.this);
+        IRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_PERSONS,
                 Const.DELETE, adList.getSelectName(), adList.getSelectIndex());
-        ILoader loaderPersons = new ListLoader(ListRepositories.LIST_PERSONS);
-        loader.execute(catalogTask, loaderPersons);
+        IRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
+        task.execute(catalogTask, taskPersons);
         activity.setVisibleProgressBar(true);
     }
 
@@ -170,16 +170,16 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
     public void putString(int action, String input) {
         if (action == Const.CANCEL)
             return;
-        loader = new LoaderTask(PersonsFragment.this);
-        CatalogTask catalogTask;
+        task = new RunnableTask(PersonsFragment.this);
+        CatalogRunnable catalogRunnable;
         if (action == Const.ADD) {
-            catalogTask = new CatalogTask(ListRepositories.LIST_PERSONS, input);
+            catalogRunnable = new CatalogRunnable(ListRepositories.LIST_PERSONS, input);
         } else { //action == Const.EDIT
-            catalogTask = new CatalogTask(ListRepositories.LIST_PERSONS,
+            catalogRunnable = new CatalogRunnable(ListRepositories.LIST_PERSONS,
                     Const.EDIT, input, adList.getSelectIndex());
         }
-        ILoader loaderPersons = new ListLoader(ListRepositories.LIST_PERSONS);
-        loader.execute(catalogTask, loaderPersons);
+        IRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
+        task.execute(catalogRunnable, taskPersons);
         activity.setVisibleProgressBar(true);
     }
 }

@@ -17,6 +17,11 @@ def about(request):
     return render(request, 'about.html', context)
 
 
+def signin(request):
+    context = {}
+    return render(request, 'signin.html', context)
+
+
 def technical_support(request):
     form_class = ContactForm
     # new logic!
@@ -45,7 +50,7 @@ def technical_support(request):
                              headers={'Reply-To': contact_email}
                              )
         email.send()
-        return redirect('technical_support')
+        return render(request, 'form_success_tech_sup.html', {'form': form_class, })
 
     return render(request, 'technical_support.html', {'form': form_class, })
 
@@ -78,7 +83,7 @@ def contact(request):
                              headers={'Reply-To': contact_email}
                              )
         email.send()
-        return redirect('contact')
+        return render(request, 'form_success_contact.html', {'form': form_class, })
 
     return render(request, 'contact.html', {'form': form_class, })
 
@@ -89,6 +94,4 @@ def comment(request):
     return render(request, 'comment.html', context)
 
 
-def form_success_tech_sup(request):
-    context = {}
-    return render(request, 'form_success_tech_sup.html', context)
+

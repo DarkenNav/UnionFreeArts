@@ -14,6 +14,10 @@
             android:id="@+id/nav_daily"
             android:icon="@drawable/ic_daily"
             android:title="@string/daily_statistics" />
+        <item
+            android:id="@+id/nav_reg"
+            android:icon="@drawable/ic_reg"
+            android:title="@string/registration" />
 
         <item android:title="@string/catalogs">
             <menu>

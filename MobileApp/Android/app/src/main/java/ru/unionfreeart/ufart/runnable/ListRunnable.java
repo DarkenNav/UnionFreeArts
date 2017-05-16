@@ -15,6 +15,7 @@ import org.json.JSONArray;
 
 import ru.unionfreeart.ufart.utils.Settings;
 import ru.unionfreeart.ufart.entities.ListItem;
+import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.repositories.ListRepositories;
 
@@ -23,7 +24,6 @@ import ru.unionfreeart.ufart.repositories.ListRepositories;
  */
 
 public class ListRunnable implements IRunnable {
-    private final int TIMEOUT = 5000;
     private String name;
     private int id = -1;
 
@@ -37,8 +37,8 @@ public class ListRunnable implements IRunnable {
 
     public void run(Context context) throws Exception {
         BasicHttpParams httpParameters = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParameters, TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpParameters, TIMEOUT);
+        HttpConnectionParams.setConnectionTimeout(httpParameters, Const.TIMEOUT);
+        HttpConnectionParams.setSoTimeout(httpParameters, Const.TIMEOUT);
         DefaultHttpClient client = new DefaultHttpClient(httpParameters);
         Settings settings = new Settings(context);
         HttpGet rget;

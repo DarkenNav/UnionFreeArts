@@ -1,7 +1,6 @@
 package ru.unionfreeart.ufart.runnable;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,10 +38,8 @@ public class TotalRunnable implements IRunnable {
         Settings settings = new Settings(context);
         HttpGet rget = new HttpGet(settings.getAddress() + "/stat/total/" + id_site);
         HttpResponse res = client.execute(rget);
-        Log.d("neo","code="+res.getStatusLine().getStatusCode());
         if (res.getStatusLine().getStatusCode() == 200) { //ok
             String r = EntityUtils.toString(res.getEntity());
-            Log.d("neo",r);
             JSONArray jsonA = new JSONArray(r);
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();

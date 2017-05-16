@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ru.unionfreeart.ufart.view.LoginActivity">
+
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:hint="@string/login"
+        android:imeOptions="actionNext"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etLogin"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/pBottom2"
+        android:background="@color/colorPrimary" />
+
+
+    <LinearLayout
+        android:id="@+id/pBottom2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pBottom1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/bForgetPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="@string/forget_password"
+            android:textColor="@color/colorAccent" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/bForgetMe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="@string/forget_me"
+            android:textColor="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/pBottom1"
+        android:background="@color/colorPrimary" />
+
+
+    <LinearLayout
+        android:id="@+id/pBottom1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/bAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="@string/address_to_service"
+            android:textColor="@color/colorAccent" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/bEnter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:text="@string/enter"
+            android:textColor="@color/colorAccent" />
+
+    </LinearLayout>
+
+</RelativeLayout>

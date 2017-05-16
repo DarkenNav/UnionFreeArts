@@ -1,7 +1,18 @@
 <resources>
     <string name="app_name">Статистика</string>
+    <string name="authorization">Авторизация</string>
+    <string name="graph">Графики</string>
+    <string name="user">Пользователь</string>
+    <string name="admin">Администатор</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="registration">Регистрация</string>
+    <string name="forget_password">Забыл пароль?</string>
+    <string name="forget_me">Забыть меня</string>
+    <string name="enter">Войти</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="exit">выйти</string>
     <string name="total_statistics">Общая статистика</string>
     <string name="daily_statistics">Ежедевная статистика</string>
     <string name="settings">Настройки</string>
@@ -10,7 +21,7 @@
     <string name="keywords">Ключевые слова</string>
     <string name="sites">Сайты</string>
     <string name="add">Добавить</string>
-    <string name="edit">Редактировать</string>
+    <string name="edit">Изменить</string>
     <string name="delete">Удалить</string>
     <string name="need_select">Сначала выберите элемент списка</string>
     <string name="site">Сайт:</string>
@@ -23,5 +34,7 @@
     <string name="count_new_pages">Количество новых страниц</string>
     <string name="total_for_period">Всего за период:</string>
     <string name="load_interrupted_error">Загрузка прервана ошибкой</string>
-    <string name="address_to_service">Адрес к сервису:</string>
+    <string name="address_to_service">Адрес к сервису</string>
+    <string name="old_password">Старый пароль</string>
+    <string name="new_password">Новый пароль</string>
 </resources>

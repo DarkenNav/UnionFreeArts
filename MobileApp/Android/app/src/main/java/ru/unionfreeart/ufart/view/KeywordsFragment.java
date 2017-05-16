@@ -121,6 +121,8 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
         container.findViewById(R.id.bAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (adPerson.getCount() == 0)
+                    return;
                 InputDialog dialog = new InputDialog(activity);
                 dialog.setResult(KeywordsFragment.this);
                 dialog.show();

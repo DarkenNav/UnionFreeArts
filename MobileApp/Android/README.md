@@ -4,4 +4,6 @@
 
 На данный момент, есть два рабочих логина: user (пользователь) и admin (администратор). Пароль - любой.
 
+[Демонстрационное видео](https://youtu.be/kkoR_tybbN4)
+
 [APK-файл для запуска](https://drive.google.com/drive/folders/0B1RdcS1jF5HdTkxuRUg2UXRyTnc?usp=sharing)

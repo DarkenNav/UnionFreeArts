@@ -6,10 +6,11 @@
     <groupId>UnionFreeArts</groupId>
     <artifactId>webservice</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>1.8</java.version>
+        <start-class>ru.unionfreearts.webservice.controller.Application</start-class>
     </properties>
 
     <parent>
@@ -19,13 +20,15 @@
     </parent>
 
     <build>
+        <finalName>api</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>ru.unionfreearts.webservice.controller.Application</mainClass>
-                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
@@ -34,18 +37,16 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-                <!--<artifactId>maven-compiler-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<compilerArguments>-->
-                        <!--<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>-->
-                    <!--</compilerArguments>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -58,7 +59,6 @@
             <version>1.1.1</version>
         </dependency>
 
-
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter-security</artifactId>-->
@@ -69,6 +69,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.39</version>
+            <scope>compile</scope>
         </dependency>
 
         <!--Generate metamodel classes ClassName_ -->
@@ -84,23 +85,23 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.2.9.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/hibernate/hibernate-entitymanager -->
-        <dependency>
-            <groupId>hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.4.1.Final</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>5.2.9.Final</version>
-        </dependency>
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/hibernate/hibernate-entitymanager &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>hibernate</groupId>-->
+            <!--<artifactId>hibernate-entitymanager</artifactId>-->
+            <!--<version>3.4.0.GA</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate/hibernate-validator &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-validator</artifactId>-->
+            <!--<version>5.4.1.Final</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate/hibernate-envers &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-envers</artifactId>-->
+            <!--<version>5.2.9.Final</version>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

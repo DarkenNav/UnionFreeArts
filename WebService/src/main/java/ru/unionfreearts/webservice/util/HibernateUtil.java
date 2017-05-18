@@ -5,8 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Bean;
 
-import java.io.File;
-
 @org.springframework.context.annotation.Configuration
 public class HibernateUtil {
 
@@ -23,8 +21,7 @@ public class HibernateUtil {
      */
     private static SessionFactory configureSessionFactory()
             throws HibernateException {
-        File hibernateConfig = new File("src/main/resources/config/hibernate.cfg.xml");
-        Configuration configuration = new Configuration().configure(hibernateConfig);
+        Configuration configuration = new Configuration().configure("/config/hibernate.cfg.xml");
         return configuration.buildSessionFactory();
     }
 

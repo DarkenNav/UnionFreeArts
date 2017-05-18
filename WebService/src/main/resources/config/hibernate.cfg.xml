@@ -9,7 +9,7 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.pool_size">2</property>
         <property name="current_session_context_class">thread</property>
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
         <property name="hibernate.id.new_generator_mappings">false</property>
 
         <property name="connection.username"></property>

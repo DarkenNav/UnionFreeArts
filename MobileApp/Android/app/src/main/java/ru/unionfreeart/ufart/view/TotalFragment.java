@@ -22,6 +22,7 @@ import ru.unionfreeart.ufart.repositories.TableRepositories;
 import ru.unionfreeart.ufart.runnable.ListRunnable;
 import ru.unionfreeart.ufart.runnable.TotalRunnable;
 import ru.unionfreeart.ufart.utils.Const;
+import ru.unionfreeart.ufart.utils.FabHelper;
 import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class TotalFragment extends Fragment implements IMasterTask {
@@ -40,9 +41,9 @@ public class TotalFragment extends Fragment implements IMasterTask {
         activity.setTitle(getResources().getString(R.string.total_statistics));
         this.container = inflater.inflate(R.layout.fragment_statistics, container, false);
         initSites();
-        initTable();
         initPanels();
         initButtons();
+        initTable();
         restoreFragmentState(savedInstanceState);
         return this.container;
     }
@@ -138,6 +139,7 @@ public class TotalFragment extends Fragment implements IMasterTask {
         ListView lvTable = (ListView) container.findViewById(R.id.lvTable);
         adTable = new TableAdapter(activity);
         lvTable.setAdapter(adTable);
+        FabHelper.help(activity, lvTable, new View[]{fabGraph, fabOptions});
     }
 
     public Context getContext() {

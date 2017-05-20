@@ -30,6 +30,7 @@ import ru.unionfreeart.ufart.repositories.TableRepositories;
 import ru.unionfreeart.ufart.runnable.DailyRunnable;
 import ru.unionfreeart.ufart.runnable.ListRunnable;
 import ru.unionfreeart.ufart.utils.Const;
+import ru.unionfreeart.ufart.utils.FabHelper;
 import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class DailyFragment extends Fragment implements View.OnClickListener, IMasterTask {
@@ -57,9 +58,9 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         this.container = inflater.inflate(R.layout.fragment_statistics, container, false);
         initSites();
         initPersons();
-        initTable();
         initPanels();
         initButtons();
+        initTable();
         initPreferences();
         initDates();
         restoreFragmentState(savedInstanceState);
@@ -209,6 +210,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener, IMa
         ListView lvTable = (ListView) container.findViewById(R.id.lvTable);
         adTable = new TableAdapter(activity);
         lvTable.setAdapter(adTable);
+        FabHelper.help(activity, lvTable, new View[]{fabGraph, fabOptions});
     }
 
 

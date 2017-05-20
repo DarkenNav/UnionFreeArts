@@ -41,7 +41,7 @@ public class RunnableTask extends AsyncTask<IRunnable, Integer, String> implemen
             }
         } catch (Exception e) {
             final String msg = e.getMessage();
-            if (msg.contains("timed out"))
+            if (msg.contains("timed out") || msg.contains("Connect"))
                 return context.getResources().getString(R.string.timeout_error);
             if (msg.equals("Code: 404"))
                 return context.getResources().getString(R.string.not_found);

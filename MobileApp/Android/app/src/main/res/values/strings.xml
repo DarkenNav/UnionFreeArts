@@ -36,4 +36,5 @@
     <string name="address_to_service">Адрес к сервису</string>
     <string name="old_password">Старый пароль</string>
     <string name="new_password">Новый пароль</string>
+    <string name="change_password">Сменить пароль</string>
 </resources>

@@ -85,13 +85,11 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i != index_person) {
                     index_person = i;
-                    adList.setSelectIndex(-1);
                     task = new RunnableTask(KeywordsFragment.this);
                     ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
                     taskKeywords.setId(getPersonId());
                     task.execute(taskKeywords);
                     activity.setVisibleProgressBar(true);
-
                 }
             }
 
@@ -189,6 +187,8 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     }
 
     public void putResult(String msg) {
+        adList.clear();
+        adList.notifyDataSetChanged();
         if (msg != null) { //error
             activity.setVisibleProgressBar(false);
             Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
@@ -202,7 +202,6 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     }
 
     private void openList() {
-        adList.clear();
         ListRepositories sites = new ListRepositories(activity, ListRepositories.LIST_KEYWORDS);
         sites.loadList();
         for (int i = 0; i < sites.getCount(); i++) {

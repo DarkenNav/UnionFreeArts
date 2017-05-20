@@ -148,6 +148,8 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     }
 
     public void putResult(String msg) {
+        adList.clear();
+        adList.notifyDataSetChanged();
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
             Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
@@ -157,7 +159,6 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     }
 
     private void openList() {
-        adList.clear();
         ListRepositories sites = new ListRepositories(activity, ListRepositories.LIST_SITES);
         sites.loadList();
         for (int i = 0; i < sites.getCount(); i++) {

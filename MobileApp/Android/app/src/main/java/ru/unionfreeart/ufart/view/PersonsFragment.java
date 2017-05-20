@@ -148,6 +148,8 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
     }
 
     public void putResult(String msg) {
+        adList.clear();
+        adList.notifyDataSetChanged();
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
             Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
@@ -157,7 +159,6 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
     }
 
     private void openList() {
-        adList.clear();
         ListRepositories persons = new ListRepositories(activity, ListRepositories.LIST_PERSONS);
         persons.loadList();
         for (int i = 0; i < persons.getCount(); i++) {

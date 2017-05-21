@@ -40,9 +40,9 @@ public class CatalogRunnable implements IRunnable {
         this.name = name;
         this.method = method;
         if (id > 0)
-            request = "{\"id\": " + id + ", \"name\": \"" + item + "\", \"personId\": " + person + "}";
+            request = "{\"id\": " + id + ", \"name\": \"" + item + "\", \"person\": {\"id\": " + person + "}}";
         else
-            request = "{\"name\": \"" + item + "\", \"personId\": " + person + "}";
+            request = "{\"name\": \"" + item + "\", \"person\": {\"id\": " + person + "}}";
     }
 
     public void run(Context context) throws Exception {
@@ -52,7 +52,7 @@ public class CatalogRunnable implements IRunnable {
         DefaultHttpClient client = new DefaultHttpClient(httpParameters);
         Settings settings = new Settings(context);
         HttpResponse res;
-        StringEntity entity = new StringEntity(request);
+        StringEntity entity = new StringEntity(request, "UTF-8");
         switch (method) {
             case Const.ADD:
                 HttpPost post = new HttpPost(settings.getAddress() + name + "/");

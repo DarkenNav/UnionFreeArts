@@ -18,7 +18,8 @@ public class Settings {
     }
 
     public String getAddress() {
-        return pref.getString(ADDRESS, "http://192.168.0.104:8080/");
+        return pref.getString(ADDRESS,
+                "http://web-unionfreearts.7e14.starter-us-west-2.openshiftapps.com/api/");
     }
 
     public void setAddress(String adr) {

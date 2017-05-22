@@ -40,4 +40,5 @@
     <string name="timeout_error">Не удалось подключиться к сервису</string>
     <string name="not_found">Не найдено</string>
     <string name="server_error">Внутренняя ошибка сервера</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
 </resources>

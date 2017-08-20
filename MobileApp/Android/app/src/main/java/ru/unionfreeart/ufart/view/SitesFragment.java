@@ -129,7 +129,7 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     private void deleteItem() {
         task = new RunnableTask(SitesFragment.this);
         IRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_SITES,
-                Const.DELETE, adList.getSelectName(), adList.getSelectIndex());
+                Const.DELETE, adList.getSelectName(), adList.getSelectId());
         IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
         task.execute(catalogTask, taskSites);
         activity.setVisibleProgressBar(true);
@@ -148,6 +148,8 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     }
 
     public void putResult(String msg) {
+        adList.clear();
+        adList.notifyDataSetChanged();
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
             Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
@@ -157,7 +159,6 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
     }
 
     private void openList() {
-        adList.clear();
         ListRepositories sites = new ListRepositories(activity, ListRepositories.LIST_SITES);
         sites.loadList();
         for (int i = 0; i < sites.getCount(); i++) {
@@ -176,7 +177,7 @@ public class SitesFragment extends Fragment implements IMasterTask, InputDialog.
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_SITES, input);
         } else { //action == Const.EDIT
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_SITES,
-                    Const.EDIT, input, adList.getSelectIndex());
+                    Const.EDIT, input, adList.getSelectId());
         }
         IRunnable taskSites = new ListRunnable(ListRepositories.LIST_SITES);
         task.execute(catalogRunnable, taskSites);

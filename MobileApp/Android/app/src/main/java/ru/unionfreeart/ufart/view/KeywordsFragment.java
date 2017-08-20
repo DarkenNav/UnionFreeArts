@@ -17,23 +17,22 @@ import android.widget.Toast;
 import ru.unionfreeart.ufart.R;
 import ru.unionfreeart.ufart.entities.ListAdapter;
 import ru.unionfreeart.ufart.entities.SpinnerAdapter;
-import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.interfaces.IMasterTask;
+import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.runnable.CatalogRunnable;
 import ru.unionfreeart.ufart.runnable.ListRunnable;
-import ru.unionfreeart.ufart.repositories.ListRepositories;
 import ru.unionfreeart.ufart.utils.Const;
 import ru.unionfreeart.ufart.utils.RunnableTask;
 
 public class KeywordsFragment extends Fragment implements IMasterTask, InputDialog.Result {
-    private final String PERSON = "person", SELECT = "sel";
+    private final String PERSON = "index_person", SELECT = "sel";
     private MainActivity activity;
     private RunnableTask task;
     private Spinner spPerson;
     private SpinnerAdapter adPerson;
     private ListView lvList;
     private ListAdapter adList;
-    private int person = 0;
+    private int index_person = 0;
     private View container;
 
     @Override
@@ -52,10 +51,8 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     private void restoreFragmentState(Bundle state) {
         if (state == null) { //first open fragment
             task = new RunnableTask(KeywordsFragment.this);
-            IRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
-            ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
-            taskKeywords.setId(1);
-            task.execute(taskPersons, taskKeywords);
+            ListRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
+            task.execute(taskPersons);
             activity.setVisibleProgressBar(true);
         } else { //restore fragment
             task = (RunnableTask) state.getSerializable(Const.TASK);
@@ -63,8 +60,8 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
                 task.newMaster(KeywordsFragment.this);
             }
             openPerson();
-            person = state.getInt(PERSON);
-            spPerson.setSelection(person);
+            index_person = state.getInt(PERSON);
+            spPerson.setSelection(index_person);
             openList();
             adList.setSelectIndex(state.getInt(SELECT));
             adList.notifyDataSetChanged();
@@ -75,7 +72,7 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(Const.TASK, task);
         outState.putInt(SELECT, adList.getSelectIndex());
-        outState.putInt(PERSON, person);
+        outState.putInt(PERSON, index_person);
         super.onSaveInstanceState(outState);
     }
 
@@ -86,14 +83,13 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
         spPerson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != person) {
-                    adList.setSelectIndex(-1);
+                if (i != index_person) {
+                    index_person = i;
                     task = new RunnableTask(KeywordsFragment.this);
                     ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
-                    taskKeywords.setId(i);
+                    taskKeywords.setId(getPersonId());
                     task.execute(taskKeywords);
                     activity.setVisibleProgressBar(true);
-                    person = i;
                 }
             }
 
@@ -164,18 +160,22 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
         });
     }
 
+    private int getPersonId() {
+        return adPerson.getId(index_person);
+    }
+
     private void deleteItem() {
         task = new RunnableTask(KeywordsFragment.this);
-        IRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_KEYWORDS,
-                Const.DELETE, adList.getSelectName(), person, adList.getSelectIndex());
+        CatalogRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_KEYWORDS,
+                Const.DELETE, adList.getSelectName(), getPersonId(), adList.getSelectId());
         ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
-        taskKeywords.setId(person);
+        taskKeywords.setId(getPersonId());
         task.execute(catalogTask, taskKeywords);
         activity.setVisibleProgressBar(true);
     }
 
     private boolean isCorrectIndex() {
-        if(adList.getSelectIndex() > -1)
+        if (adList.getSelectIndex() > -1)
             return true;
         else
             Toast.makeText(activity, getResources().getString(R.string.need_select), Toast.LENGTH_LONG).show();
@@ -187,17 +187,21 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     }
 
     public void putResult(String msg) {
-        activity.setVisibleProgressBar(false);
+        adList.clear();
+        adList.notifyDataSetChanged();
         if (msg != null) { //error
+            activity.setVisibleProgressBar(false);
             Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
         } else {
-            openPerson();
-            openList();
+            if (adPerson.getCount() > 0) { //list is not empty
+                activity.setVisibleProgressBar(false);
+                openList();
+            } else
+                openPerson();
         }
     }
 
     private void openList() {
-        adList.clear();
         ListRepositories sites = new ListRepositories(activity, ListRepositories.LIST_KEYWORDS);
         sites.loadList();
         for (int i = 0; i < sites.getCount(); i++) {
@@ -207,10 +211,12 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
     }
 
     private void openPerson() {
-        if (adPerson.getCount() > 0) //list is not empty
-            return;
         ListRepositories persons = new ListRepositories(activity, ListRepositories.LIST_PERSONS);
         persons.loadList();
+        ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
+        taskKeywords.setId(persons.getItem(0).getId());
+        task = new RunnableTask(KeywordsFragment.this);
+        task.execute(taskKeywords);
         for (int i = 0; i < persons.getCount(); i++) {
             adPerson.addItem(persons.getItem(i));
         }
@@ -225,13 +231,13 @@ public class KeywordsFragment extends Fragment implements IMasterTask, InputDial
         CatalogRunnable catalogRunnable;
         if (action == Const.ADD) {
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_KEYWORDS,
-                    Const.ADD, input, person, -1);
+                    Const.ADD, input, getPersonId(), -1);
         } else { //action == Const.EDIT
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_KEYWORDS,
-                    Const.EDIT, input, person, adList.getSelectIndex());
+                    Const.EDIT, input, getPersonId(), adList.getSelectId());
         }
         ListRunnable taskKeywords = new ListRunnable(ListRepositories.LIST_KEYWORDS);
-        taskKeywords.setId(person);
+        taskKeywords.setId(getPersonId());
         task.execute(catalogRunnable, taskKeywords);
         activity.setVisibleProgressBar(true);
     }

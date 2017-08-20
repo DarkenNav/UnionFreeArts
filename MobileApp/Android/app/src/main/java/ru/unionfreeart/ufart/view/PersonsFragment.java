@@ -129,7 +129,7 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
     private void deleteItem() {
         task = new RunnableTask(PersonsFragment.this);
         IRunnable catalogTask = new CatalogRunnable(ListRepositories.LIST_PERSONS,
-                Const.DELETE, adList.getSelectName(), adList.getSelectIndex());
+                Const.DELETE, adList.getSelectName(), adList.getSelectId());
         IRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
         task.execute(catalogTask, taskPersons);
         activity.setVisibleProgressBar(true);
@@ -148,6 +148,8 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
     }
 
     public void putResult(String msg) {
+        adList.clear();
+        adList.notifyDataSetChanged();
         activity.setVisibleProgressBar(false);
         if (msg != null) { //error
             Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
@@ -157,7 +159,6 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
     }
 
     private void openList() {
-        adList.clear();
         ListRepositories persons = new ListRepositories(activity, ListRepositories.LIST_PERSONS);
         persons.loadList();
         for (int i = 0; i < persons.getCount(); i++) {
@@ -176,7 +177,7 @@ public class PersonsFragment extends Fragment implements IMasterTask, InputDialo
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_PERSONS, input);
         } else { //action == Const.EDIT
             catalogRunnable = new CatalogRunnable(ListRepositories.LIST_PERSONS,
-                    Const.EDIT, input, adList.getSelectIndex());
+                    Const.EDIT, input, adList.getSelectId());
         }
         IRunnable taskPersons = new ListRunnable(ListRepositories.LIST_PERSONS);
         task.execute(catalogRunnable, taskPersons);

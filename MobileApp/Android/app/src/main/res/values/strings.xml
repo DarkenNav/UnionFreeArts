@@ -31,10 +31,14 @@
     <string name="period_from">Период с</string>
     <string name="to">по</string>
     <string name="date">Дата</string>
-    <string name="count_new_pages">Количество новых страниц</string>
     <string name="total_for_period">Всего за период:</string>
-    <string name="load_interrupted_error">Загрузка прервана ошибкой</string>
     <string name="address_to_service">Адрес к сервису</string>
     <string name="old_password">Старый пароль</string>
     <string name="new_password">Новый пароль</string>
+    <string name="change_password">Сменить пароль</string>
+    <string name="error">Ошибка:</string>
+    <string name="timeout_error">Не удалось подключиться к сервису</string>
+    <string name="not_found">Не найдено</string>
+    <string name="server_error">Внутренняя ошибка сервера</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
 </resources>

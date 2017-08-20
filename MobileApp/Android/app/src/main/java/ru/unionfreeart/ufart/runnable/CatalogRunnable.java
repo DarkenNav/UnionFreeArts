@@ -3,15 +3,16 @@ package ru.unionfreeart.ufart.runnable;
 import android.content.Context;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 
 import ru.unionfreeart.ufart.interfaces.IRunnable;
 import ru.unionfreeart.ufart.utils.Const;
+import ru.unionfreeart.ufart.utils.HttpDeleteE;
 import ru.unionfreeart.ufart.utils.Settings;
 
 /**
@@ -19,7 +20,7 @@ import ru.unionfreeart.ufart.utils.Settings;
  */
 
 public class CatalogRunnable implements IRunnable {
-    private final String PARAMETER_NAME = "data";
+    private final String HEAD_NAME1 = "Accept", HEAD_NAME2 = "Content-type", HEAD_VALUE = "application/json";
     private String name, request;
     private int method;
 
@@ -39,9 +40,9 @@ public class CatalogRunnable implements IRunnable {
         this.name = name;
         this.method = method;
         if (id > 0)
-            request = "{\"id\": " + id + ", \"name\": \"" + item + "\", \"personId\": " + person + "}";
+            request = "{\"id\": " + id + ", \"name\": \"" + item + "\", \"person\": {\"id\": " + person + "}}";
         else
-            request = "{\"name\": \"" + item + "\", \"personId\": " + person + "}";
+            request = "{\"name\": \"" + item + "\", \"person\": {\"id\": " + person + "}}";
     }
 
     public void run(Context context) throws Exception {
@@ -51,22 +52,27 @@ public class CatalogRunnable implements IRunnable {
         DefaultHttpClient client = new DefaultHttpClient(httpParameters);
         Settings settings = new Settings(context);
         HttpResponse res;
-        httpParameters = new BasicHttpParams();
-        httpParameters.setParameter(PARAMETER_NAME, request);
+        StringEntity entity = new StringEntity(request, "UTF-8");
         switch (method) {
             case Const.ADD:
                 HttpPost post = new HttpPost(settings.getAddress() + name + "/");
-                post.setParams(httpParameters);
+                post.setHeader(HEAD_NAME1, HEAD_VALUE);
+                post.setHeader(HEAD_NAME2, HEAD_VALUE);
+                post.setEntity(entity);
                 res = client.execute(post);
                 break;
             case Const.EDIT:
                 HttpPut put = new HttpPut(settings.getAddress() + name + "/");
-                put.setParams(httpParameters);
+                put.setHeader(HEAD_NAME1, HEAD_VALUE);
+                put.setHeader(HEAD_NAME2, HEAD_VALUE);
+                put.setEntity(entity);
                 res = client.execute(put);
                 break;
             default: //case Const.DELETE:
-                HttpDelete del = new HttpDelete(settings.getAddress() + name + "/");
-                del.setParams(httpParameters);
+                HttpDeleteE del = new HttpDeleteE(settings.getAddress() + name + "/");
+                del.setHeader(HEAD_NAME1, HEAD_VALUE);
+                del.setHeader(HEAD_NAME2, HEAD_VALUE);
+                del.setEntity(entity);
                 res = client.execute(del);
                 break;
         }

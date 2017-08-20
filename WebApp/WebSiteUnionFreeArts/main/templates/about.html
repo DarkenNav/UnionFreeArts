@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}О компании{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2 class="text-left"><strong>О компании</strong></h2>
+        <P>Компания UnionFreeArts занимается разработкой ПО для образовательного портала Geekbrains в рамках стажировки.
+        </P>
+        <h3 class="text-center">
+            Участники разработки:
+        </h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table_members table table-hover table-bordered">
+            <tr class="active">
+                <td>
+                    <strong>Участник</strong>
+                </td>
+                <td>
+                    <strong>Роль в компании</strong>
+                </td>
+                <td>
+                    <strong>Контакты</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static 'general/IMG/ivan9.jpg' %}" widh="30px" height="40px">
+                    Иван Голубых
+                </td>
+                <td>
+                    <p>Разработчик веб-сайта компании на Python/Django. Выполнял следующие части проекта:</p>
+                    <p>Первоначальное создание проекта на Django/Python, задание начальных настроек проекта, создание
+                        вьюшек, урлов и заготовок шаблонов для всех страниц в соответствии с паттерном MVC/MVT.</p>
+                    <p>Вынесение формы для отправки данных в отдельный файл шаблона и подключение его сразу к двум
+                        страницам: "Техническая помощь" и "Связь".</p>
+                    <p>Выкладывание текущей версии сайта на боевой сервер.</p>
+                    <p>Написание тестов на Django для автопроверки работы проекта.</p>
+                </td>
+                <td>
+                    Город: Санкт-Петербург
+                    <br>Телефон: +7-921-355-04-60
+                    <br>Git: <a href="https://github.com/ivangolubykh">ivangolubykh</a>
+                    <br>E-mail: <a href="mailto:ivan9@allworld.xyz">ivan9@allworld.xyz</a>
+                    <br>Skype: <a href="skype:kreoya">kreoya</a>
+                    <br>ВКонтакте: <a href="https://vk.com/id52396437">id52396437</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                    Константин Кузовлев
+                </td>
+                <td>
+                    <p>Разработчик Веб-сайта проекта UnionFreeArts на Python/Django.
+Выполнял следующие части проекта:</p>
+
+    <p>Cоздание вьюшек, урлов и заготовок шаблонов для страниц сайта в соответствии с паттерном MVC/MVT.</p>
+    <p>Верстка всех страниц с использованием Bootstrap</p>
+    <p>Реализвция отправки формы обратной связи в тестовом режиме (информация о сообщении выводится в консоль)</p>
+
+                </td>
+                <td>
+                    Город: Санкт-Петербург
+                    <br>Телефон: +7-981-820-98-65
+                    <br>Git: <a href="https://github.com/Konstantin555">Konstantin555</a>
+                    <br>E-mail: <a href="mailto:kostyan.k@bk.ru">kostyan.k@bk.ru</a>
+                    <br>Skype: <a href="skype:kostyan.k">kostyan.k</a>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                    Алексей Ермаков
+                </td>
+                <td>
+                    Разработчик веб-сайта компании на Python/Django. Разработка и вёрстка front-end-а, доработка и
+                    наполнение информацией на front-end-е.
+                </td>
+                <td>
+                    Git: <a href="https://github.com/SayWho">SayWho</a>
+                    <br>E-mail: <a href="mailto:ermakov.lesha@gmail.com">ermakov.lesha@gmail.com</a>
+                    <br>Skype: <a href="skype:santoruy">santoruy</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                    Дмитрий Костюков
+                </td>
+                <td>
+                     Разработчик веб-сервиса на Java.
+                </td>
+                <td>
+                    Git: <a href="https://github.com/DmYK">DmYK</a>
+                    <br>E-mail: <a href="mailto:Dmitry.k888@gmail.com">Dmitry.k888@gmail.com</a>
+                    <br>Skype: <a href="skype:dmitry.k888">dmitry.k888</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                    Юрий Тихомиров
+                </td>
+                <td>
+                    Разработчик краулера и приложения для Android.
+                </td>
+                <td>
+                    Город: Санкт-Петербург
+                    <br>Телефон: +7-950-001-67-93
+                    <br>Git: <a href="https://github.com/NeoSvet">NeoSvet</a>
+                    <br>E-mail: <a href="mailto:neosvet333@gmail.com">neosvet333@gmail.com</a>
+                    <br>Skype: <a href="skype:unstoppableman">unstoppableman</a>
+                    <br>ВКонтакте: <a href="https://vk.com/neosvet">neosvet</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                    Андрей Олейник
+                </td>
+                <td>
+                    Разработчик десктопного интерфейса пользователя на C#.
+                </td>
+                <td>
+                    Git: <a href="https://github.com/DarkenNav">DarkenNav</a>
+                    <br>E-mail: <a href="mailto:altnavarro@gmail.com">altnavarro@gmail.com</a>
+                    <br>Skype: <a href="skype:darken_navarro">darken_navarro</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static 'general/IMG/logo.ico' %}" widh="30px" height="40px">
+                    Сергей Смирнов
+                </td>
+                <td>
+                    Разработчик мобильного интерфейса администратора для iOS.
+                </td>
+                <td>
+                    Git: <a href="https://github.com/Darkwing-Duck">Darkwing-Duck</a>
+                    <br>E-mail: <a href="mailto:d.duck.dev@gmail.com">d.duck.dev@gmail.com</a>
+                    <br>Skype: <a href="skype:sargun1109">sargun1109</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+{% endblock %}

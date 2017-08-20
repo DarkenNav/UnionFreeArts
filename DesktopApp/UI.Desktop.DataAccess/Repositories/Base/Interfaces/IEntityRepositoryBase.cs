@@ -5,11 +5,12 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UI.Desktop.DataAccess.Repositories.Base.Interfaces
+namespace UFart.Desktop.DataAccess.Repositories.Base.Interfaces
 {
     public interface IEntityRepositoryBase<TEntity> where TEntity : class
     {
-        IEnumerable<TEntity> Get(int id);
+        TEntity Get(int id);
+        IEnumerable<TEntity> GetAll();
 
         void Create(TEntity item);
         void Update(TEntity item);

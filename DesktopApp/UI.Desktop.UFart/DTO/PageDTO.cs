@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.UFart.UI.DTO.Base;
+using UFart.Desktop.UI.DTO.Base;
 
-namespace UI.Desktop.UFart.UI.DTO
+namespace UFart.Desktop.UI.DTO
 {
     public class PageDTO
         : EntityBaseDTO
@@ -13,6 +13,8 @@ namespace UI.Desktop.UFart.UI.DTO
         public string Url { get; set; }
         public int SiteID { get; set; }
         public DateTime FoundDateTime { get; set; }
-        public DateTime LastScanDate { get; set; }
+        public DateTime? LastScanDate { get; set; }
+
+        public SiteDTO Site { get; set; }
     }
 }

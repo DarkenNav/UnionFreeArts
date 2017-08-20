@@ -1,74 +1,66 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Desktop.DataAccess.Repositories.Base;
-using UI.Desktop.DataAccess.Repositories.Base.Interfaces;
-using UI.Desktop.UFart.Domain.Entity;
+using UFart.Desktop.DataAccess.FakeData;
+using UFart.Desktop.DataAccess.Repositories.Base;
+using UFart.Desktop.DataAccess.Repositories.Base.Interfaces;
+using UFart.Desktop.Domain.Entity;
+using UI.Desktop.DataAccess.DTO;
 
-namespace UI.Desktop.DataAccess.Repositories
+namespace UFart.Desktop.DataAccess.Repositories
 {
     public class DataRepository
         : AbstractRepository, IDataRepository
     {
-        public DataRepository() 
+        IDataRepository dataRepository;
+        public DataRepository(IDataRepository dataRepository) 
             : base()
         {
+            this.dataRepository = dataRepository;
+
         }
 
-        IEntityRepositoryBase<Keyword> keywordsRepository;
         public IEntityRepositoryBase<Keyword> Keywords
         {
             get
             {
-                if (keywordsRepository == null)
-                    keywordsRepository = new EntityRepositoryBase<Keyword>();
-                return keywordsRepository;
+                return dataRepository.Keywords;
             }
         }
 
-        IEntityRepositoryBase<Page> pagesRepository;
+
         public IEntityRepositoryBase<Page> Pages
         {
             get
             {
-                if (pagesRepository == null)
-                    pagesRepository = new EntityRepositoryBase<Page>();
-                return pagesRepository;
+                return dataRepository.Pages;
             }
         }
 
-        IEntityRepositoryBase<PersonPageRank> personPagesRankRepository;
-        public IEntityRepositoryBase<PersonPageRank> PersonPagesRank
+        public IPersonPageRankRepository PersonPagesRank
         {
             get
             {
-                if (personPagesRankRepository == null)
-                    personPagesRankRepository = new EntityRepositoryBase<PersonPageRank>();
-                return personPagesRankRepository;
+                return dataRepository.PersonPagesRank;
             }
         }
 
-        IEntityRepositoryBase<Person> personsRepository;
         public IEntityRepositoryBase<Person> Persons
         {
             get
             {
-                if (personsRepository == null)
-                    personsRepository = new EntityRepositoryBase<Person>();
-                return personsRepository;
+                return dataRepository.Persons;
             }
         }
 
-        IEntityRepositoryBase<Site> sitesRepository;
         public IEntityRepositoryBase<Site> Sites
         {
             get
             {
-                if (sitesRepository == null)
-                    sitesRepository = new EntityRepositoryBase<Site>();
-                return sitesRepository;
+                return dataRepository.Sites;
             }
         }
     }

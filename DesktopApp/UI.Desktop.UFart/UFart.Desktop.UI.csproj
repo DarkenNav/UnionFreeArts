@@ -32,7 +32,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,26 +53,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeData\FakePersonPagesRankList.cs" />
-    <Compile Include="FakeData\FakePagesList.cs" />
-    <Compile Include="FakeData\FakeSitesList.cs" />
-    <Compile Include="FakeData\FakePersonsList.cs" />
     <Compile Include="DTO\Base\EntityBaseDTO.cs" />
     <Compile Include="DTO\KeywordDTO.cs" />
     <Compile Include="DTO\PageDTO.cs" />
     <Compile Include="DTO\PersonDTO.cs" />
     <Compile Include="DTO\PersonPageRankDTO.cs" />
     <Compile Include="DTO\SiteDTO.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="Interface\FormEveryDay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="Interface\FormEveryDay.Designer.cs">
+      <DependentUpon>FormEveryDay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Implimentation\AppWrapper.cs" />
+    <Compile Include="Interface\FormStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\FormStart.Designer.cs">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\FormTotal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\FormTotal.Designer.cs">
+      <DependentUpon>FormTotal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mapping\MapperConfigurate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="Interface\FormEveryDay.resx">
+      <DependentUpon>FormEveryDay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\FormStart.resx">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\FormTotal.resx">
+      <DependentUpon>FormTotal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,6 +108,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -89,7 +122,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\UI.Desktop.DataAccess\UFart.Desktop.DataAccess.csproj">
+      <Project>{A73ACC59-6211-4986-9B3B-D0C91E65F2AF}</Project>
+      <Name>UFart.Desktop.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Desktop.UFart.Domain\UFart.Desktop.Domain.csproj">
+      <Project>{2173CCB4-4E8E-4570-A286-BFCAA440A3BC}</Project>
+      <Name>UFart.Desktop.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
